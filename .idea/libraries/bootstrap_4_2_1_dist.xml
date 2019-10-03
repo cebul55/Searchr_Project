@@ -1,0 +1,52 @@
+<component name="libraryTable">
+  <library name="bootstrap-4.2.1-dist" type="javaScript">
+    <properties>
+      <option name="frameworkName" value="jQuery" />
+      <sourceFilesUrls>
+        <item url="file:///Library/bootstrap-4.2.1-dist" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.css" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.css.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.min.css" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.min.css.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.css" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.css.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.min.css" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.min.css.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.css" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.css.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.min.css" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.min.css.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.js" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.js.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.js" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.js.map" />
+        <item url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.min.js.map" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file:///Library/bootstrap-4.2.1-dist" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.css" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.css.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.min.css" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-grid.min.css.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.css" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.css.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.min.css" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap-reboot.min.css.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.css" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.css.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.min.css" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/css/bootstrap.min.css.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.js" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.js.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.js" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.js.map" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.min.js" />
+      <root url="file:///Library/bootstrap-4.2.1-dist/js/bootstrap.min.js.map" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
