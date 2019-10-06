@@ -43,6 +43,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# REDUX login/registration configuration variables
+# If true, users can register
+REGISTRATION_OPEN = True
+
+# If true, the user will be automatically logged in after registering
+REGISTRATION_AUTO_LOGIN = True
+
+# The URL that Django redirects users to after logged in.
+LOGIN_REDIRECT_URL = 'rango:index'
+
+# The page users are directed to if they are not logged in
+# Login URL
+LOGIN_URL = 'auth_login'
+
 
 # Application definition
 
@@ -54,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'searchr_app',
+    'registration',         # Django-registration-redux 2.2
 ]
 
 MIDDLEWARE = [
@@ -79,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -111,6 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 8},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -118,6 +135,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
 
 
