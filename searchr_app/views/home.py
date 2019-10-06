@@ -1,5 +1,6 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def home(request):
-    return HttpResponse("Hello SearchR App")
+    return render(request, 'searchr_app/base.html', )
