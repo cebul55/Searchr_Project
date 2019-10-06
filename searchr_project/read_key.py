@@ -9,7 +9,7 @@ def read_db_key():
 
 
 def read_bing_key():
-    secret_key = read_any_key('conf/bing.key', '../conf/bing.key', 'searchrDB.key')
+    secret_key = read_any_key('conf/bing.key', '../conf/bing.key', 'bing.key')
     return secret_key
 
 

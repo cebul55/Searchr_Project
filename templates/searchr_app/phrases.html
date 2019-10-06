@@ -2,17 +2,15 @@
     {% if phrases %}
 
         {% for p in phrases %}
-{#            {% if p == current_phrase %}#}
-{#                <li class="nav-item">#}
-{#                        <a class="nav-link" href="{% url 'rango:show_category' p.slug %}"><span data-feather="archive"></span>{{ c.name }}</a>#}
-{##}
-{#                </li>#}
-{#            {% else %}#}
-{#                <li><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></li>#}
-{#            {% endif %}#}
-            <li class="nav-item">
-                {{ p.phrase_name }}
-            </li>
+            {% if p == current_phrase %}
+                <li class="nav-item">
+                        <a class="nav-link" href="{% url 'searchr_app:show_phrase' p.slug %}"><span data-feather="archive"></span>{{ p.phrase_name }}</a>
+
+                </li>
+            {% else %}
+                <li><a href="{% url 'searchr_app:show_phrase' p.slug %}">{{ p.phrase_name }}</a></li>
+            {% endif %}
+
 
         {% endfor %}
     {% else %}
