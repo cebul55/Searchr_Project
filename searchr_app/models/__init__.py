@@ -1,2 +1,6 @@
 from .keyword import Keyword
-from .phrase import Phrase
+from .searchresult import SearchResult
+
+
+# Phrase model
+# from .phrase import Phrase

@@ -1,0 +1,50 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if keyword %}
+        {{ keyword.keyword }}
+    {% else  %}
+        Unknown Keyword
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+
+    <div class="jumbotron p-4">
+        <div class="container">
+            {% if keyword %}
+            <h1 class="jumbotron-heading">{{ keyword.keyword }}</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if keyword %}
+        {% if search_res %}
+
+            <ul>
+                {% for res in search_res %}
+
+                    <li><a href="{{ res.url }}">{{ res.search_result_title }}</a> </li>
+                    {% if res.views > 1 %}
+                    <p>{{ res.views }} views.</p>
+                {% else %}
+                        <p>{{ res.views }} views.</p>
+                {% endif %}
+
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No Search Results found for specified keyword.</strong>
+
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        Logged in!
+{#            <a href="{% url 'searchr_app:add_keyword' phrase.slug %}">Add Keyword</a>#}
+        {% endif %}
+    {% else %}
+
+        The specified keyword does not exist!
+    {% endif %}
+{% endblock %}

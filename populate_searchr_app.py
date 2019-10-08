@@ -7,6 +7,8 @@ django.setup()
 
 from searchr_app.models import Keyword, Phrase
 
+# todo update populate script !!!
+
 def populate():
 
     allegro_key = [

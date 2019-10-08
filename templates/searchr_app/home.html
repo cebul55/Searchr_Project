@@ -6,5 +6,26 @@
 {% endblock %}
 
 {% block body_block %}
-    THIS IS HOME
+        <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h2>Most Searched Keywords </h2>
+                        <p class="card-text">
+                        {% if keywords %}
+                            <ul class="list-group">
+                                {% for keyword in keywords %}
+                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_keyword' keyword.slug %}">{{ keyword.keyword }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <strong>There are no searched keywords present yet.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
