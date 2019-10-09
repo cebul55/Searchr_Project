@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block body_block %}
+    <div class="jumbotron p-4">
+        <div class="container">
+            <h1 class="jumbotron-heading p-1 text-center">HOME PAGE</h1>
+        </div>
+    </div>
         <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -25,6 +30,32 @@
                         </p>
                     </div>
                 </div>
+            </div>
+        <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h2>Most Viewed Search Results </h2>
+                        <p class="card-text">
+                        {% if search_results %}
+                            <ul class="list-group">
+                                {% for result in search_results %}
+                                    <li class="list-group-item" >
+                                        <a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ result.id }}">{{ result.search_result_title }}</a>
+                                        {% if result.views > 1 or result.views == 0 %}
+                                            ({{ result.views }} views.)
+                                        {% else %}
+                                            ({{ result.views }} view.)
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <strong>There are no searched results present yet.</strong>
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

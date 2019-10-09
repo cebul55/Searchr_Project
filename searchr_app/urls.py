@@ -11,5 +11,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('keyword/<slug:keyword_name_slug>', views.show_keyword, name='show_keyword'),
     path('add_keyword/', views.add_keyword, name='add_keyword'),
+    path('goto/', views.goto_url, name='goto_url'),
 ]
 

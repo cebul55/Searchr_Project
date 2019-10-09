@@ -4,8 +4,7 @@
         {% for k in keywords %}
             {% if k == current_keyword %}
                 <li class="nav-item">
-                        <a class="nav-link" href="{% url 'searchr_app:show_keyword' k.slug %}"><span data-feather="archive"></span>{{ k.keyword }}</a>
-
+                    <a class="nav-link" href="{% url 'searchr_app:show_keyword' k.slug %}"><span data-feather="arrow-right"></span>{{ k.keyword }}</a>
                 </li>
             {% else %}
                 <li><a href="{% url 'searchr_app:show_keyword' k.slug %}">{{ k.keyword }}</a></li>

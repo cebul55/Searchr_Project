@@ -19,7 +19,7 @@ def show_keyword(request, keyword_name_slug):
             query_result_list = run_query(query)
             add_or_update_search_results(query_result_list, keyword)
 
-        search_res = SearchResult.objects.filter(keyword=keyword)
+        search_res = SearchResult.objects.filter(keyword=keyword).order_by('-views')
 
         context_dict['keyword'] = keyword
         context_dict['search_res'] = search_res

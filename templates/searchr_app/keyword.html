@@ -14,19 +14,14 @@
     <div class="jumbotron p-4">
         <div class="container">
             {% if keyword %}
-            <h1 class="jumbotron-heading p-1">{{ keyword.keyword }}</h1>
-            <h4 class="jumbotron-heading p-2">Last search performed: {{ keyword.date_last_searched }}.</h4>
+            <h1 class="jumbotron-heading p-1 text-center">{{ keyword.keyword }}</h1>
+            <h6 class="jumbotron-heading p-2 text-right">Last search performed: {{ keyword.date_last_searched }}.</h6>
             {% endif %}
         </div>
     </div>
 
     {% if keyword %}
-        {% if user.is_authenticated %}
-        <form role="form-inline" id="keyword_search" method="post" action="{% url 'searchr_app:show_keyword' keyword.slug %}">
-                {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-        {% endif %}
+
 
 
         {% if search_res %}
@@ -34,18 +29,30 @@
             <ul>
                 {% for res in search_res %}
 
-                    <li><a href="{{ res.url }}">{{ res.search_result_title }}</a> </li>
-                    {% if res.views > 1 %}
-                    <p>{{ res.views }} views.</p>
-                {% else %}
-                        <p>{{ res.views }} views.</p>
-                {% endif %}
-
+                    <li class="list-group">
+                        <div class="list-group-item card">
+                            <h6><a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ res.id }}">{{ res.search_result_title }}</a></h6>
+                            <p class="card-subtitle p-1">
+                                {% if res.views > 1 or res.views == 0 %}
+                                    {{ res.views }} views. &middot; First searched: {{ res.first_searched_date }}
+                                {% else %}
+                                    {{ res.views }} view. &middot; First searched: {{ res.first_searched_date }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>No Search Results found for specified keyword.</strong>
 
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <form role="form" id="keyword_search" method="post" action="{% url 'searchr_app:show_keyword' keyword.slug %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary ">Search</button>
+        </form>
         {% endif %}
 
     {% else %}
