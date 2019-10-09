@@ -1,3 +1,5 @@
+from datetime import datetime
+from django.utils.timezone import now
 from django.db import models
 from django.utils.text import slugify
 
@@ -10,8 +12,7 @@ class Keyword(models.Model):
     # phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
     keyword = models.CharField(max_length=KEYWORD_MAX_LENGTH)
     slug = models.SlugField(unique=True)
-    date_last_searched = models.DateTimeField(default=None)
-
+    date_last_searched = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.keyword)
@@ -19,4 +20,8 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.keyword
+
+    def update_date_last_searched(self):
+        self.date_last_searched = now()
+        self.save()
 

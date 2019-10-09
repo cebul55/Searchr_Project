@@ -13,7 +13,6 @@ class SearchResult( models.Model):
     url = models.URLField()
     views = models.IntegerField(default=0)
 
-
     def save(self, *args, **kwargs):
         now = date.today()
         self.date_last_searched = now

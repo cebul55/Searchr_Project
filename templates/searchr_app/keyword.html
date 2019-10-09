@@ -14,12 +14,21 @@
     <div class="jumbotron p-4">
         <div class="container">
             {% if keyword %}
-            <h1 class="jumbotron-heading">{{ keyword.keyword }}</h1>
+            <h1 class="jumbotron-heading p-1">{{ keyword.keyword }}</h1>
+            <h4 class="jumbotron-heading p-2">Last search performed: {{ keyword.date_last_searched }}.</h4>
             {% endif %}
         </div>
     </div>
 
     {% if keyword %}
+        {% if user.is_authenticated %}
+        <form role="form-inline" id="keyword_search" method="post" action="{% url 'searchr_app:show_keyword' keyword.slug %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {% endif %}
+
+
         {% if search_res %}
 
             <ul>
@@ -39,10 +48,6 @@
 
         {% endif %}
 
-        {% if user.is_authenticated %}
-        Logged in!
-{#            <a href="{% url 'searchr_app:add_keyword' phrase.slug %}">Add Keyword</a>#}
-        {% endif %}
     {% else %}
 
         The specified keyword does not exist!

@@ -24,8 +24,9 @@
                 {% endfor %}
                 {% for field in form.visible_fields %}
 
-
-                    {{ field.errors }}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">{{ error|escape }}</div>
+                    {% endfor %}
                     {{ field.help_text}}<br/>
                     {{ field }}<br/>
                 {% endfor %}

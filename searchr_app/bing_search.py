@@ -21,7 +21,7 @@ def run_query(search_terms):
     for result in search_results["webPages"]["value"]:
         results.append({
             'title': result['name'],
-            'ling': result['url'],
+            'link': result['url'],
             'summary': result['snippet'],
         })
 
