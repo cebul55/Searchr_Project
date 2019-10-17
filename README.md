@@ -16,4 +16,18 @@
 | sqlparse                  | 0.3.0  
 | wheel                     | 0.33.6 
 
-## 2. 
+## 2. Technology Stack
+### 2.1 Aktualnie wykorzystywane
+- Język: Python
+- Framework: Django
+- IDE: PyCharm
+- Baza Danych: PostgreSQL
+- Wyszukiwarka: Bing Search
+- Repozytorium: GitHub
+- Framework CSS: Bootstrap
+- (W przygotowaniu) Narzędzia do parsowania i pobierania stron WWW: Scrapy, BeautifulSoup (integracja Django i Scrapy: https://blog.theodo.com/2019/01/data-scraping-scrapy-django-integration/ )
+- (W przygotowaniu) Biblioteki NLP: Spacy: Industrial Standard, TextBlob, Polylot
+### 2.2 Plany / pomysły do wykorzystania
+- Serwer: Serwer na platformie Azure for Students
+- Wirtualizacja: Docker
+- CI: Jenkins

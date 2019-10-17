@@ -13,8 +13,5 @@ def home(request):
     context_dict['keywords'] = keyword_list
     context_dict['search_results'] = search_results_list
 
-    ## todo visitor_cookie_handler(request)
-    # context_dict['visits'] = request.session['visits']
-
     response = render(request, 'searchr_app/home.html', context_dict)
     return response
