@@ -1,14 +1,12 @@
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views import View
 
 from searchr_app.models import SearchResult
 
 
-def goto_url(request):
-    # View that counts clicks on pages and redirects to coresponding page-url
-    search_result_id = None
-
-    if request.method == 'GET':
+class GoToUrlView(View):
+    def get(self, request):
         search_result_id = request.GET.get('search_result_id')
 
         try:
@@ -23,4 +21,5 @@ def goto_url(request):
         except SearchResult.DoesNotExist:
             return redirect(reverse('searchr_app:home'))
 
-    return redirect(reverse('searchr_app:home:index'))
+    def post(self, request):
+        return redirect(reverse('searchr_app:home:index'))

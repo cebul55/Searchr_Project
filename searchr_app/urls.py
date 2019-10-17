@@ -6,11 +6,11 @@ from searchr_app import views
 app_name = 'searchr_app'
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.HomeView.as_view(), name='home'),
     # path('phrase/<slug:phrase_name_slug>/', views.show_phrase, name='show_phrase'),
-    path('search/', views.search, name='search'),
-    path('keyword/<slug:keyword_name_slug>', views.show_keyword, name='show_keyword'),
-    path('add_keyword/', views.add_keyword, name='add_keyword'),
-    path('goto/', views.goto_url, name='goto_url'),
+    path('search/', views.SearchView.as_view(), name='search'),
+    path('keyword/<slug:keyword_name_slug>', views.ShowKeywordView.as_view(), name='show_keyword'),
+    path('add_keyword/', views.AddKeywordView.as_view(), name='add_keyword'),
+    path('goto/', views.GoToUrlView.as_view(), name='goto_url'),
 ]
 

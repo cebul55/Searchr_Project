@@ -23,6 +23,6 @@ from searchr_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('searchR/', include('searchr_app.urls')),
-    path('', views.home, name='home'),
+    path('', views.HomeView.as_view(), name='home'),
     path('accounts/', include('registration.backends.simple.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

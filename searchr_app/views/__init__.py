@@ -1,8 +1,8 @@
-from .home import home
-from .search import search
-from .show_keyword import show_keyword
-from .add_keyword import add_keyword
-from .goto_url import goto_url
+from .HomeView import HomeView
+from .SearchView import SearchView
+from .ShowKeywordView import ShowKeywordView
+from .AddKeywordView import AddKeywordView
+from .GoToUrlView import GoToUrlView
 
 
 
