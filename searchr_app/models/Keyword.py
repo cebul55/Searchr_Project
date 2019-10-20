@@ -1,15 +1,14 @@
-from datetime import datetime
 from django.utils.timezone import now
 from django.db import models
 from django.utils.text import slugify
 
-# from searchr_app.models.phrase import Phrase
-
-
+'''
+    Class Keyword - represents single word, that can be part of search phrase
+    
+'''
 class Keyword(models.Model):
     KEYWORD_MAX_LENGTH = 128
 
-    # phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
     keyword = models.CharField(max_length=KEYWORD_MAX_LENGTH)
     slug = models.SlugField(unique=True)
     date_last_searched = models.DateTimeField(null=True, blank=True)
@@ -25,3 +24,5 @@ class Keyword(models.Model):
         self.date_last_searched = now()
         self.save()
 
+    class Meta:
+        verbose_name_plural = 'keywords'

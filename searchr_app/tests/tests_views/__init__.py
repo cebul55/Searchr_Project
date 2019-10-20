@@ -1,4 +1,4 @@
-from .HomeViewTest import HomeViewTest
+# from .HomeViewTest import HomeViewTest
 
 # Views tests use selenium
 # geckodriver executable for Firefox: https://github.com/mozilla/geckodriver/releases

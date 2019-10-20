@@ -1,5 +1,5 @@
-from .keyword import Keyword
-from .searchresult import SearchResult
+from .Keyword import Keyword
+from .SearchResult import SearchResult
 
 
 # Phrase model
