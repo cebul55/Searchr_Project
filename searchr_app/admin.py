@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Keyword, SearchResult, PhraseDescription
+from .models import Keyword, SearchResult, Phrase
 
 
 class KeywordAdmin(admin.ModelAdmin):
@@ -14,4 +14,4 @@ class SearchResultAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Keyword, KeywordAdmin)
 admin.site.register(SearchResult, SearchResultAdmin)
-admin.site.register(PhraseDescription)
+admin.site.register(Phrase)
