@@ -17,12 +17,19 @@ class Phrase(models.Model):
     number_of_searches = models.PositiveIntegerField(default=0)
     keywords = models.ManyToManyField(Keyword)
     user_id = models.ForeignKey(
-            User, on_delete=models.CASCADE
+            User, on_delete=models.CASCADE, null=True
         )
 
     def save(self, *args, **kwargs):
         """ On save update timestamps """
+        date_saved = timezone.now()
         if not self.id:
-            self.date_created = timezone.now()
-        self.date_modified = timezone.now()
+            self.date_created = date_saved
+        self.date_modified = date_saved
         super(Phrase, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.phrase_value
+
+    class Meta:
+        verbose_name_plural = 'phrases'
