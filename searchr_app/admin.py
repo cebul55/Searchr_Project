@@ -8,7 +8,7 @@ class KeywordAdmin(admin.ModelAdmin):
 
 
 class SearchResultAdmin(admin.ModelAdmin):
-    list_display = ('keyword', 'search_result_title', 'url', 'views')
+    list_display = ('phrase', 'title', 'url', 'views')
 
 
 # Register your models here.
