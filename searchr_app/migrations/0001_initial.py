@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('keyword', models.CharField(max_length=128)),
-                ('phrase', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='searchr_app.Phrase')),
+                ('phrase', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='searchr_app.PhraseDescription')),
             ],
         ),
     ]
