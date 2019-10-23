@@ -1,3 +1,4 @@
+from django.conf.global_settings import LANGUAGES
 from django.db import models
 from django.utils import timezone
 
@@ -10,6 +11,7 @@ from searchr_app.models import Keyword
 class Phrase(models.Model):
     _PHRASE_PRIVATE_FIELD_NAME = 'Is Phrase private?'
     _PHRASE_MAX_LENGTH = 1024
+    LANGUAGE_MAX_LENGTH = 7
 
     phrase_value = models.CharField(max_length=_PHRASE_MAX_LENGTH,)
     is_private = models.BooleanField(verbose_name=_PHRASE_PRIVATE_FIELD_NAME, default=False)
@@ -17,6 +19,7 @@ class Phrase(models.Model):
     date_modified = models.DateTimeField()
     number_of_searches = models.PositiveIntegerField(default=0)
     keywords = models.ManyToManyField(Keyword)
+    language = models.CharField(max_length=LANGUAGE_MAX_LENGTH, choices=LANGUAGES)
     user_id = models.ForeignKey(
             User, on_delete=models.CASCADE, null=True
         )
