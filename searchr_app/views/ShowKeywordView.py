@@ -10,8 +10,7 @@ class ShowKeywordView(View):
         # function that adds new search results to keyword or updates date last searched
         for i in range(0, 4):
             result = query_result[i]
-            search_result = SearchResult.objects.get_or_create(keyword=keyword, search_result_title=result['title'],
-                                                               url=result['link'])
+            search_result = SearchResult.objects.get_or_create(keyword=keyword, search_result_title=result['title'],url=result['link'])
             # search_result.save()
 
     def get(self, request, keyword_name_slug):
@@ -55,3 +54,5 @@ class ShowKeywordView(View):
             context_dict['search_res'] = None
 
         return render(request, 'searchr_app/keyword.html', context_dict)
+
+# todo change displaying searh results to phrasees.

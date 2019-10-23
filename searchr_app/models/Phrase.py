@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 from searchr_app.models import Keyword
 
@@ -19,8 +20,10 @@ class Phrase(models.Model):
     user_id = models.ForeignKey(
             User, on_delete=models.CASCADE, null=True
         )
+    phrase_slug = models.SlugField(max_length=_PHRASE_MAX_LENGTH, null=False, unique=True)
 
     def save(self, *args, **kwargs):
+        self.phrase_slug = slugify(self.phrase_value.strip())
         """ On save update timestamps """
         date_saved = timezone.now()
         if not self.id:

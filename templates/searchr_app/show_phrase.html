@@ -3,7 +3,7 @@
 
 {% block title_block %}
     {% if phrase %}
-        {{ phrase.phrase_name }}
+        {{ phrase.phrase_value }}
     {% else  %}
         Unknown Phrase
     {% endif %}
@@ -14,17 +14,18 @@
     <div class="jumbotron p-4">
         <div class="container">
             {% if phrase %}
-            <h1 class="jumbotron-heading">{{ phrase.phrase_name }}</h1>
+            <h1 class="jumbotron-heading">{{ phrase.phrase_value }}</h1>
+            {% else %}
+
+                <h1 class="jumbotron-heading">The specified Phrase does not exist!</h1>
             {% endif %}
         </div>
     </div>
 
     {% if phrase %}
         {% if keywords %}
-
             <ul>
                 {% for kword in keywords %}
-
                     <li>{{ kword.keyword }} </li>
                 {% endfor %}
             </ul>
@@ -34,11 +35,8 @@
         {% endif %}
 
         {% if user.is_authenticated %}
-        Zalogowany!
+        Użytkownik jest zalogowany!
 {#            <a href="{% url 'searchr_app:add_keyword' phrase.slug %}">Add Keyword</a>#}
         {% endif %}
-    {% else %}
-
-        The specified phrase does not exist!
     {% endif %}
 {% endblock %}
