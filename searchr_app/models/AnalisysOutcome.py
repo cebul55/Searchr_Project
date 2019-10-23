@@ -1,10 +1,23 @@
 from django.db import models
 
-''' 
-    Class AnalisysOutcome - represents fragment of a webpage, which contains fragment of searched phrase
-'''
-class AnalisysOutcome(models.Model):
+from searchr_app.models import SearchResult, Keyword
 
-    text_fagment = models.TextField()
+
+class AnalisysOutcome(models.Model):
+    """
+        Class AnalisysOutcome - represents fragment of a webpage, which contains fragment of searched phrase
+        Object cannot exist without relation to Search Result and to existink Keyword/s
+    """
+
+    text_fragment = models.TextField()
     exact_match = models.BooleanField(verbose_name='Does fragment contain whole searched phrase ?', default=False)
-    # var website_part 
+    """ website_part - variable representing part of website, where searched text was found, uses dictionary... """
+    website_part = models.CharField(max_length=64, default='')
+    search_result_id = models.ForeignKey(SearchResult, on_delete=models.CASCADE, null=False)
+    keyword_ids = models.ManyToManyField(Keyword,)
+
+    def __str__(self):
+        return self.text_fragment
+
+    class Meta:
+        verbose_name_plural = 'analisys outcomes'
