@@ -1,4 +1,5 @@
 from .AddKeywordViewTest import AddKeywordViewTest
+from .AddPhraseViewTest import AddPhraseViewTest
 #from .HomeViewTest import HomeViewTest
 
 # Views tests use selenium

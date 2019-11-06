@@ -42,6 +42,7 @@
                         {% if user.is_authenticated %}
 {#                        <li class="nav-item "><a class="nav-link" href="{% url 'rango:restricted' %}">Restricted</a></li>#}
                         <li class="nav-item"><a class="nav-link" href="{% url 'searchr_app:add_keyword' %}">Add Keyword</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'searchr_app:add_phrase' %}">Add Phrase</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next={% url 'searchr_app:home' %}">Logout</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register Here</a></li>
