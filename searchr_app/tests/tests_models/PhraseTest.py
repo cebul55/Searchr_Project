@@ -1,10 +1,9 @@
 from django.test import TestCase
 
-from searchr_app.models.Phrase import Phrase
+from searchr_app.models import Phrase
 
 
 class PhraseTest(TestCase):
-    pass
 
     def test_string_representation(self):
         str_value = 'Phrase value'
