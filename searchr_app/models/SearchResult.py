@@ -15,7 +15,7 @@ class SearchResult(models.Model):
     html_content = models.TextField(editable=False)
     date_found = models.DateTimeField()
     accuracy = models.FloatField(default=0)
-    phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
+#    phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
 
     views = models.IntegerField(default=0)
 

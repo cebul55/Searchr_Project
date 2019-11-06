@@ -3,7 +3,7 @@
 
 {% block title_block %}
     {% if phrase %}
-        {{ phrase.phrase_value }}
+        {{ phrase.value }}
     {% else  %}
         Unknown Phrase
     {% endif %}
@@ -14,7 +14,7 @@
     <div class="jumbotron p-4">
         <div class="container">
             {% if phrase %}
-            <h1 class="jumbotron-heading">{{ phrase.phrase_value }}</h1>
+            <h1 class="jumbotron-heading">{{ phrase.value }}</h1>
             {% else %}
 
                 <h1 class="jumbotron-heading">The specified Phrase does not exist!</h1>
