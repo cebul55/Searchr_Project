@@ -1,7 +1,10 @@
+from datetime import timedelta
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import transaction, IntegrityError
 from django.test import TestCase
+from django.utils import timezone
 
 from searchr_app.models import Search, Project
 
@@ -67,3 +70,14 @@ class SearchTest(TestCase):
             pass
         except ValidationError:
             pass
+
+    def test_date_created_not_empty_after_save(self):
+        str_project_title = 'Project'
+        project = Project(title=str_project_title, user=self.user)
+        project.save()
+
+        s1 = Search(title=str_project_title, project=project, query='')
+        s1.save()
+        time_now = timezone.now()
+        self.assertNotEqual(s1.date_created, None)
+        self.assertAlmostEqual(s1.date_created, time_now, delta=timedelta(seconds=1))

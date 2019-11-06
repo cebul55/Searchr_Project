@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.test import TestCase
+from django.utils.text import slugify
 
 from searchr_app.models import Project
 
@@ -15,6 +16,8 @@ class ProjectTest(TestCase):
             self.fail('Project cannot be saved without mandatory fields')
         except IntegrityError:
             pass
+        except ValidationError:
+            pass
 
     def test_project_create(self):
         str_project_name = 'Name'
@@ -23,6 +26,15 @@ class ProjectTest(TestCase):
 
     def test_verbose_name_plural(self):
         self.assertEqual(str(Project._meta.verbose_name_plural), 'projects')
+
+    def test_slug_added_after_save(self):
+        username = 'Username'
+        user = User(username=username)
+        user.save()
+        title = 'Very long title'
+        project = Project(title=title, user=user)
+        project.save()
+        self.assertEqual(project.slug, slugify(title))
 
     def test_save_mandatory_fields(self):
         str_value = 'Title'
@@ -66,7 +78,6 @@ class ProjectTest(TestCase):
         user1.save()
         user2 = User(username='Username2')
         user2.save()
-
 
         str_project_title = 'Title'
         project1 = Project(title=str_project_title, user=user1, is_private=False)

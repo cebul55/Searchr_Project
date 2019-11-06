@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from searchr_app.models import Project
 
@@ -30,6 +31,11 @@ class Search(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date_created = timezone.now()
+        super(Search, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'searches'
