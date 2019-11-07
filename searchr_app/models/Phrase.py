@@ -40,3 +40,4 @@ class Phrase(models.Model):
 
     class Meta:
         verbose_name_plural = 'phrases'
+        unique_together = ('value', 'language')
