@@ -4,3 +4,4 @@ from .PhraseTest import PhraseTest
 #from .AnalisysOutcomeTest import AnalisysOutcomeTest
 from .ProjectTest import ProjectTest
 from .SearchTest import SearchTest
+from .SearchHistoryTest import SearchHistoryTest
