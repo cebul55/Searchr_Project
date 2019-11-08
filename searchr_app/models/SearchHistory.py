@@ -20,3 +20,6 @@ class SearchHistory(models.Model):
 
     def __str__(self):
         return self.search.title + ',' + self.username + ',[' + self.date_searched.strftime('%d/%m/%Y, %H:%M:%S') + ']'
+
+    class Meta:
+        verbose_name_plural = 'search history'
