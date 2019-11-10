@@ -15,8 +15,13 @@
                 </li>
             {% endif %}
         {% endfor %}
-    {% else %}
+    {% elif user.is_authenticated %}
         <p class="nav-fill">No projects.</p>
+    {% else %}
+        <p class="nav-fill">
+            <a class="card-link" href="{% url 'auth_login' %}">Login</a>
+            or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+        </p>
     {% endif %}
     <br/>
     <h2 class="sidebar-heading">Public Projects:</h2>

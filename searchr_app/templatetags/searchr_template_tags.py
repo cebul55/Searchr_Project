@@ -20,10 +20,8 @@ def get_keywords_list(current_keyword=None):
 @register.inclusion_tag('searchr_app/projects.html')
 def get_projects_list(current_project=None, username=None):
     user = None
-    # todo poprawić pobieranie usera w menu bocznym
     if username:
         user = User.objects.filter(username=username)[0]
-    print(user)
     return {
         'public_projects': Project.objects.all().filter(is_private=False),
         'private_projects': Project.objects.all().filter(user=user),

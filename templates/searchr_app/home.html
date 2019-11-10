@@ -27,6 +27,25 @@
                         {% else %}
                             <strong>There are no public projects available.</strong>
                         {% endif %}
+
+                        </p>
+                        <h2>My projects</h2>
+                        <p class="card-text">
+                        {% if private_project_list %}
+                            <ul class="list-group">
+                                {% for project in private_project_list %}
+                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% elif user.is_authenticated %}
+                            <strong>You have no projects.</strong>
+                        {% else %}
+                            <p class="card-text">
+                                To see projects, <a class="card-link" href="{% url 'auth_login' %}">login</a> or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+                            </p>
+
+                        {% endif %}
+
                         </p>
                     </div>
                 </div>
