@@ -5,6 +5,7 @@ from .AddKeywordView import AddKeywordView
 from .GoToUrlView import GoToUrlView
 from .ShowPhraseView import ShowPhraseView
 from .AddPhraseView import AddPhraseView
+from .ProjectView import ProjectView
 
 
 # Phrase view

@@ -16,16 +16,16 @@
             <div class="col-md-6">
                 <div class="card mb-6">
                     <div class="card-body">
-                        <h2>Recently Searched Keywords </h2>
+                        <h2>Public projects</h2>
                         <p class="card-text">
-                        {% if keywords %}
+                        {% if public_project_list %}
                             <ul class="list-group">
-                                {% for keyword in keywords %}
-                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_keyword' keyword.slug %}">{{ keyword.keyword }}</a></li>
+                                {% for project in public_project_list %}
+                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
                                 {% endfor %}
                             </ul>
                         {% else %}
-                            <strong>There are no searched keywords present yet.</strong>
+                            <strong>There are no public projects available.</strong>
                         {% endif %}
                         </p>
                     </div>
@@ -36,22 +36,22 @@
                     <div class="card-body">
                         <h2>Most Viewed Search Results </h2>
                         <p class="card-text">
-                        {% if search_results %}
-                            <ul class="list-group">
-                                {% for result in search_results %}
-                                    <li class="list-group-item" >
-                                        <a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ result.id }}">{{ result.search_result_title }}</a>
-                                        {% if result.views > 1 or result.views == 0 %}
-                                            ({{ result.views }} views.)
-                                        {% else %}
-                                            ({{ result.views }} view.)
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <strong>There are no searched results present yet.</strong>
-                        {% endif %}
+{#                        {% if search_results %}#}
+{#                            <ul class="list-group">#}
+{#                                {% for result in search_results %}#}
+{#                                    <li class="list-group-item" >#}
+{#                                        <a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ result.id }}">{{ result.search_result_title }}</a>#}
+{#                                        {% if result.views > 1 or result.views == 0 %}#}
+{#                                            ({{ result.views }} views.)#}
+{#                                        {% else %}#}
+{#                                            ({{ result.views }} view.)#}
+{#                                        {% endif %}#}
+{#                                    </li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        {% else %}#}
+{#                            <strong>There are no searched results present yet.</strong>#}
+{#                        {% endif %}#}
                         </p>
                     </div>
                 </div>

@@ -1,0 +1,47 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if project %}
+        {{ project.title }}
+    {% else  %}
+        Unknown Project
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+        <div class="jumbotron p-4">
+            <div class="container">
+            {% if project %}
+            <h1 class="jumbotron-heading p-1 text-center">Title: {{ project.title }}</h1>
+            <h4 class="jumbotron-heading p-1 text-right">Author: {{ project.user.first_name }} {{ project.user.last_name }}</h4>
+            {% else%}
+                <h1 class="jumbotron-heading p-1 text-center">Unknown project</h1>
+            {% endif %}
+            </div>
+        </div>
+        <div>
+            {% if project %}
+
+                {% if searches %}
+
+                    <ul>
+                        {% for search in searches %}
+                            <li class="list-group">
+                                <div class="list-group-item card">
+                                    <p class="card-header">
+                                        {{ search.title }}
+                                    </p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="justify-content-lg-start text-center">
+                        No Searches defined for project: <strong> {{ project.title }}.</strong>
+                    </p>
+                {% endif %}
+
+            {% endif %}
+        </div>
+{% endblock %}
