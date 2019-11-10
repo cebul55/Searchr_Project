@@ -7,7 +7,7 @@ from .models import Keyword, SearchResult, Phrase
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'user', 'is_private', 'slug')
-    # add_form_template = ProjectForm
+    fields = ('title', 'user', 'is_private', 'description')
 
 
 class SearchAdmin(admin.ModelAdmin):
