@@ -58,7 +58,7 @@
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky" style="padding-left: 10px">
                     {% block sidebar_block %}
-                        {% get_projects_list project username %}
+                        {% get_projects_list project user.username %}
                     {% endblock %}
                     </div>
                 </nav>
