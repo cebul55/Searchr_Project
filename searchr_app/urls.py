@@ -9,6 +9,8 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('add_project/', views.AddProjectView.as_view(), name='add_project'),
     path('owner/<slug:username>/project/<slug:slug>/', views.ProjectView.as_view(), name='show_project'),
+    path('owner/<slug:username>/project/<slug:slug>/<slug:search_slug>/', views.SearchObjectView.as_view(), name='show_search'),
+
     path('phrase/<slug:slug>/', views.ShowPhraseView.as_view(), name='show_phrase'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('keyword/<slug:keyword_name_slug>', views.ShowKeywordView.as_view(), name='show_keyword'),

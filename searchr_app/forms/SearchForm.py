@@ -7,16 +7,16 @@ class SearchForm(forms.ModelForm):
 
     def __init__(self, user):
         if user.is_authenticated:
-            self.username = user.username
+            self.user = user
 
-    username = None
+    user = None
 
     title = forms.CharField(
         max_length=Search.SEARCH_TITLE_LENGTH,
         help_text='Enter title'
     )
     project = forms.ModelChoiceField(
-        queryset=Project.objects.filter(username=username),
+        queryset=Project.objects.filter(user=user),
     )
     attributes = forms.CharField(
         max_length=Search.SEARCH_ATTRIBS_LENGTH,

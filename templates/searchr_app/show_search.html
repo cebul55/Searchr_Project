@@ -1,0 +1,39 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if search and user.is_authenticated %}
+        {{ search.title }}
+    {% else %}
+        Unknown Search
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    <div class="jumbotron p-4">
+        <div class="container">
+            {% if search and user.is_authenticated %}
+                <nav aria-label="breadcrumb p-1">
+                    <ol class="breadcrumb p-lg-0">
+                        <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
+                        <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                        <li class="breadcrumb-item active"><a href="#">{{ search.title }}</a> </li>
+                    </ol>
+                </nav>
+                <h1 class="jumbotron-heading text-center">{{ search.title }}</h1>
+            {% else %}
+                <h1 class="jumbotron-heading">Specified Search does not exist or you are not logged in.</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if search %}
+
+        {{ search.title }}<br/>
+        {{ search.project }}<br/>
+        {{ search.query }}<br/>
+        {{ search.date_created }}<br/>
+
+        {{ phrases }}
+    {% endif %}
+{%  endblock %}

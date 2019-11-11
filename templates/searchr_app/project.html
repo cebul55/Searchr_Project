@@ -13,6 +13,12 @@
         <div class="jumbotron p-4">
             <div class="container">
             {% if project %}
+                <nav aria-label="breadcrumb p-1">
+                    <ol class="breadcrumb p-lg-0">
+                        <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
+                        <li class="breadcrumb-item active"><a href="#">{{ project.title }}</a></li>
+                    </ol>
+                </nav>
             <h1 class="jumbotron-heading p-1 text-center">Title: {{ project.title }}</h1>
             <h4 class="jumbotron-heading p-1 text-right">Author: {{ project.user.first_name }} {{ project.user.last_name }}</h4>
             {% else%}
@@ -30,7 +36,7 @@
                             <li class="list-group">
                                 <div class="list-group-item card">
                                     <p class="card-header">
-                                        {{ search.title }}
+                                        <a class="card-link active" href="{% url 'searchr_app:show_search' user.username project.slug search.slug %}">{{ search.title }}</a>
                                     </p>
                                 </div>
                             </li>

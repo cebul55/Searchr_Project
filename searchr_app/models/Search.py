@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
 
 from searchr_app.models import Project
 
@@ -28,6 +29,7 @@ class Search(models.Model):
     query = models.CharField(max_length=SEARCH_QUERY_LENGTH, null=False, default=None)
     search_engine = models.CharField(max_length=64, choices=SEARCH_ENGINE_CHOICES, default=_BING)
     date_created = models.DateTimeField(editable=False)
+    slug = models.SlugField(max_length=SEARCH_TITLE_LENGTH, null=False, unique=False)
 
     def __str__(self):
         return self.title
@@ -35,6 +37,7 @@ class Search(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.date_created = timezone.now()
+        self.slug = slugify(self.title.strip())
         super(Search, self).save(*args, **kwargs)
 
     class Meta:

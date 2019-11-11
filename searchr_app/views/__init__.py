@@ -7,6 +7,7 @@ from .ShowPhraseView import ShowPhraseView
 from .AddPhraseView import AddPhraseView
 from .ProjectView import ProjectView
 from .AddProjectView import AddProjectView
+from .SearchObjectView import SearchObjectView
 
 # Phrase view
 # from .show_phrase import show_phrase
