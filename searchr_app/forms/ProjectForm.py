@@ -9,11 +9,13 @@ class ProjectForm(forms.ModelForm):
         max_length=Project.PROJECT_TITLE_LENGTH,
         help_text='Please enter title',
     )
-    user = forms.ChoiceField(
-        choices=User.objects.all(),
+    user = forms.ModelChoiceField(
+        queryset=User.objects.all(),
     )
-    description = forms.Textarea()
-    is_private = forms.BooleanField(
+    description = forms.Textarea(
+        attrs={'input_type': 'textarea',}
+    )
+    is_private = forms.NullBooleanField(
         label='Is project private?',
         initial=True,
     )
