@@ -5,6 +5,7 @@ from searchr_app.models import Project
 
 
 class ProjectForm(forms.ModelForm):
+
     title = forms.CharField(
         max_length=Project.PROJECT_TITLE_LENGTH,
         help_text='Enter title',
