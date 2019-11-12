@@ -20,6 +20,7 @@ class SearchForm(forms.ModelForm):
     )
     phrases = forms.ModelMultipleChoiceField(
         queryset=Phrase.objects.all(),
+        widget=forms.CheckboxSelectMultiple()
     )
     query = forms.CharField(
         widget=forms.HiddenInput(),
@@ -30,9 +31,15 @@ class SearchForm(forms.ModelForm):
         required=False
     )
 
+    def __init__(self, *args, **kwargs):
+        userid = kwargs.pop('userid', None)
+        super(SearchForm, self).__init__(*args, **kwargs)
+
+        if userid:
+            self.fields['project'].queryset = Project.objects.filter(user_id=userid)
+
     class Meta:
         model = Search
         exclude = ['slug']
 
-        # todo filtering projects by user
         # todo proper adding of phrases !

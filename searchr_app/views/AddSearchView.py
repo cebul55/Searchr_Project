@@ -14,17 +14,27 @@ class AddSearchView(View):
     @method_decorator(login_required)
     def get(self, request, project_id):
 
+        project = Project.objects.get(id=project_id)
+        self.form = SearchForm(userid=project.user.id, initial={
+            'project': project,
+        })
         return render(request, 'searchr_app/new_search.html', {
             'form':self.form,
             'project_id': project_id,
         })
 
-    @method_decorator(login_required )
+    @method_decorator(login_required)
     def post(self, request, project_id):
         self.form = SearchForm(request.POST)
 
         if self.form.is_valid():
             search = self.form.save(commit=True)
+            # get chosen phrases and update m2m relationship
+            phrases = self.form.fields['phrases'].queryset
+            for p in phrases:
+                p.searches.add(search)
+                p.save()
+
             project = Project.objects.filter(id=project_id)[0]
             return redirect('searchr_app:show_search',username=project.user.username, slug=project.slug, search_slug=search.slug)
 
