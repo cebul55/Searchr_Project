@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <form role="form" id="category_form" method="post" action="{% url 'searchr_app:add_keyword' %}">
+            <form role="form" id="category_form" method="post" action="{% url 'searchr_app:add_phrase' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
 {#                {% for hidden in form.hidden_fields %}#}
@@ -31,8 +31,8 @@
 {#                    {{ field }}<br/>#}
 {#                {% endfor %}#}
 {#                <br/>#}
-{#                <button class="btn btn-primary" type="submit" name="submit">Add Keyword</button>#}
-{#                <div class="p-5"></div>#}
+                <button class="btn btn-primary" type="submit" name="submit">Add Phrase</button>
+                <div class="p-5"></div>
             </form>
         </div>
     </div>

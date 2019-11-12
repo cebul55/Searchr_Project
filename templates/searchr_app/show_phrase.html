@@ -14,7 +14,7 @@
     <div class="jumbotron p-4">
         <div class="container">
             {% if phrase %}
-            <h1 class="jumbotron-heading">{{ phrase.value }}</h1>
+            <h1 class="jumbotron-heading text-center">{{ phrase.value }}</h1>
             {% else %}
 
                 <h1 class="jumbotron-heading">The specified Phrase does not exist!</h1>
@@ -23,10 +23,21 @@
     </div>
 
     {% if phrase %}
+        <p class="page-item">
+            Date created: {{ phrase.date_created }}
+        </p>
+        <p class="page-item">
+            Date last searched: {{ phrase.date_last_searched }}
+        </p>
+        <p class="page-item">
+            Language: {{ phrase.get_language_display|capfirst|escape }}
+        </p>
         {% if keywords %}
             <ul>
                 {% for kword in keywords %}
-                    <li>{{ kword.keyword }} </li>
+                    <li>{{ kword.keyword }}
+                        <a class="page-link" href="{% url 'searchr_app:show_keyword' kword.slug %}">{{ kword.keyword }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}

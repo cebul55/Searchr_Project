@@ -5,11 +5,12 @@ from searchr_app.models import Phrase, Keyword
 
 
 class ShowPhraseView(View):
-    def get(self, request, phrase_slug):
+
+    def get(self, request, phrase_language, phrase_slug):
         context_dict = {}
         try:
-            phrase = Phrase.objects.get(phrase_slug=phrase_slug)
-            keywords = phrase.keywords.all()
+            phrase = Phrase.objects.get(slug=phrase_slug, language=phrase_language)
+            keywords = Keyword.objects.filter(phrases=phrase)
             context_dict['phrase'] = phrase
             context_dict['keywords'] = keywords
 

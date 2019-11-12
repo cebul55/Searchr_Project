@@ -34,6 +34,15 @@
         {{ search.query }}<br/>
         {{ search.date_created }}<br/>
 
-        {{ phrases }}
+        {% if phrases %}
+            <h3 class="jumbotron-heading text-center">Phrases: </h3>
+            {% for phrase in phrases %}
+                <li class="text-center">
+                    <a href="{% url 'searchr_app:show_phrase' phrase.language phrase.slug %}">{{ phrase.value }}</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <h3 class="jumbotron-heading text-center">No defined phrases add one to start searching</h3>
+        {% endif %}
     {% endif %}
 {%  endblock %}
