@@ -27,7 +27,9 @@ class Keyword(models.Model):
     def save(self, *args, **kwargs):
         if self.keyword == '':
             raise ValidationError('Keyword value can not be empty.')
-        self.slug = slugify(self.keyword)
+        self.slug = slugify(self.keyword + ' ' + self.language)
+        # todo perform lematization of keyword and save it to primary_form
+
         super(Keyword, self).save(*args, **kwargs)
 
     def __str__(self):

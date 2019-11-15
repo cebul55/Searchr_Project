@@ -12,6 +12,10 @@ class AddProjectView(View):
     @method_decorator(login_required)
     def get(self, request):
 
+        current_user = request.user
+        self.form = ProjectForm(initial={
+            'user': current_user,
+        })
         return render(request, 'searchr_app/add_project.html', {
             'form': self.form,
         })

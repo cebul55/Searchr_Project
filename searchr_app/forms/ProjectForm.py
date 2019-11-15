@@ -11,6 +11,7 @@ class ProjectForm(forms.ModelForm):
         help_text='Enter title',
     )
     user = forms.ModelChoiceField(
+        widget=forms.HiddenInput(),
         queryset=User.objects.all(),
     )
     description = forms.Textarea(
