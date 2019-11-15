@@ -36,7 +36,7 @@
             <ul>
                 {% for kword in keywords %}
                     <li>{{ kword.keyword }}
-                        <a class="page-link" href="{% url 'searchr_app:show_keyword' kword.slug %}">{{ kword.keyword }}</a>
+                        <a class="page-link" href="{% url 'searchr_app:show_keyword' kword.language kword.slug %}">{{ kword.keyword }}</a>
                     </li>
                 {% endfor %}
             </ul>
