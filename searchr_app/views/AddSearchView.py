@@ -30,13 +30,13 @@ class AddSearchView(View):
         if self.form.is_valid():
             search = self.form.save(commit=True)
             # get chosen phrases and update m2m relationship
-            phrases = self.form.fields['phrases'].queryset
+            phrases = self.form.cleaned_data['phrases']
             for p in phrases:
                 p.searches.add(search)
                 p.save()
 
             project = Project.objects.filter(id=project_id)[0]
-            return redirect('searchr_app:show_search',username=project.user.username, slug=project.slug, search_slug=search.slug)
+            return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
 
         else:
             print(self.form.errors)

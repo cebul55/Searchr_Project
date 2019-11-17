@@ -23,7 +23,7 @@ class KeywordAdmin(admin.ModelAdmin):
 
 
 class SearchResultAdmin(admin.ModelAdmin):
-    list_display = ('title', 'url', 'date_found', 'accuracy')
+    list_display = ('title', 'url', 'date_found', 'accuracy', 'id')
 
 
 class SearchHistoryAdmin(admin.ModelAdmin):

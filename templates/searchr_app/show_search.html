@@ -41,6 +41,10 @@
                     <a href="{% url 'searchr_app:show_phrase' phrase.language phrase.slug %}">{{ phrase.value }}</a>
                 </li>
             {% endfor %}
+            <form action="{% url 'searchr_app:home' %}" method="get">
+                <button class="btn-primary btn" type="submit" name="submit">Run Search</button>
+
+            </form>
         {% else %}
             <h3 class="jumbotron-heading text-center">No defined phrases add one to start searching</h3>
         {% endif %}
