@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.views import View
 
-from searchr_app.models import Search
+from searchr_app.models import Search, SearchResult
 
 
 class RunSearchView(View):
@@ -19,7 +19,15 @@ class RunSearchView(View):
                 return redirect('searchr_app:home')
 
             # do sth with results
-            return redirect('searchr_app:home')
+            for result in results:
+                search_result = SearchResult(
+                    title=result['title'],
+                    url=result['link'],
+                    search=search,
+                )
+                # todo spider to download file and count hash value
+                search_result.save()
+            return redirect('searchr_app:show_search', request.user.username, search.project.slug, search.slug)
         except Search.DoesNotExist:
             return redirect('searchr_app:home')
 
