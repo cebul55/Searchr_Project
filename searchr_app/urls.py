@@ -15,6 +15,7 @@ urlpatterns = [
     path('add_phrase/', views.AddPhraseView.as_view(), name='add_phrase'),
     path('keyword/<keyword_language>/<slug:keyword_slug>/', views.ShowKeywordView.as_view(), name='show_keyword'),
     path('search_result/<search_res_id>', views.ShowSearchResultsView.as_view(), name='search_result'),
+    path('run_query/<search_id>', views.RunSearchView.as_view(), name='run_query'),
 
     path('search/', views.SearchView.as_view(), name='search'),
 

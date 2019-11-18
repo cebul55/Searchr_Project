@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from searchr_app.bing_search import create_bing_search_query
 from searchr_app.forms import SearchForm
 from searchr_app.models import Project
 
@@ -34,6 +35,9 @@ class AddSearchView(View):
             for p in phrases:
                 p.searches.add(search)
                 p.save()
+
+            search.query = create_bing_search_query(search)
+            search.save()
 
             project = Project.objects.filter(id=project_id)[0]
             return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
