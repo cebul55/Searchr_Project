@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views import View
 
-from searchr_app.models import Project, Search, Phrase
+from searchr_app.models import Project, Search, Phrase, SearchResult
 
 
 class SearchObjectView(View):
@@ -26,5 +26,14 @@ class SearchObjectView(View):
             phrases = phrase_query_set.all()
 
         context_dict['phrases'] = phrases
+
+        try:
+            search_results = SearchResult.objects.filter(search=search)
+            search_results = search_results.order_by('-date_found')
+
+            context_dict['search_results'] = search_results
+
+        except SearchResult.DoesNotExist:
+            context_dict['search_results'] = None
 
         return render(request, 'searchr_app/show_search.html', context_dict)
