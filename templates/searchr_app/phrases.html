@@ -1,0 +1,19 @@
+<ul class="nav flex-column">
+    {% if phrases %}
+
+        {% for p in phrases %}
+            {% if p == current_phrase %}
+                <li class="nav-item">
+                        <a class="nav-link" href="{% url 'searchr_app:show_phrase' p.slug %}"><span data-feather="archive"></span>{{ p.phrase_name }}</a>
+
+                </li>
+            {% else %}
+                <li><a href="{% url 'searchr_app:show_phrase' p.slug %}">{{ p.phrase_name }}</a></li>
+            {% endif %}
+
+
+        {% endfor %}
+    {% else %}
+        <li class="nav-item">There are no phrases present.</li>
+    {% endif %}
+</ul>

@@ -1,0 +1,41 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if keyword %}
+        {{ keyword.keyword }}
+    {% else  %}
+        Unknown Keyword
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+
+    <div class="jumbotron p-4">
+        <div class="container">
+            {% if keyword %}
+            <h1 class="jumbotron-heading p-1 text-center">{{ keyword.keyword }}</h1>
+            <h6 class="jumbotron-heading p-2 text-right">Last search performed: {{ keyword.date_last_searched }}.</h6>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if keyword %}
+
+        Value: {{ keyword.keyword }}
+        Language: {{ keyword.language }}
+        Primary_Form = {{ keyword.primary_form }}
+
+
+        {% if user.is_authenticated %}
+        <form role="form" id="keyword_search" method="post" action="{% url 'searchr_app:show_keyword' keyword.language keyword.slug %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary ">Search</button>
+        </form>
+        {% endif %}
+
+    {% else %}
+
+        The specified keyword does not exist!
+    {% endif %}
+{% endblock %}

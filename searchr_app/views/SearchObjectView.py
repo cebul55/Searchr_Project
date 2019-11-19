@@ -1,0 +1,39 @@
+from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.views import View
+
+from searchr_app.models import Project, Search, Phrase, SearchResult
+
+
+class SearchObjectView(View):
+
+    def get(self, request, username, slug, search_slug):
+        context_dict = {}
+        # get user by username
+        user = User.objects.filter(username=username)[0]
+
+        # get project by slug and username
+        project = Project.objects.filter(user=user, slug=slug)[0]
+
+        # get search object by project and slug
+        search = Search.objects.filter(project=project, slug=search_slug)[0]
+
+        context_dict['search'] = search
+        context_dict['project'] = project
+        phrases = []
+        if search:
+            phrase_query_set = Phrase.objects.filter(searches=search )
+            phrases = phrase_query_set.all()
+
+        context_dict['phrases'] = phrases
+
+        try:
+            search_results = SearchResult.objects.filter(search=search)
+            search_results = search_results.order_by('-date_found')
+
+            context_dict['search_results'] = search_results
+
+        except SearchResult.DoesNotExist:
+            context_dict['search_results'] = None
+
+        return render(request, 'searchr_app/show_search.html', context_dict)

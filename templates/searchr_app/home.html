@@ -1,0 +1,81 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+    <div class="jumbotron p-4">
+        <div class="container">
+            <h1 class="jumbotron-heading p-1 text-center">HOME PAGE</h1>
+        </div>
+    </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h2>Public projects</h2>
+                        <p class="card-text">
+                        {% if public_project_list %}
+                            <ul class="list-group">
+                                {% for project in public_project_list %}
+                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <strong>There are no public projects available.</strong>
+                        {% endif %}
+
+                        </p>
+                        <h2>My projects</h2>
+                        <p class="card-text">
+                        {% if private_project_list %}
+                            <ul class="list-group">
+                                {% for project in private_project_list %}
+                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% elif user.is_authenticated %}
+                            <strong>You have no projects.</strong>
+                        {% else %}
+                            <p class="card-text">
+                                To see projects, <a class="card-link" href="{% url 'auth_login' %}">login</a> or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+                            </p>
+
+                        {% endif %}
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h2>Most Viewed Search Results </h2>
+                        <p class="card-text">
+{#                        {% if search_results %}#}
+{#                            <ul class="list-group">#}
+{#                                {% for result in search_results %}#}
+{#                                    <li class="list-group-item" >#}
+{#                                        <a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ result.id }}">{{ result.search_result_title }}</a>#}
+{#                                        {% if result.views > 1 or result.views == 0 %}#}
+{#                                            ({{ result.views }} views.)#}
+{#                                        {% else %}#}
+{#                                            ({{ result.views }} view.)#}
+{#                                        {% endif %}#}
+{#                                    </li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        {% else %}#}
+{#                            <strong>There are no searched results present yet.</strong>#}
+{#                        {% endif %}#}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

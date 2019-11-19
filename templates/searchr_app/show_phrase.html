@@ -1,0 +1,53 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if phrase %}
+        {{ phrase.value }}
+    {% else  %}
+        Unknown Phrase
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+
+    <div class="jumbotron p-4">
+        <div class="container">
+            {% if phrase %}
+            <h1 class="jumbotron-heading text-center">{{ phrase.value }}</h1>
+            {% else %}
+
+                <h1 class="jumbotron-heading">The specified Phrase does not exist!</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if phrase %}
+        <p class="page-item">
+            Date created: {{ phrase.date_created }}
+        </p>
+        <p class="page-item">
+            Date last searched: {{ phrase.date_last_searched }}
+        </p>
+        <p class="page-item">
+            Language: {{ phrase.get_language_display|capfirst|escape }}
+        </p>
+        {% if keywords %}
+            <ul>
+                {% for kword in keywords %}
+                    <li>{{ kword.keyword }}
+                        <a class="page-link" href="{% url 'searchr_app:show_keyword' kword.language kword.slug %}">{{ kword.keyword }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No Keywords found in phrase.</strong>
+
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        Użytkownik jest zalogowany!
+{#            <a href="{% url 'searchr_app:add_keyword' phrase.slug %}">Add Keyword</a>#}
+        {% endif %}
+    {% endif %}
+{% endblock %}

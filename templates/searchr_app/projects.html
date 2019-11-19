@@ -1,0 +1,46 @@
+<ul class="nav flex-column">
+    <h2 class="sidebar-heading">My Projects:</h2>
+    {% if private_projects %}
+
+        {% for project in private_projects %}
+
+            {% if project == current_project %}
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'searchr_app:show_project' project.user.username project.slug %}"><span data-feather="archive"></span>{{ project.title }}</a>
+                </li>
+            {% else %}
+                <li class="nav-item"></li>
+                    <a class="nav-link active" href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% elif  user.is_authenticated  %}
+        <p class="nav-fill">No projects.</p>
+    {% else %}
+        <p class="nav-fill">
+            <a class="card-link" href="{% url 'auth_login' %}">Login</a>
+            or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+        </p>
+    {% endif %}
+    <br/>
+    <h2 class="sidebar-heading">Public Projects:</h2>
+    {% if public_projects %}
+
+        {% for project in public_projects %}
+
+            {% if project == current_project %}
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'searchr_app:show_project' project.user.username project.slug %}"><span data-feather="archive"></span>{{ project.title }}</a>
+                </li>
+            {% else %}
+                <li class="nav-item"></li>
+                    <a class="nav-link active" href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p class="nav-fill">No projects.</p>
+    {% endif %}
+</ul>

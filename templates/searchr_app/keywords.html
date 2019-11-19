@@ -1,0 +1,18 @@
+<ul class="nav flex-column">
+    {% if keywords %}
+
+        {% for k in keywords %}
+            {% if k == current_keyword %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'searchr_app:show_keyword' k.slug %}"><span data-feather="arrow-right"></span>{{ k.keyword }}</a>
+                </li>
+            {% else %}
+                <li><a href="{% url 'searchr_app:show_keyword' k.slug %}">{{ k.keyword }}</a></li>
+            {% endif %}
+
+
+        {% endfor %}
+    {% else %}
+        <li class="nav-item">There are no keywords present.</li>
+    {% endif %}
+</ul>
