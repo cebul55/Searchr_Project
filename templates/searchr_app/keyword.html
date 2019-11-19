@@ -22,31 +22,10 @@
 
     {% if keyword %}
 
+        Value: {{ keyword.keyword }}
+        Language: {{ keyword.language }}
+        Primary_Form = {{ keyword.primary_form }}
 
-
-        {% if search_res %}
-
-            <ul>
-                {% for res in search_res %}
-
-                    <li class="list-group">
-                        <div class="list-group-item card">
-                            <h6><a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ res.id }}">{{ res.search_result_title }}</a></h6>
-                            <p class="card-subtitle p-1">
-                                {% if res.views > 1 or res.views == 0 %}
-                                    {{ res.views }} views. &middot; First searched: {{ res.first_searched_date }}
-                                {% else %}
-                                    {{ res.views }} view. &middot; First searched: {{ res.first_searched_date }}
-                                {% endif %}
-                            </p>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>No Search Results found for specified keyword.</strong>
-
-        {% endif %}
 
         {% if user.is_authenticated %}
         <form role="form" id="keyword_search" method="post" action="{% url 'searchr_app:show_keyword' keyword.language keyword.slug %}">
