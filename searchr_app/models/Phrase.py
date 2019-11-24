@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from django.utils.text import slugify
 
-from searchr_app.models import Search
+from searchr_app.models import Search, Project
 
 
 class Phrase(models.Model):
@@ -18,9 +18,13 @@ class Phrase(models.Model):
     date_last_searched = models.DateTimeField()
     number_of_searches = models.PositiveIntegerField(default=0)
     language = models.CharField(max_length=LANGUAGE_MAX_LENGTH, choices=LANGUAGES)
-    searches = models.ManyToManyField(
-        Search,
-        db_table='search_contains_phrase',
+    # searches = models.ManyToManyField(
+    #     Search,
+    #     db_table='search_contains_phrase',
+    # )
+    projects = models.ManyToManyField(
+        Project,
+        db_table='project_contains_phrases',
     )
     slug = models.SlugField(max_length=_PHRASE_MAX_LENGTH, null=False, unique=False)
 

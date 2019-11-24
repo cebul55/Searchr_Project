@@ -5,7 +5,6 @@ from searchr_app.models import Phrase
 
 
 class PhraseForm(forms.ModelForm):
-
     value = forms.CharField(
         max_length=Phrase._PHRASE_MAX_LENGTH,
         required=True,
@@ -29,13 +28,13 @@ class PhraseForm(forms.ModelForm):
     language = forms.ChoiceField(
         choices=LANGUAGES,
     )
-    searches = forms.MultipleChoiceField(
+    projects = forms.MultipleChoiceField(
         widget=forms.HiddenInput(),
-        required = False,
+        required=False,
     )
     slug = forms.CharField(
         widget=forms.HiddenInput(),
-        required = False,
+        required=False,
     )
 
     class Meta:

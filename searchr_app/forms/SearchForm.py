@@ -33,10 +33,15 @@ class SearchForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         userid = kwargs.pop('userid', None)
+        projectid = kwargs.pop('projectid', None)
         super(SearchForm, self).__init__(*args, **kwargs)
 
         if userid:
             self.fields['project'].queryset = Project.objects.filter(user_id=userid)
+
+        if projectid:
+            project = Project.objects.get(id=projectid)
+            self.fields['phrases'].queryset = Phrase.objects.filter(projects=project)
 
     class Meta:
         model = Search

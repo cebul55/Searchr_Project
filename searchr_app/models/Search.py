@@ -23,12 +23,23 @@ class Search(models.Model):
         (_YAHOO, 'YAHOO'),
     ]
 
+    _CREATED = 'created'
+    _SAVED = 'saved'
+    _SEARCHED = 'searched'
+    SEARCH_STATUS_CHOICES = [
+        (_CREATED, 'CREATED'),
+        (_SAVED, 'SAVED'),
+        (_SEARCHED, 'SEARCHED'),
+    ]
+
     title = models.CharField(max_length=SEARCH_TITLE_LENGTH, null=False, default=None)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False)
     attributes = models.CharField(max_length=SEARCH_ATTRIBS_LENGTH, null=True)
     query = models.CharField(max_length=SEARCH_QUERY_LENGTH, null=False, default=None)
     search_engine = models.CharField(max_length=64, choices=SEARCH_ENGINE_CHOICES, default=_BING)
     date_created = models.DateTimeField(editable=False)
+    status = models.CharField(max_length=64, null=False, blank=False, editable=False, default=_CREATED)
+    # todo show status in view
     slug = models.SlugField(max_length=SEARCH_TITLE_LENGTH, null=False, unique=False)
 
     def __str__(self):

@@ -26,6 +26,14 @@ class AddProjectView(View):
 
         if self.form.is_valid():
             project = self.form.save(commit=True)
+            # get chosen phrases and update m2m relationship
+            phrases = self.form.cleaned_data['phrases']
+            for p in phrases:
+                p.projects.add(project)
+                p.save()
+
+            project.save()
+
             return redirect('searchr_app:show_project', username=project.user.username, slug=project.slug)
             # return redirect('searchr_app:home')
         else:

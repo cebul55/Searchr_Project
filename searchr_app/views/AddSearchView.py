@@ -16,9 +16,11 @@ class AddSearchView(View):
     def get(self, request, project_id):
 
         project = Project.objects.get(id=project_id)
-        self.form = SearchForm(userid=project.user.id, initial={
+        self.form = SearchForm(userid=project.user.id, projectid=project_id
+                               , initial={
             'project': project,
         })
+
         return render(request, 'searchr_app/new_search.html', {
             'form':self.form,
             'project_id': project_id,
@@ -30,15 +32,16 @@ class AddSearchView(View):
 
         if self.form.is_valid():
             search = self.form.save(commit=True)
+            # todo fix + change add search view,, updating search query itp..
             # get chosen phrases and update m2m relationship
-            phrases = self.form.cleaned_data['phrases']
-            for p in phrases:
-                p.searches.add(search)
-                p.save()
-
-            search.query = create_bing_search_query(search)
-            search.save()
-
+            # phrases = self.form.cleaned_data['phrases']
+            # for p in phrases:
+            #     p.searches.add(search)
+            #     p.save()
+            #
+            # search.query = create_bing_search_query(search)
+            # search.save()
+            #
             project = Project.objects.filter(id=project_id)[0]
             return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
 
