@@ -57,10 +57,10 @@ LOGIN_REDIRECT_URL = 'searchr_app:home'
 # Login URL
 LOGIN_URL = 'auth_login'
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',  # Django-registration-redux 2.2
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'searchr_app',
-    'registration',         # Django-registration-redux 2.2
 ]
 
 MIDDLEWARE = [
@@ -102,7 +101,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'searchr_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -116,7 +114,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -144,7 +141,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -158,7 +154,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

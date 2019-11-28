@@ -6,3 +6,4 @@ from .SearchResult import SearchResult
 from .SearchHistory import SearchHistory
 from .AnalisysOutcome import AnalisysOutcome
 from .AnalisysOutcomePhraseValues import AnalisysOutcomePhraseValues
+from .CrawlItem import CrawlItem
