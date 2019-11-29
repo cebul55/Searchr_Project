@@ -30,6 +30,7 @@ class AddSearchView(View):
     def post(self, request, project_id):
         self.form = SearchForm(request.POST)
 
+        # todo saving query into the search...
         if self.form.is_valid():
             search = self.form.save(commit=True)
             # todo fix + change add search view,, updating search query itp..

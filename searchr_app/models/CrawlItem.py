@@ -25,7 +25,7 @@ class CrawlItem(models.Model):
 
     def __str__(self):
         return self.unique_id
-
-    def save(self, *args, **kwargs):
-        # todo update search result if cralwItem is saved
-        super(CrawlItem, self).save(*args, **kwargs)
+    #
+    # def save(self, *args, **kwargs):
+    #     # todo update search result if cralwItem is saved
+    #     super(CrawlItem, self).save(*args, **kwargs)

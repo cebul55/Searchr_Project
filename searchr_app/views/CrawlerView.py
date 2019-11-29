@@ -12,7 +12,7 @@ from scrapyd_api import ScrapydAPI
 
 from searchr_app.models import CrawlItem
 
-scrapyd = ScrapydAPI('https://localhost:6800')
+scrapyd = ScrapydAPI('http://localhost:6800')
 
 
 def is_url_valid(url):
@@ -30,7 +30,7 @@ class CrawlerView(View):
     @method_decorator(login_required)
     def post(self, request):
         # url that is send from the new search result
-        url = request.POST.get('url', None)
+        url = request.POST.get('url', 'https://google.com')
 
         if not url:
             return JsonResponse({'error': 'Missing arguments: URL'})
@@ -48,6 +48,7 @@ class CrawlerView(View):
             'unique_id': unique_id,  # unique ID for each record for DB
             'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
         }
+        print(settings)
 
         # Schedule new crawling task by scrapyd
         # schedule() returns task_id
