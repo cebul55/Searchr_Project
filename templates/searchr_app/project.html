@@ -26,6 +26,28 @@
             {% endif %}
             </div>
         </div>
+    <div class="jumbotron p-1" style="background-color: lightsteelblue">
+        <div class="container">
+            {% if project and project.phrase_set.all %}
+                <h1 class="modal-header">Defined search phrases:</h1>
+                    {% for phrase in project.phrase_set.all %}
+
+                        <li class="list-group p-0">
+                                <div class="list-group-item card p-0" style="background-color: aliceblue">
+                                    <p class="card-header p-1 pl-4">
+                                        {{ phrase }}
+                                    </p>
+                                    <p class="card-body p-0 pl-4">
+                                        Language: <strong>{{ phrase.get_language_display|escape}}</strong>
+                                    </p>
+                                </div>
+                            </li>
+                    {% endfor %}
+            {% else %}
+                <h1 class="card-header">No defined search phrases.</h1>
+            {% endif %}
+        </div>
+    </div>
         <div>
             {% if project %}
 

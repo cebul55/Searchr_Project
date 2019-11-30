@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -16,13 +18,13 @@ class AddSearchView(View):
     def get(self, request, project_id):
 
         project = Project.objects.get(id=project_id)
-        self.form = SearchForm(userid=project.user.id, projectid=project_id
-                               , initial={
-            'project': project,
-        })
+        self.form = SearchForm(userid=project.user.id, projectid=project_id,
+                               initial={
+                                   'project': project,
+                               })
 
         return render(request, 'searchr_app/new_search.html', {
-            'form':self.form,
+            'form': self.form,
             'project_id': project_id,
         })
 
@@ -35,22 +37,22 @@ class AddSearchView(View):
             search = self.form.save(commit=True)
             # todo fix + change add search view,, updating search query itp..
             # get chosen phrases and update m2m relationship
-            # phrases = self.form.cleaned_data['phrases']
-            # for p in phrases:
-            #     p.searches.add(search)
-            #     p.save()
-            #
-            # search.query = create_bing_search_query(search)
-            # search.save()
+            phrases = self.form.cleaned_data['phrases']
+            phrases_val = []
+            for p in phrases:
+                phrases_val.append(p.value)
+            search.phrases_list = json.dumps(phrases_val)
+            search.query = create_bing_search_query(search, phrases)
+            search.save()
             #
             project = Project.objects.filter(id=project_id)[0]
-            return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
+            return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug,
+                            search_slug=search.slug)
 
         else:
             print(self.form.errors)
 
         return render(request, 'searchr_app/new_search.html', {
-            'form':self.form,
+            'form': self.form,
             'project_id': project_id,
         })
-

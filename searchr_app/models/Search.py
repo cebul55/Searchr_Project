@@ -38,6 +38,7 @@ class Search(models.Model):
     query = models.CharField(max_length=SEARCH_QUERY_LENGTH, null=False, default=None)
     search_engine = models.CharField(max_length=64, choices=SEARCH_ENGINE_CHOICES, default=_BING)
     date_created = models.DateTimeField(editable=False)
+    phrases_list = models.TextField()
     status = models.CharField(max_length=64, null=False, blank=False, editable=False, default=_CREATED)
     # todo show status in view
     slug = models.SlugField(max_length=SEARCH_TITLE_LENGTH, null=False, unique=False)

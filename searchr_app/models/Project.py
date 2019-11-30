@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 
+# from searchr_app.models import Phrase
+
 
 class Project(models.Model):
     """
@@ -33,6 +35,15 @@ class Project(models.Model):
         if Project.objects.exclude(id=self.id).filter(title=self.title, is_private=False):
             raise ValidationError("Project with provided title already exists!")
         super(Project, self).validate_unique(exclude)
+
+    # def _has_phrases(self):
+    #     if self.id is None:
+    #         return False
+    #     phrases = Phrase.objects.get(projects=self)
+    #     if phrases.len() > 0:
+    #         return True
+    #     else:
+    #         return False
 
     class Meta:
         unique_together = ('title', 'user')

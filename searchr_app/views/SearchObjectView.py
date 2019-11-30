@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views import View
@@ -21,9 +23,9 @@ class SearchObjectView(View):
         context_dict['search'] = search
         context_dict['project'] = project
         phrases = []
-        if search:
-            phrase_query_set = Phrase.objects.filter(searches=search )
-            phrases = phrase_query_set.all()
+        print(search.phrases_list)
+        # if search:
+            # phrases = json.decoder.JSONDecoder().decode(search.phrases_list)
 
         context_dict['phrases'] = phrases
 

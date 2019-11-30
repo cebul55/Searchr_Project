@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from django.utils.text import slugify
 
-from searchr_app.models import Search, Project
+from searchr_app.models import Project
 
 
 class Phrase(models.Model):
