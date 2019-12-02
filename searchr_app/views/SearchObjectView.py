@@ -24,8 +24,8 @@ class SearchObjectView(View):
         context_dict['project'] = project
         phrases = []
         print(search.phrases_list)
-        # if search:
-            # phrases = json.decoder.JSONDecoder().decode(search.phrases_list)
+        if search:
+            phrases = json.decoder.JSONDecoder().decode(search.phrases_list)
 
         context_dict['phrases'] = phrases
 

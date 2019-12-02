@@ -28,50 +28,70 @@
         </div>
     <div class="jumbotron p-1" style="background-color: lightsteelblue">
         <div class="container">
-            {% if project and project.phrase_set.all %}
-                <h1 class="modal-header">Defined search phrases:</h1>
-                    {% for phrase in project.phrase_set.all %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                    {% if project and project.phrase_set.all %}
+                        <h1 class="modal-header">Defined search phrases:</h1>
+                        {% for phrase in project.phrase_set.all %}
 
-                        <li class="list-group p-0">
+                            <li class="list-group p-0">
                                 <div class="list-group-item card p-0" style="background-color: aliceblue">
                                     <p class="card-header p-1 pl-4">
-                                        {{ phrase }}
+                                        <strong>{{ phrase.value }}</strong>
                                     </p>
                                     <p class="card-body p-0 pl-4">
                                         Language: <strong>{{ phrase.get_language_display|escape}}</strong>
                                     </p>
                                 </div>
                             </li>
-                    {% endfor %}
-            {% else %}
-                <h1 class="card-header">No defined search phrases.</h1>
+                        {% endfor %}
+                    {% else %}
+                        <h1 class="card-header">No defined search phrases.</h1>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <div>
+                            {% if project %}
+
+                                {% if searches %}
+                                    <h1 class="modal-header">Searches:</h1>
+
+                                    <ul>
+                                        {% for search in searches %}
+                                            <li class="list-group p-0">
+                                                <div class="list-group-item card p-0" style="background-color: aliceblue">
+
+                                                    <p class="card-header p-1 pl-4">
+                                                        <a class="card-link active" href="{% url 'searchr_app:show_search' user.username project.slug search.slug %}">{{ search.title }}</a>
+                                                    </p>
+                                                    <p class="card-body p-0 pl-4">
+                                                        Date created: {{ search.date_created }}
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="justify-content-lg-start text-center">
+                                        No Searches defined for project: <strong> {{ project.title }}.</strong>
+                                    </p>
+                                {% endif %}
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container">
+            {% if user.is_authenticated and user == project.user %}
+                <a class="btn btn-primary" href="{% url 'searchr_app:new_search' project.id %}">Create new Search</a>
             {% endif %}
         </div>
     </div>
-        <div>
-            {% if project %}
 
-                {% if searches %}
-
-                    <ul>
-                        {% for search in searches %}
-                            <li class="list-group">
-                                <div class="list-group-item card">
-                                    <p class="card-header">
-                                        <a class="card-link active" href="{% url 'searchr_app:show_search' user.username project.slug search.slug %}">{{ search.title }}</a>
-                                    </p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="justify-content-lg-start text-center">
-                        No Searches defined for project: <strong> {{ project.title }}.</strong>
-                    </p>
-                {% endif %}
-                {% if user.is_authenticated and user == project.user %}
-                <a class="btn btn-primary" href="{% url 'searchr_app:new_search' project.id %}">New Search</a>
-                {% endif %}
-            {% endif %}
-        </div>
 {% endblock %}

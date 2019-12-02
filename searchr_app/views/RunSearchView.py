@@ -1,21 +1,30 @@
 import ast
+import json
+from urllib.parse import urlparse
+from uuid import uuid4
 
 import requests
-from django.http import HttpResponseRedirect
+from scrapyd_api import ScrapydAPI
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views import View
 
 from searchr_app.models import Search, SearchResult
+from searchr_app.views import CrawlerView, crawl
+
+scrapyd = ScrapydAPI('http://localhost:6800')
 
 
 class RunSearchView(View):
 
-    def get(self, request, search_id):
+    def post(self, request, search_id):
         try:
             search = Search.objects.get(id=search_id)
             results = self.run_search_query(search.query)
-            if results == None:
+            if results is None:
                 return redirect('searchr_app:home')
 
             # do sth with results
@@ -26,6 +35,11 @@ class RunSearchView(View):
                     search=search,
                 )
                 # todo spider to download file and count hash value
+                search_result.save()
+                request.POST.url = search_result.url
+                search_result.html_file = self.start_spider(search_result.url)
+                # search_result.html_file = crawl(request)
+                # print(json.decoder.JSONDecoder().decode(search_result.html_file))
                 search_result.save()
             return redirect('searchr_app:show_search', request.user.username, search.project.slug, search.slug)
         except Search.DoesNotExist:
@@ -56,3 +70,47 @@ class RunSearchView(View):
             print(IOError)
             print('Query failed')
             return None
+
+    def is_url_valid(self, url):
+        validate = URLValidator()
+        try:
+            validate(url)
+            return True
+        except ValidationError:
+            return False
+
+    def start_spider(self, url):
+        # url that is send from the new search result
+
+        # url = request.POST.get('url', None)
+        if not url:
+            print('dupa')
+            return JsonResponse({'error': 'Missing arguments: URL'})
+
+        if not self.is_url_valid(url):
+            return JsonResponse({'error': 'URL is not valid'})
+
+        # extract domain from url
+        domain = urlparse(url).netloc
+        # create unique id to store in helper table in database,
+        unique_id = str(uuid4())
+        # configuration of settings for scrapy spider
+        settings = {
+            'unique_id': unique_id,  # unique ID for each record for DB
+            'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        }
+        print(settings)
+
+        # Schedule new crawling task by scrapyd
+        # schedule() returns task_id
+        task_id = scrapyd.schedule('default',
+                                   'link_extractor_crawler',
+                                   settings=settings,
+                                   url=url,
+                                   domain=domain)
+
+        return JsonResponse({
+            'task_id': task_id,
+            'unique_id': unique_id,
+            'status': 'started',
+        })

@@ -36,17 +36,18 @@
         Date created: {{ search.date_created }}<br/>
 
         {% if phrases %}
-            <h3 class="jumbotron-heading text-center">Phrases: </h3>
+            <h3 class="jumbotron-heading text-center">Defined Phrases: </h3>
             {% for phrase in phrases %}
-                <li class="text-center">
-                    <a href="{% url 'searchr_app:show_phrase' phrase.language phrase.slug %}">{{ phrase.value }}</a>
+                <li class="jumbotron-fluid text-center text-body">
+                    {{ phrase }}
                 </li>
             {% endfor %}
-{#            <form action="{% url 'searchr_app:home' %}" method="get">#}
-{#                <button class="btn-primary btn" type="submit" name="submit">Run Search</button>#}
-{##}
-{#            </form>#}
-            <a class="btn-primary btn" href="{% url 'searchr_app:run_query' search.id %}">Run Search</a>
+            <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
+                {% csrf_token %}
+                <button class="btn-primary btn" type="submit" name="submit">Run Search</button>
+
+            </form>
+{#            <a class="btn-primary btn" method="post" href="{% url 'searchr_app:run_query' search.id %}">Run Search</a>#}
         {% else %}
             <h3 class="jumbotron-heading text-center">No defined phrases add one to start searching</h3>
         {% endif %}
