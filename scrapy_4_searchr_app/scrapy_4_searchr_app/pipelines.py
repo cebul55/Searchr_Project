@@ -24,10 +24,14 @@ class Scrapy4SearchrAppPipeline(object):
         # And here we are saving our crawled data with django models.
         item = CrawlItem()
         item.unique_id = self.unique_id
-        item.data = json.dumps(self.items)
+        # item.data = json.dumps(self.items)
+        # save html file
+        item.data = self.items
         item.status = 'finished'
         item.save()
 
     def process_item(self, item, spider):
+        # print("DUPA" + item)
+        # print("Dupa" + spider.items + "DUPA@")
         self.items.append(item['url'])
         return item

@@ -129,3 +129,6 @@ dmypy.json
 # Searchr App
 conf/
 searchr_app/migrations
+.idea/
+.idea
+

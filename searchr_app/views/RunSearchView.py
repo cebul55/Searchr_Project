@@ -104,7 +104,7 @@ class RunSearchView(View):
         # Schedule new crawling task by scrapyd
         # schedule() returns task_id
         task_id = scrapyd.schedule('default',
-                                   'link_extractor_crawler',
+                                   'html_file_downloader',
                                    settings=settings,
                                    url=url,
                                    domain=domain)
