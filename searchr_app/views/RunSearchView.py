@@ -37,7 +37,11 @@ class RunSearchView(View):
                 # todo spider to download file and count hash value
                 search_result.save()
                 request.POST.url = search_result.url
-                search_result.html_file = self.start_spider(search_result.url)
+                response = self.start_spider(search_result.url)
+                # get unique_id from new spider
+                response_dict = json.loads(response.content)
+                search_result.scrapy_unique_task_id = response_dict['unique_id']
+                search_result.status = SearchResult._STARTED
                 # search_result.html_file = crawl(request)
                 # print(json.decoder.JSONDecoder().decode(search_result.html_file))
                 search_result.save()

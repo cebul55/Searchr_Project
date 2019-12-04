@@ -19,5 +19,5 @@ class HtmlFileDownloader(CrawlSpider):
 
     def parse_item(self, response):
         i = {}
-        i['url'] = response.body
+        i['url'] = response.text
         return i

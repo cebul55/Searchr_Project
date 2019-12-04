@@ -9,12 +9,23 @@ from hashlib import sha256
 class SearchResult(models.Model):
     SEARCH_RESULT_NAME_MAX_LEN = 128
 
+    _CREATED = 'created'
+    _STARTED = 'started'
+    _FINISHED = 'finished'
+    SEARCH_STATUS_CHOICES = [
+        (_CREATED, 'CREATED'),
+        (_STARTED, 'STARTED'),
+        (_FINISHED, 'FINISHED'),
+    ]
+
     title = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN)
     url = models.URLField(null=False, blank=False)
     search_result_hash = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN)
-    html_file = models.TextField(editable=False, null=False)
+    html_file = models.TextField(editable=False)
     date_found = models.DateTimeField()
     accuracy = models.FloatField(default=0)
+    status = models.CharField(max_length=30, null=False, choices=SEARCH_STATUS_CHOICES, default=_CREATED)
+    scrapy_unique_task_id = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN, editable=False)
 
     search = models.ForeignKey(Search, on_delete=models.CASCADE)
 
