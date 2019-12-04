@@ -25,6 +25,7 @@
 - Wyszukiwarka: Bing Search
 - Repozytorium: GitHub
 - Framework CSS: Bootstrap
+- Wyświetlanie kodu za pomocą [Google prettyprint](https://github.com/google/code-prettify)
 - (W przygotowaniu) Narzędzia do parsowania i pobierania stron WWW: Scrapy, BeautifulSoup (integracja Django i Scrapy: https://blog.theodo.com/2019/01/data-scraping-scrapy-django-integration/ )
 - (W przygotowaniu) Biblioteki NLP: Spacy: Industrial Standard, TextBlob, Polylot
 ### 2.2 Plany / pomysły do wykorzystania

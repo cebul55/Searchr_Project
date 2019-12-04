@@ -30,7 +30,7 @@
                     <h1 class="jumbotron-heading text-center">{{ search.title }}</h1>
             </div>
         </div>
-        <div class="container">
+        <div class="container" >
             <div class="row">
                 <form role="form" id="search_result_form" method="get" action="#">
                     <fieldset disabled="True">
@@ -38,7 +38,19 @@
 
                     </fieldset>
                 </form>
+
+
             </div>
+        </div>
+        <div class="container">
+            <p class="text-body">
+                <pre class="prettyprint linenums">
+                    <code >
+                        {{ search_result.html_file|escape }}
+
+                    </code>
+                </pre>
+            </p>
         </div>
     {% endif %}
 {% endblock %}

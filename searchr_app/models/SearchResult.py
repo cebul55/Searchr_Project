@@ -33,7 +33,7 @@ class SearchResult(models.Model):
         # Object Search Result is not editable
         if not self.id:
             self.date_found = now()
-            self.search_result_hash = self.sha256_html_content()
+        self.search_result_hash = self.sha256_html_content()
         super(SearchResult, self).save(*args, **kwargs)
 
     def sha256_html_content(self):

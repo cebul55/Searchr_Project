@@ -13,6 +13,7 @@ class Scrapy4SearchrAppPipeline(object):
     def __init__(self, unique_id, *args, **kwargs):
         self.unique_id = unique_id
         self.items = []
+        self.html_content = None
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -25,11 +26,11 @@ class Scrapy4SearchrAppPipeline(object):
         item = CrawlItem()
         item.unique_id = self.unique_id
         # save html file
-        item.data = self.items
+        item.data = self.html_content
         item.status = 'finished'
-        print('cos sie dzieje ?')
         item.save()
 
     def process_item(self, item, spider):
         self.items.append(item['url'])
+        self.html_content = item['url']
         return item
