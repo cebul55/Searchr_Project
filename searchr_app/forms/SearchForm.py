@@ -10,6 +10,7 @@ class SearchForm(forms.ModelForm):
         help_text='Enter title',
     )
     project = forms.ModelChoiceField(
+        widget=forms.HiddenInput(),
         queryset=Project.objects.all(),
     )
     attributes = forms.CharField(

@@ -35,11 +35,10 @@ class SearchResult(models.Model):
         # Object Search Result is not editable
         if not self.id:
             self.date_found = now()
-        if not self.search_result_hash or self.search_result_hash == -1:
-            self.search_result_hash = self.sha256_html_content()
         if self.status == self._FINISHED:
             self.status = self._FINISHED_SAVED
             self.search.running_results = self.search.running_results - 1
+            self.search_result_hash = self.sha256_html_content()
             self.search.save()
         super(SearchResult, self).save(*args, **kwargs)
 
