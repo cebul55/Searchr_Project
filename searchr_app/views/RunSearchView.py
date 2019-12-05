@@ -23,9 +23,16 @@ class RunSearchView(View):
     def post(self, request, search_id):
         try:
             search = Search.objects.get(id=search_id)
+
             results = self.run_search_query(search.query)
             if results is None:
                 return redirect('searchr_app:home')
+
+            # set status running
+            search.status = Search._RUNNING
+            # set number of running searches
+            search.running_results = len(results)
+            search.save()
 
             # do sth with results
             for result in results:

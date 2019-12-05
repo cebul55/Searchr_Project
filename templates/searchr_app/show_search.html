@@ -21,6 +21,7 @@
                     </ol>
                 </nav>
                 <h1 class="jumbotron-heading text-center">{{ search.title }}</h1>
+                <h3 class="jumbotron-content text-left">Status: {{ search.status|capfirst}}</h3>
             {% else %}
                 <h1 class="jumbotron-heading">Specified Search does not exist or you are not logged in.</h1>
             {% endif %}
@@ -42,11 +43,25 @@
                     {{ phrase }}
                 </li>
             {% endfor %}
-            <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
-                {% csrf_token %}
-                <button class="btn-primary btn" type="submit" name="submit">Run Search</button>
+            {% if search.status != 'running' %}
+                <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
 
-            </form>
+                </form>
+            {% else %}
+                <div class="container">
+                    <h3 class="jumbotron-heading text-body">
+                        Search is running. {{ search.running_results }} search results are still processed.
+                    </h3>
+
+                    <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn-primary btn" type="submit" name="submit" disabled="disabled">Run Search</button>
+
+                    </form>
+                </div>
+            {% endif %}
 {#            <a class="btn-primary btn" method="post" href="{% url 'searchr_app:run_query' search.id %}">Run Search</a>#}
         {% else %}
             <h3 class="jumbotron-heading text-center">No defined phrases add one to start searching</h3>
@@ -63,6 +78,7 @@
                             <div class="card-body p-2">
                                 <ul class="list-group p-0">
                                     {% for search_result in search_results %}
+                                        {% if search_result.status == 'finished' or search_result.status == 'finished_saved' %}
                                         <li class="list-group-item card p-0">
                                             <div class="card-header" >
                                                 <a class="card-link" href="{% url 'searchr_app:search_result' search_result.id %}">{{ search_result.title|safe|escape  }}</a>
@@ -75,6 +91,7 @@
                                                 Accuracy: {{ search_result.accuracy }} %
                                             </div>
                                         </li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>

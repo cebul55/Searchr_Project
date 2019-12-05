@@ -24,12 +24,12 @@ class Search(models.Model):
     ]
 
     _CREATED = 'created'
-    _SAVED = 'saved'
     _SEARCHED = 'searched'
+    _RUNNING = 'running'
     SEARCH_STATUS_CHOICES = [
         (_CREATED, 'CREATED'),
-        (_SAVED, 'SAVED'),
         (_SEARCHED, 'SEARCHED'),
+        (_RUNNING, 'RUNNING')
     ]
 
     title = models.CharField(max_length=SEARCH_TITLE_LENGTH, null=False, default=None)
@@ -40,7 +40,7 @@ class Search(models.Model):
     date_created = models.DateTimeField(editable=False)
     phrases_list = models.TextField()
     status = models.CharField(max_length=64, null=False, blank=False, editable=False, default=_CREATED)
-    # todo show status in view
+    running_results = models.IntegerField(null=False, default=0)
     slug = models.SlugField(max_length=SEARCH_TITLE_LENGTH, null=False, unique=False)
 
     def __str__(self):
@@ -50,6 +50,8 @@ class Search(models.Model):
         if not self.id:
             self.date_created = timezone.now()
         self.slug = slugify(self.title.strip())
+        if self.status == Search._RUNNING and self.running_results == 0:
+            self.status = Search._SEARCHED
         super(Search, self).save(*args, **kwargs)
 
     class Meta:

@@ -45,6 +45,6 @@ class SearchForm(forms.ModelForm):
 
     class Meta:
         model = Search
-        exclude = ['slug', 'phrases_list']
+        exclude = ['slug', 'phrases_list', 'running_results']
 
         # todo proper adding of phrases !
