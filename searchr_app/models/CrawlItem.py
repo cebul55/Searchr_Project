@@ -12,6 +12,7 @@ class CrawlItem(models.Model):
     Only spiders from scrapy framework are inserting data into the table
     """
     unique_id = models.CharField(max_length=100, null=True)
+    content_type = models.CharField(max_length=100, null=True)
     data = models.TextField()
     date = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=30, default='started')
@@ -35,6 +36,17 @@ class CrawlItem(models.Model):
 
             if search_result is not None:
                 search_result.status = SearchResult._FINISHED
+                if self.content_type is not None:
+                    search_result.content_type = self.content_type
+                else:
+                    search_result.content_type = 'Unknown'
+
                 search_result.html_file = self.data
+                search_result.search_result_hash = search_result.sha256_html_content()
                 search_result.save()
+                # update number of running searches in search
+                search = search_result.search
+                search.running_results = search.running_results - 1
+                search.save()
+
         super(CrawlItem, self).save(*args, **kwargs)

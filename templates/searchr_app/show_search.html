@@ -46,8 +46,10 @@
             {% if search.status != 'running' %}
                 <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
                     {% csrf_token %}
-                    <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
-
+                    <div class="btn-group">
+                        <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
+                        <button class="btn btn-dark" type="button" name="delete">Delete</button>
+                    </div>
                 </form>
             {% else %}
                 <div class="container">
@@ -78,7 +80,7 @@
                             <div class="card-body p-2">
                                 <ul class="list-group p-0">
                                     {% for search_result in search_results %}
-                                        {% if search_result.status == 'finished' or search_result.status == 'finished_saved' %}
+                                        {% if search_result.status == 'finished'  %}
                                         <li class="list-group-item card p-0">
                                             <div class="card-header" >
                                                 <a class="card-link" href="{% url 'searchr_app:search_result' search_result.id %}">{{ search_result.title|safe|escape  }}</a>

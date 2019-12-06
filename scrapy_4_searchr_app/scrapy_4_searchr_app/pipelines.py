@@ -14,6 +14,7 @@ class Scrapy4SearchrAppPipeline(object):
         self.unique_id = unique_id
         self.items = []
         self.html_content = None
+        self.content_type = None
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -26,6 +27,7 @@ class Scrapy4SearchrAppPipeline(object):
         item = CrawlItem()
         item.unique_id = self.unique_id
         # save html file
+        item.content_type = self.content_type
         item.data = self.html_content
         item.status = 'finished'
         item.save()
@@ -33,4 +35,5 @@ class Scrapy4SearchrAppPipeline(object):
     def process_item(self, item, spider):
         self.items.append(item['url'])
         self.html_content = item['url']
+        self.content_type = item['content-type']
         return item

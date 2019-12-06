@@ -23,7 +23,8 @@ class SearchResult(models.Model):
     title = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN)
     url = models.URLField(null=False, blank=False)
     search_result_hash = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN)
-    html_file = models.TextField(editable=False)
+    content_type = models.CharField(max_length=100, null=True)
+    html_file = models.TextField(editable=False, null=True)
     date_found = models.DateTimeField()
     accuracy = models.FloatField(default=0)
     status = models.CharField(max_length=30, null=False, choices=SEARCH_STATUS_CHOICES, default=_CREATED)
@@ -35,11 +36,11 @@ class SearchResult(models.Model):
         # Object Search Result is not editable
         if not self.id:
             self.date_found = now()
-        if self.status == self._FINISHED:
-            self.status = self._FINISHED_SAVED
-            self.search.running_results = self.search.running_results - 1
-            self.search_result_hash = self.sha256_html_content()
-            self.search.save()
+        # if self.status == self._FINISHED:
+        #     self.status = self._FINISHED_SAVED
+        #     self.search.running_results = self.search.running_results - 1
+        #     self.search_result_hash = self.sha256_html_content()
+        #     self.search.save()
         super(SearchResult, self).save(*args, **kwargs)
 
     def sha256_html_content(self):
@@ -57,4 +58,3 @@ class SearchResult(models.Model):
         verbose_name = 'Search Result'
 
 # todo calculate accuracy
-# todo remove views ?
