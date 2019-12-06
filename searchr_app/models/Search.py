@@ -47,12 +47,17 @@ class Search(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        is_new_search = False
         if not self.id:
+            is_new_search = True
             self.date_created = timezone.now()
         self.slug = slugify(self.title.strip())
         if self.status == Search._RUNNING and self.running_results == 0:
             self.status = Search._SEARCHED
         super(Search, self).save(*args, **kwargs)
+        if is_new_search:
+            from searchr_app.models.search_models_helper_functions import create_search_history_item
+            create_search_history_item(self, self.query, self.project.user.username)
 
     class Meta:
         verbose_name_plural = 'searches'

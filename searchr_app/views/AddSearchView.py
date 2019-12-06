@@ -33,7 +33,7 @@ class AddSearchView(View):
         self.form = SearchForm(request.POST)
 
         if self.form.is_valid():
-            search = self.form.save(commit=True)
+            search = self.form.save(commit=False)
             # todo fix + change add search view,, updating search query itp..
             # get chosen phrases and update m2m relationship
             phrases = self.form.cleaned_data['phrases']

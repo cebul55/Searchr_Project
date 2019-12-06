@@ -2,7 +2,7 @@ from datetime import date
 
 from django.db import models
 from django.utils.timezone import now
-from searchr_app.models import Search
+from searchr_app.models import Search# , SearchHistory
 from hashlib import sha256
 
 
@@ -34,14 +34,20 @@ class SearchResult(models.Model):
 
     def save(self, *args, **kwargs):
         # Object Search Result is not editable
+        is_new_result = False
         if not self.id:
             self.date_found = now()
+            is_new_result = True
         # if self.status == self._FINISHED:
         #     self.status = self._FINISHED_SAVED
         #     self.search.running_results = self.search.running_results - 1
         #     self.search_result_hash = self.sha256_html_content()
         #     self.search.save()
         super(SearchResult, self).save(*args, **kwargs)
+        if is_new_result:
+            from searchr_app.models.search_models_helper_functions import add_result_to_history
+            add_result_to_history(self.search, self)
+
 
     def sha256_html_content(self):
         if self.html_file:
