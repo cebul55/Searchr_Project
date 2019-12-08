@@ -48,7 +48,6 @@
                     {% csrf_token %}
                     <div class="btn-group">
                         <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
-                        <button class="btn btn-dark" type="button" name="delete">Delete</button>
                     </div>
                 </form>
             {% else %}
@@ -63,7 +62,9 @@
 
                     </form>
                 </div>
+
             {% endif %}
+            <a class="btn btn-primary" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
 {#            <a class="btn-primary btn" method="post" href="{% url 'searchr_app:run_query' search.id %}">Run Search</a>#}
         {% else %}
             <h3 class="jumbotron-heading text-center">No defined phrases add one to start searching</h3>

@@ -12,6 +12,7 @@ from .AddSearchView import AddSearchView
 from .ShowSearchResultsView import ShowSearchResultsView
 from .CrawlerView import CrawlerView, crawl
 from .RunSearchView import RunSearchView
+from .HistoryView import HistoryView
 
 
 # Phrase view

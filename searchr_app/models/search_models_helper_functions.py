@@ -20,6 +20,12 @@ def create_search_history_item(search, query,username):
     return search_history
 
 def add_result_to_history(search, search_result):
+    """
+    Function saving new search result to search history object.
+    :param search:
+    :param search_result:
+    :return:
+    """
     search_history = SearchHistory.objects.get(search=search)
     search_history.search_results.add(search_result)
     search_history.number_of_results = search_history.search_results.all().count()

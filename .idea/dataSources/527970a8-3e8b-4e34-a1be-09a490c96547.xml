@@ -29,7 +29,7 @@
       <ObjectId>114272</ObjectId>
       <StateNumber>21754</StateNumber>
       <Owner>bartoszcybulski</Owner>
-      <IntrospectionStateNumber>21846</IntrospectionStateNumber>
+      <IntrospectionStateNumber>23576</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
       <Relations>sequence|table|114273|114275|1
@@ -170,7 +170,7 @@ TimeZone=utc</Config>
       <Comment>standard public schema</Comment>
       <StateNumber>359</StateNumber>
       <Owner>bartoszcybulski</Owner>
-      <IntrospectionStateNumber>21847</IntrospectionStateNumber>
+      <IntrospectionStateNumber>23577</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -494,7 +494,7 @@ TimeZone=utc</Config>
     <table id="72" parent="25" name="searchr_app_crawlitem">
       <ObjectId>114470</ObjectId>
       <Owner>searchradmin</Owner>
-      <StateNumber>21776</StateNumber>
+      <StateNumber>23079</StateNumber>
     </table>
     <table id="73" parent="25" name="searchr_app_keyword">
       <ObjectId>114565</ObjectId>
@@ -514,7 +514,7 @@ TimeZone=utc</Config>
     <table id="76" parent="25" name="searchr_app_search">
       <ObjectId>114492</ObjectId>
       <Owner>searchradmin</Owner>
-      <StateNumber>21776</StateNumber>
+      <StateNumber>22222</StateNumber>
     </table>
     <table id="77" parent="25" name="searchr_app_searchhistory">
       <ObjectId>114514</ObjectId>
@@ -524,7 +524,7 @@ TimeZone=utc</Config>
     <table id="78" parent="25" name="searchr_app_searchresult">
       <ObjectId>114503</ObjectId>
       <Owner>searchradmin</Owner>
-      <StateNumber>21776</StateNumber>
+      <StateNumber>23079</StateNumber>
     </table>
     <column id="79" parent="55" name="id">
       <Position>1</Position>
@@ -1760,21 +1760,27 @@ searchresult_id</ColNames>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="247" parent="72" name="searchr_app_crawlitem_pkey">
+    <column id="247" parent="72" name="content_type">
+      <Position>6</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <StateNumber>23079</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="248" parent="72" name="searchr_app_crawlitem_pkey">
       <ObjectId>114477</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="248" parent="72" name="searchr_app_crawlitem_pkey">
+    <key id="249" parent="72" name="searchr_app_crawlitem_pkey">
       <ObjectId>114478</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_crawlitem_pkey</UnderlyingIndexName>
     </key>
-    <column id="249" parent="73" name="id">
+    <column id="250" parent="73" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1782,73 +1788,73 @@ searchresult_id</ColNames>
       <DefaultExpression>nextval(&apos;searchr_app_keyword_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="250" parent="73" name="keyword">
+    <column id="251" parent="73" name="keyword">
       <Position>2</Position>
       <DataType>varchar(512)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="251" parent="73" name="language">
+    <column id="252" parent="73" name="language">
       <Position>3</Position>
       <DataType>varchar(7)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="252" parent="73" name="primary_form">
+    <column id="253" parent="73" name="primary_form">
       <Position>4</Position>
       <DataType>varchar(512)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="253" parent="73" name="slug">
+    <column id="254" parent="73" name="slug">
       <Position>5</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="254" parent="73" name="searchr_app_keyword_pkey">
+    <index id="255" parent="73" name="searchr_app_keyword_pkey">
       <ObjectId>114572</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="255" parent="73" name="searchr_app_keyword_keyword_language_f13b9367_uniq">
+    <index id="256" parent="73" name="searchr_app_keyword_keyword_language_f13b9367_uniq">
       <ObjectId>114658</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>keyword
 language</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="256" parent="73" name="searchr_app_keyword_slug_3f0497f2">
+    <index id="257" parent="73" name="searchr_app_keyword_slug_3f0497f2">
       <ObjectId>114660</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <index id="257" parent="73" name="searchr_app_keyword_slug_3f0497f2_like">
+    <index id="258" parent="73" name="searchr_app_keyword_slug_3f0497f2_like">
       <ObjectId>114661</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <key id="258" parent="73" name="searchr_app_keyword_pkey">
+    <key id="259" parent="73" name="searchr_app_keyword_pkey">
       <ObjectId>114573</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_keyword_pkey</UnderlyingIndexName>
     </key>
-    <key id="259" parent="73" name="searchr_app_keyword_keyword_language_f13b9367_uniq">
+    <key id="260" parent="73" name="searchr_app_keyword_keyword_language_f13b9367_uniq">
       <ObjectId>114659</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>keyword
 language</ColNames>
       <UnderlyingIndexName>searchr_app_keyword_keyword_language_f13b9367_uniq</UnderlyingIndexName>
     </key>
-    <column id="260" parent="74" name="id">
+    <column id="261" parent="74" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1856,93 +1862,93 @@ language</ColNames>
       <DefaultExpression>nextval(&apos;searchr_app_phrase_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="261" parent="74" name="value">
+    <column id="262" parent="74" name="value">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="262" parent="74" name="date_created">
+    <column id="263" parent="74" name="date_created">
       <Position>3</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="263" parent="74" name="date_last_searched">
+    <column id="264" parent="74" name="date_last_searched">
       <Position>4</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="264" parent="74" name="number_of_searches">
+    <column id="265" parent="74" name="number_of_searches">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="265" parent="74" name="language">
+    <column id="266" parent="74" name="language">
       <Position>6</Position>
       <DataType>varchar(7)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="266" parent="74" name="slug">
+    <column id="267" parent="74" name="slug">
       <Position>7</Position>
       <DataType>varchar(1024)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="267" parent="74" name="searchr_app_phrase_pkey">
+    <index id="268" parent="74" name="searchr_app_phrase_pkey">
       <ObjectId>114542</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="268" parent="74" name="searchr_app_phrase_value_language_0b770bd3_uniq">
+    <index id="269" parent="74" name="searchr_app_phrase_value_language_0b770bd3_uniq">
       <ObjectId>114628</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>value
 language</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="269" parent="74" name="searchr_app_phrase_slug_bc828de8">
+    <index id="270" parent="74" name="searchr_app_phrase_slug_bc828de8">
       <ObjectId>114630</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <index id="270" parent="74" name="searchr_app_phrase_slug_bc828de8_like">
+    <index id="271" parent="74" name="searchr_app_phrase_slug_bc828de8_like">
       <ObjectId>114631</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <key id="271" parent="74" name="searchr_app_phrase_pkey">
+    <key id="272" parent="74" name="searchr_app_phrase_pkey">
       <ObjectId>114543</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_phrase_pkey</UnderlyingIndexName>
     </key>
-    <key id="272" parent="74" name="searchr_app_phrase_value_language_0b770bd3_uniq">
+    <key id="273" parent="74" name="searchr_app_phrase_value_language_0b770bd3_uniq">
       <ObjectId>114629</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>value
 language</ColNames>
       <UnderlyingIndexName>searchr_app_phrase_value_language_0b770bd3_uniq</UnderlyingIndexName>
     </key>
-    <check id="273" parent="74" name="searchr_app_phrase_number_of_searches_check">
+    <check id="274" parent="74" name="searchr_app_phrase_number_of_searches_check">
       <ObjectId>114538</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>number_of_searches</ColNames>
       <Predicate>number_of_searches &gt;= 0</Predicate>
     </check>
-    <column id="274" parent="75" name="id">
+    <column id="275" parent="75" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1950,85 +1956,85 @@ language</ColNames>
       <DefaultExpression>nextval(&apos;searchr_app_project_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="275" parent="75" name="title">
+    <column id="276" parent="75" name="title">
       <Position>2</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="276" parent="75" name="description">
+    <column id="277" parent="75" name="description">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="277" parent="75" name="is_private">
+    <column id="278" parent="75" name="is_private">
       <Position>4</Position>
       <DataType>boolean|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="278" parent="75" name="slug">
+    <column id="279" parent="75" name="slug">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="279" parent="75" name="user_id">
+    <column id="280" parent="75" name="user_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="280" parent="75" name="searchr_app_project_pkey">
+    <index id="281" parent="75" name="searchr_app_project_pkey">
       <ObjectId>114488</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="281" parent="75" name="searchr_app_project_title_user_id_370e55ce_uniq">
+    <index id="282" parent="75" name="searchr_app_project_title_user_id_370e55ce_uniq">
       <ObjectId>114587</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>title
 user_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="282" parent="75" name="searchr_app_project_slug_8f6d682b">
+    <index id="283" parent="75" name="searchr_app_project_slug_8f6d682b">
       <ObjectId>114589</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <index id="283" parent="75" name="searchr_app_project_slug_8f6d682b_like">
+    <index id="284" parent="75" name="searchr_app_project_slug_8f6d682b_like">
       <ObjectId>114590</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <index id="284" parent="75" name="searchr_app_project_user_id_1fc07ddc">
+    <index id="285" parent="75" name="searchr_app_project_user_id_1fc07ddc">
       <ObjectId>114591</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>user_id</ColNames>
     </index>
-    <key id="285" parent="75" name="searchr_app_project_pkey">
+    <key id="286" parent="75" name="searchr_app_project_pkey">
       <ObjectId>114489</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_project_pkey</UnderlyingIndexName>
     </key>
-    <key id="286" parent="75" name="searchr_app_project_title_user_id_370e55ce_uniq">
+    <key id="287" parent="75" name="searchr_app_project_title_user_id_370e55ce_uniq">
       <ObjectId>114588</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>title
 user_id</ColNames>
       <UnderlyingIndexName>searchr_app_project_title_user_id_370e55ce_uniq</UnderlyingIndexName>
     </key>
-    <foreign-key id="287" parent="75" name="searchr_app_project_user_id_1fc07ddc_fk_auth_user_id">
+    <foreign-key id="288" parent="75" name="searchr_app_project_user_id_1fc07ddc_fk_auth_user_id">
       <ObjectId>114582</ObjectId>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
@@ -2040,7 +2046,7 @@ user_id</ColNames>
       <RefKeyName>auth_user_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="288" parent="76" name="id">
+    <column id="289" parent="76" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -2048,112 +2054,119 @@ user_id</ColNames>
       <DefaultExpression>nextval(&apos;searchr_app_search_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="289" parent="76" name="title">
+    <column id="290" parent="76" name="title">
       <Position>2</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="290" parent="76" name="attributes">
+    <column id="291" parent="76" name="attributes">
       <Position>3</Position>
       <DataType>varchar(256)|0s</DataType>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="291" parent="76" name="query">
+    <column id="292" parent="76" name="query">
       <Position>4</Position>
       <DataType>varchar(1024)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="292" parent="76" name="search_engine">
+    <column id="293" parent="76" name="search_engine">
       <Position>5</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="293" parent="76" name="date_created">
+    <column id="294" parent="76" name="date_created">
       <Position>6</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="294" parent="76" name="phrases_list">
+    <column id="295" parent="76" name="phrases_list">
       <Position>7</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="295" parent="76" name="status">
+    <column id="296" parent="76" name="status">
       <Position>8</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="296" parent="76" name="slug">
+    <column id="297" parent="76" name="slug">
       <Position>9</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="297" parent="76" name="project_id">
+    <column id="298" parent="76" name="project_id">
       <Position>10</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="298" parent="76" name="searchr_app_search_pkey">
+    <column id="299" parent="76" name="running_results">
+      <Position>11</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>22222</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="300" parent="76" name="searchr_app_search_pkey">
       <ObjectId>114499</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="299" parent="76" name="searchr_app_search_title_project_id_16dc04fb_uniq">
+    <index id="301" parent="76" name="searchr_app_search_title_project_id_16dc04fb_uniq">
       <ObjectId>114597</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>title
 project_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="300" parent="76" name="searchr_app_search_slug_1048ded2">
+    <index id="302" parent="76" name="searchr_app_search_slug_1048ded2">
       <ObjectId>114599</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <index id="301" parent="76" name="searchr_app_search_slug_1048ded2_like">
+    <index id="303" parent="76" name="searchr_app_search_slug_1048ded2_like">
       <ObjectId>114600</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>slug</ColNames>
     </index>
-    <index id="302" parent="76" name="searchr_app_search_project_id_5c4f6b23">
+    <index id="304" parent="76" name="searchr_app_search_project_id_5c4f6b23">
       <ObjectId>114601</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>project_id</ColNames>
     </index>
-    <key id="303" parent="76" name="searchr_app_search_pkey">
+    <key id="305" parent="76" name="searchr_app_search_pkey">
       <ObjectId>114500</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_search_pkey</UnderlyingIndexName>
     </key>
-    <key id="304" parent="76" name="searchr_app_search_title_project_id_16dc04fb_uniq">
+    <key id="306" parent="76" name="searchr_app_search_title_project_id_16dc04fb_uniq">
       <ObjectId>114598</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>title
 project_id</ColNames>
       <UnderlyingIndexName>searchr_app_search_title_project_id_16dc04fb_uniq</UnderlyingIndexName>
     </key>
-    <foreign-key id="305" parent="76" name="searchr_app_search_project_id_5c4f6b23_fk_searchr_a">
+    <foreign-key id="307" parent="76" name="searchr_app_search_project_id_5c4f6b23_fk_searchr_a">
       <ObjectId>114592</ObjectId>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
@@ -2165,7 +2178,7 @@ project_id</ColNames>
       <RefKeyName>searchr_app_project_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="306" parent="77" name="id">
+    <column id="308" parent="77" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -2173,60 +2186,60 @@ project_id</ColNames>
       <DefaultExpression>nextval(&apos;searchr_app_searchhistory_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="307" parent="77" name="username">
+    <column id="309" parent="77" name="username">
       <Position>2</Position>
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="308" parent="77" name="date_searched">
+    <column id="310" parent="77" name="date_searched">
       <Position>3</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="309" parent="77" name="query_value">
+    <column id="311" parent="77" name="query_value">
       <Position>4</Position>
       <DataType>varchar(1024)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="310" parent="77" name="number_of_results">
+    <column id="312" parent="77" name="number_of_results">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="311" parent="77" name="search_id">
+    <column id="313" parent="77" name="search_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>21776</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="312" parent="77" name="searchr_app_searchhistory_pkey">
+    <index id="314" parent="77" name="searchr_app_searchhistory_pkey">
       <ObjectId>114522</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="313" parent="77" name="searchr_app_searchhistory_search_id_83cc8b0f">
+    <index id="315" parent="77" name="searchr_app_searchhistory_search_id_83cc8b0f">
       <ObjectId>114613</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>search_id</ColNames>
     </index>
-    <key id="314" parent="77" name="searchr_app_searchhistory_pkey">
+    <key id="316" parent="77" name="searchr_app_searchhistory_pkey">
       <ObjectId>114523</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_searchhistory_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="315" parent="77" name="searchr_app_searchhi_search_id_83cc8b0f_fk_searchr_a">
+    <foreign-key id="317" parent="77" name="searchr_app_searchhi_search_id_83cc8b0f_fk_searchr_a">
       <ObjectId>114608</ObjectId>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
@@ -2238,13 +2251,13 @@ project_id</ColNames>
       <RefKeyName>searchr_app_search_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <check id="316" parent="77" name="searchr_app_searchhistory_number_of_results_check">
+    <check id="318" parent="77" name="searchr_app_searchhistory_number_of_results_check">
       <ObjectId>114518</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>number_of_results</ColNames>
       <Predicate>number_of_results &gt;= 0</Predicate>
     </check>
-    <column id="317" parent="78" name="id">
+    <column id="319" parent="78" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -2252,89 +2265,94 @@ project_id</ColNames>
       <DefaultExpression>nextval(&apos;searchr_app_searchresult_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="318" parent="78" name="title">
+    <column id="320" parent="78" name="title">
       <Position>2</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="319" parent="78" name="url">
+    <column id="321" parent="78" name="url">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="320" parent="78" name="search_result_hash">
+    <column id="322" parent="78" name="search_result_hash">
       <Position>4</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="321" parent="78" name="html_file">
+    <column id="323" parent="78" name="html_file">
       <Position>5</Position>
       <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>21776</StateNumber>
+      <StateNumber>22798</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="322" parent="78" name="date_found">
+    <column id="324" parent="78" name="date_found">
       <Position>6</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="323" parent="78" name="accuracy">
+    <column id="325" parent="78" name="accuracy">
       <Position>7</Position>
       <DataType>double precision|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="324" parent="78" name="status">
+    <column id="326" parent="78" name="status">
       <Position>8</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="325" parent="78" name="scrapy_unique_task_id">
+    <column id="327" parent="78" name="scrapy_unique_task_id">
       <Position>9</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="326" parent="78" name="search_id">
+    <column id="328" parent="78" name="search_id">
       <Position>10</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>21776</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="327" parent="78" name="searchr_app_searchresult_pkey">
+    <column id="329" parent="78" name="content_type">
+      <Position>11</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <StateNumber>23079</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="330" parent="78" name="searchr_app_searchresult_pkey">
       <ObjectId>114510</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="328" parent="78" name="searchr_app_searchresult_search_id_125a719b">
+    <index id="331" parent="78" name="searchr_app_searchresult_search_id_125a719b">
       <ObjectId>114607</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>search_id</ColNames>
     </index>
-    <key id="329" parent="78" name="searchr_app_searchresult_pkey">
+    <key id="332" parent="78" name="searchr_app_searchresult_pkey">
       <ObjectId>114511</ObjectId>
       <StateNumber>21776</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>searchr_app_searchresult_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="330" parent="78" name="searchr_app_searchre_search_id_125a719b_fk_searchr_a">
+    <foreign-key id="333" parent="78" name="searchr_app_searchre_search_id_125a719b_fk_searchr_a">
       <ObjectId>114602</ObjectId>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
