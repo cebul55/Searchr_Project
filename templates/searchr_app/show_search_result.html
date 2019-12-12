@@ -27,10 +27,16 @@
                             <li class="breadcrumb-item active"><a href="#">{{ search_result }}</a></li>
                         </ol>
                     </nav>
-                    <h1 class="jumbotron-heading text-center">{{ search.title }}</h1>
+                    <h1 class="jumbotron-heading text-center">Website title: {{ search_result.title }}</h1>
+                    <h5 class="jumbotron-content text-left">
+                        Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
+                    </h5>
+                    <h5 class="jumbotron-content text-left">
+                        Project: <a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
+                    </h5>
             </div>
         </div>
-        <div class="container" >
+{% comment %}        <div class="container" >
             <div class="row">
                 <form role="form" id="search_result_form" method="get" action="#">
                     <fieldset disabled="True">
@@ -40,6 +46,70 @@
                 </form>
 
 
+            </div>
+        </div>{% endcomment %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 card border border-dark" style="background-color: lightsteelblue;">
+                    <dl class="row p-0 card-text">
+                        <dt class="col-sm-3 p-2">Search Result Title</dt>
+                        <dd class="col-sm-9 p-2">{{ search_result.title }}</dd>
+
+                        <dt class="col-sm-3 p-2">URL Address</dt>
+                        <dd class="col-sm-9 p-2">
+                            <a href="{{ search_result.url }}">{{ search_result.url|safe }}</a>
+                        </dd>
+
+                        <dt class="col-sm-3 p-2">Content Type</dt>
+                        <dd class="col-sm-9 p-2">{{ search_result.content_type|safe }}</dd>
+
+                        <dt class="col-sm-3 p-2">Date found</dt>
+                        <dd class="col-sm-9 p-2">{{ search_result.date_found }}</dd>
+
+                        <dt class="col-sm-3 p-2">Status</dt>
+                        <dd class="col-sm-9 p-2">{{ search_result.status|capfirst }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-6">
+
+                            {% if analisys_results %}
+                                <div class="card-header">
+                                    <h4 class="jumbotron-content">
+                                        Search Result Analisys:
+                                    </h4>
+                                    <h6 class="jumbotron-content">
+                                    Number of outcomes : {{ analisys_results.count }}
+                                    </h6>
+                                </div>
+                                <div class="card-body p-2">
+                                    <ul class="list-group p-0">
+                                        {% for a_res in analisys_results %}
+                                            <li class="list-group-item p-2">
+                                                TODO LINK TO Specific search result<br />
+                                                <a href="{% url 'searchr_app:home' %}">{{ a_res.text_fragment|escape }}</a>
+                                                <p class="card-text">
+                                                    Is it exact match?: {{ a_res.exact_match }}<br />
+                                                    Website part: {{ a_res.website_part }}
+                                                </p>
+                                            </li>
+
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <div class="card-header">
+                                    <h3 class="jumbotron-content">
+                                        Search Result Analisys:
+                                    </h3>
+                                    <h5 class="jumbotron-content">
+                                    Number of outcomes : 0
+                                    </h5>
+                                </div>
+                            {% endif %}
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="container">

@@ -29,7 +29,7 @@
       <ObjectId>114272</ObjectId>
       <StateNumber>21754</StateNumber>
       <Owner>bartoszcybulski</Owner>
-      <IntrospectionStateNumber>23576</IntrospectionStateNumber>
+      <IntrospectionStateNumber>23774</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
       <Relations>sequence|table|114273|114275|1
@@ -170,7 +170,7 @@ TimeZone=utc</Config>
       <Comment>standard public schema</Comment>
       <StateNumber>359</StateNumber>
       <Owner>bartoszcybulski</Owner>
-      <IntrospectionStateNumber>23577</IntrospectionStateNumber>
+      <IntrospectionStateNumber>23775</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>

@@ -30,7 +30,7 @@
         </div>
     </div>
     {% if search_history %}
-        {% if search_history.search_results.get_queryset > 0 %}
+        {% if search_results.count > 0 %}
 
             <div class="container overflow-auto">
                 <div class="row align-items-center">

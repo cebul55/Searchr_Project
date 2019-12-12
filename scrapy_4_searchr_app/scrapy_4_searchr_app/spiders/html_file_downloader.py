@@ -21,5 +21,6 @@ class HtmlFileDownloader(CrawlSpider):
         i = {}
         # i['url'] = response.text
         i['content-type'] = response.headers.get('Content-Type')
-        i['url'] = response.body
+        # i['url'] = response.body
+        i['url'] = response.text
         return i
