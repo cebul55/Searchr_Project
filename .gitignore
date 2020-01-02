@@ -131,4 +131,5 @@ conf/
 searchr_app/migrations
 .idea/
 .idea
-
+media/spider/
+media/spider
