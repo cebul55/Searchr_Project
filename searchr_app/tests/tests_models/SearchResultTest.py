@@ -69,13 +69,13 @@ class SearchResultTest(TestCase):
 
         self.assertEqual(date_1, date_2, 'Date was updated after save')
 
-    def test_search_result_hash_uses_sha256(self):
-        search_result = self._create_search_result_object('shaTest')
-
-        str_content = search_result.html_file
-        search_result.save()
-        hashed_value = sha256(str(str_content).encode('utf-8')).hexdigest()
-        self.assertEqual(search_result.search_result_hash, hashed_value)
+    # def test_search_result_hash_uses_sha256(self):
+    #     search_result = self._create_search_result_object('shaTest')
+    #
+    #     str_content = search_result.html_file
+    #     search_result.save()
+    #     hashed_value = sha256(str(str_content).encode('utf-8')).hexdigest()
+    #     self.assertEqual(search_result.search_result_hash, hashed_value)
 
     def test_mandatory_fiedls(self):
         str_content = '<html><title>Test If sha256 is used?</title></html>'

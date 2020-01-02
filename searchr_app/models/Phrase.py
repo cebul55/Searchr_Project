@@ -16,6 +16,7 @@ class Phrase(models.Model):
     value = models.TextField(null=False, )
     date_created = models.DateTimeField(editable=False)
     date_last_searched = models.DateTimeField()
+    # todo remove number of searches
     number_of_searches = models.PositiveIntegerField(default=0)
     language = models.CharField(max_length=LANGUAGE_MAX_LENGTH, choices=LANGUAGES)
     # searches = models.ManyToManyField(

@@ -42,7 +42,6 @@ def crawl(request):
         domain = urlparse(url).netloc
         # create unique id to store in helper table in database,
         unique_id = str(uuid4())
-        print('upsdkaspdoksa')
         # configuration of settings for scrapy spider
         settings = {
             'unique_id': unique_id,  # unique ID for each record for DB

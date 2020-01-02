@@ -11,14 +11,14 @@
             <h1 class="jumbotron-heading p-1 text-center">HOME PAGE</h1>
         </div>
     </div>
-    <div>
+{% comment %}    <div>
                 <form action="{% url 'crawler_view'  %}" method="post">
                 {% csrf_token %}
 
 
                 <button type="submit" name='mybtn2' >run crawler</button>
             </form>
-    </div>
+    </div>{% endcomment %}
         <div class="container">
         <div class="row">
             <div class="col-md-6">

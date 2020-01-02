@@ -33,7 +33,7 @@ class Scrapy4SearchrAppPipeline(object):
         item.save()
 
     def process_item(self, item, spider):
-        self.items.append(item['url'])
-        self.html_content = item['url']
+        self.items.append(item['body'])
+        self.html_content = item['body']
         self.content_type = item['content-type']
         return item

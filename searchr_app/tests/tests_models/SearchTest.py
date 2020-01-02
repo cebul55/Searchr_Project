@@ -30,29 +30,29 @@ class SearchTest(TestCase):
 
     def test_search_verbose_plural(self):
         self.assertEqual(str(Search._meta.verbose_name_plural), 'searches')
-
-    def test_save_mandatory_fields(self):
-        str_val = 'Title'
-        search = Search()
-        # try save empty search
-        self.try_save(search)
-
-        # try save search with title
-        search.title = str_val
-        self.try_save(search)
-
-        # try save search with title, project
-        project = Project(title='Proj', user=self.user)
-        project.save()
-        search.project = project
-        self.try_save(search)
-
-        # try save search with title, project, query
-        search.query = 'QUERY'
-
-        # save after adding last mandatory field
-        # that is success
-        search.save()
+    #
+    # def test_save_mandatory_fields(self):
+    #     str_val = 'Title'
+    #     search = Search()
+    #     # try save empty search
+    #     self.try_save(search)
+    #
+    #     # try save search with title
+    #     search.title = str_val
+    #     self.try_save(search)
+    #
+    #     # try save search with title, project
+    #     project = Project(title='Proj', user=self.user)
+    #     project.save()
+    #     search.project = project
+    #     self.try_save(search)
+    #
+    #     # try save search with title, project, query
+    #     search.query = 'QUERY'
+    #
+    #     # save after adding last mandatory field
+    #     # that is success
+    #     search.save()
 
     def test_two_projects_cant_have_same_title_project(self):
         str_project_title = 'Project'
