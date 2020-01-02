@@ -19,24 +19,21 @@ class HtmlFileDownloader(CrawlSpider):
             yield scrapy.Request(url=url, callback=self.parse_headers, method='HEAD')
 
     def parse_headers(self, response):
-        headers = str(response.headers)
-        if len(headers) > 100:
-            self.i['content-type'] = headers[0:100]#response.headers.get('Content-Type').decode('utf-8')
+        if response.status == 200:
+            self.i['content-type'] = response.headers.get('Content-Type').decode('utf-8')
+            yield response.request.replace(callback=self.parse_item, method='GET')
         else:
-            self.i['content-type'] = headers
-        yield response.request.replace(callback=self.parse_item, method='GET')
+            self.i['content-type'] = ''
+            self.i['body'] = 'Status Code: ' + response.status + '\nPage wasn\'t downloaded.'
+            return self.i
 
     def parse_item(self, response):
-        # i['url'] = response.text
-
-        # if response.headers.get('Content-Type') == 'Unknown':
-        #     try:
-
-        # else:
-
         if response.status == 200:
 
-            self.i['body'] = response.text
+            try:
+                self.i['body'] = response.text
+            except AttributeError as error:
+                self.i['body'] = error
 
         else:
             self.i['body'] = 'Status Code: ' + response.status + '\nPage wasn\'t downloaded.'
