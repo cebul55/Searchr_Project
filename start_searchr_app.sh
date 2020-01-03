@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 workon searchENV
 python manage.py runserver &
-cd scrapy_4_searchr_app/
+echo 'successfully started django runserver.'
+cd scrapy_4_searchr_app/scrapy_4_searchr_app
 scrapyd && fg
+echo 'successfully started scrapyd.'
