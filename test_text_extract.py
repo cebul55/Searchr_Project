@@ -18,10 +18,16 @@ def try_tika():
     # print(raw['content'])
     print(raw)
 
+
 def try_combinations():
     import itertools
     combinations = []
-    stuff = ['a', 'dupa', 3]
+    stuff = '["test word doc"]'
+    import ast
+    x = u'' + stuff
+    x = ast.literal_eval(x)
+    stuff = x
+    stuff = [n.strip() for n in stuff]
     for L in range(1, len(stuff) + 1):
         for subset in itertools.combinations(stuff, L):
             combinations.append(subset)
@@ -29,7 +35,7 @@ def try_combinations():
     for combination in combinations:
         print(combination)
         for i in combination:
-            print(i )
+            print(i)
 
 if __name__ == '__main__':
     # try_textract()

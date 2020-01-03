@@ -13,11 +13,13 @@ class SearchResult(models.Model):
     _STARTED = 'started'
     _FINISHED = 'finished'
     _FINISHED_SAVED = 'finished_saved'
+    _FINISHED_ANALYZED = 'finished_analyzed'
     SEARCH_STATUS_CHOICES = [
         (_CREATED, 'CREATED'),
         (_STARTED, 'STARTED'),
         (_FINISHED, 'FINISHED'),
         (_FINISHED_SAVED, 'FINISHED_SAVED'),
+        (_FINISHED_ANALYZED, 'FINISHED_ANALYZED')
     ]
 
     title = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN)
@@ -59,6 +61,12 @@ class SearchResult(models.Model):
         else:
             hashed_html_content = -1
         return hashed_html_content
+
+    def set_status_to_analyzed(self):
+        if not self.id:
+            pass
+        self.status = self._FINISHED_ANALYZED
+        self.save()
 
     def __str__(self):
         return self.title

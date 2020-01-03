@@ -24,10 +24,10 @@
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
                             <li class="breadcrumb-item active"><a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a> </li>
-                            <li class="breadcrumb-item active"><a href="#">{{ search_result }}</a></li>
+                            <li class="breadcrumb-item active"><a href="#">{{ search_result|safe }}</a></li>
                         </ol>
                     </nav>
-                    <h1 class="jumbotron-heading text-center">Website title: {{ search_result.title }}</h1>
+                    <h1 class="jumbotron-heading text-center">Website title: {{ search_result.title|safe }}</h1>
                     <h5 class="jumbotron-content text-left">
                         Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
                     </h5>
@@ -49,11 +49,11 @@
             </div>
         </div>{% endcomment %}
         <div class="container">
-            <div class="row">
+            <div class=" row h-25 mh-25">
                 <div class="col-md-6 card border border-dark" style="background-color: lightsteelblue;">
                     <dl class="row p-0 card-text">
                         <dt class="col-sm-3 p-2">Search Result Title</dt>
-                        <dd class="col-sm-9 p-2">{{ search_result.title }}</dd>
+                        <dd class="col-sm-9 p-2">{{ search_result.title|safe }}</dd>
 
                         <dt class="col-sm-3 p-2">URL Address</dt>
                         <dd class="col-sm-9 p-2">
@@ -70,11 +70,11 @@
                         <dd class="col-sm-9 p-2">{{ search_result.status|capfirst }}</dd>
                     </dl>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 card border border-dark" style="background-color: lightsteelblue;">
                     <div class="card mb-6">
 
                             {% if analisys_results %}
-                                <div class="card-header">
+                                <div class="card-header border border-primary" style="background-color: lightblue;">
                                     <h4 class="jumbotron-content">
                                         Search Result Analisys:
                                     </h4>
@@ -82,20 +82,30 @@
                                     Number of outcomes : {{ analisys_results.count }}
                                     </h6>
                                 </div>
-                                <div class="card-body p-2">
-                                    <ul class="list-group p-0">
+                                <div class="mh-20 card-body border border-dark p-2 overflow-auto">
+                                    <div class="list-group p-0 overflow-auto">
                                         {% for a_res in analisys_results %}
-                                            <li class="list-group-item p-2">
-                                                TODO LINK TO Specific search result<br />
-                                                <a href="{% url 'searchr_app:home' %}">{{ a_res.text_fragment|escape }}</a>
-                                                <p class="card-text">
-                                                    Is it exact match?: {{ a_res.exact_match }}<br />
-                                                    Website part: {{ a_res.website_part }}
-                                                </p>
-                                            </li>
+                                            <div class="list-group-item border border-dark ">
+                                            <dl class="row p-0 card-text">
+                                                <dt class="col-sm-3 p-1">Phrases Found:</dt>
+                                                <dd class="col-sm-9 p-0">
+                                                    TODO LINK TO Specific search result<br />
+                                                    <a href="{% url 'searchr_app:home' %}">{{ a_res.id }}</a>
+                                                </dd>
+
+                                                <dt class="col-sm-3 p-1">Is exact match?</dt>
+                                                <dd class="col-sm-9 p-0">
+                                                    {{ a_res.exact_match }}
+                                                </dd>
+
+                                                <dt class="col-sm-3 p-1">Website part:</dt>
+                                                <dd class="col-sm-9 p-0">{{ a_res.website_part }}</dd>
+                                            </dl>
+                                            </div>
+
 
                                         {% endfor %}
-                                    </ul>
+                                    </div>
                                 </div>
                             {% else %}
                                 <div class="card-header">

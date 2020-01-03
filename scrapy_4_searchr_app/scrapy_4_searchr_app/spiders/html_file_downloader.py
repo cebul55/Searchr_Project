@@ -67,7 +67,7 @@ class HtmlFileDownloader(CrawlSpider):
             f.close()
 
         parsed_text = self.tika_parser(path)
-
+        # remove folder with content
         shutil.rmtree(folder_path, ignore_errors=True, onerror=None)
         return parsed_text
 
@@ -78,6 +78,7 @@ class HtmlFileDownloader(CrawlSpider):
         except:
             import tika
             tika.initVM()
+            content = parser.from_file(file_path)
 
         if 'content' in content:
             text = content['content']
