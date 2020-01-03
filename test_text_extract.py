@@ -18,6 +18,19 @@ def try_tika():
     # print(raw['content'])
     print(raw)
 
+def try_combinations():
+    import itertools
+    combinations = []
+    stuff = ['a', 'dupa', 3]
+    for L in range(1, len(stuff) + 1):
+        for subset in itertools.combinations(stuff, L):
+            combinations.append(subset)
+
+    for combination in combinations:
+        print(combination)
+        for i in combination:
+            print(i )
+
 if __name__ == '__main__':
     # try_textract()
-    try_tika()
+    try_combinations()

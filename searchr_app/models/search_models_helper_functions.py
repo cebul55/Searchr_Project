@@ -1,5 +1,6 @@
 from django.utils import timezone
 
+from searchr_app.file_analyzer import FileAnalyzer
 from searchr_app.models import SearchHistory
 
 
@@ -30,3 +31,6 @@ def add_result_to_history(search, search_result):
     search_history.search_results.add(search_result)
     search_history.number_of_results = search_history.search_results.all().count()
     search_history.save()
+
+def analyze_search_result(search_result):
+    file_analyzer = FileAnalyzer(search_result)

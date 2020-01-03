@@ -47,6 +47,10 @@ class SearchResult(models.Model):
         if is_new_result:
             from searchr_app.models.search_models_helper_functions import add_result_to_history
             add_result_to_history(self.search, self)
+        if self.status == self._FINISHED:
+            # start analyzing result
+            from searchr_app.models.search_models_helper_functions import analyze_search_result
+            analyze_search_result(self)
 
 
     def sha256_html_content(self):

@@ -40,9 +40,8 @@ class HtmlFileDownloader(CrawlSpider):
             try:
                 self.i['body'] = response.text
             except AttributeError as error:
-                if 'pdf' in self.i['content-type']:
-                    self.i['body'] = 'FILE DOWNLOADED'
-                    # todo file downloading and text extraction
+                # todo sprawdzić czy pobiera word
+                if 'pdf' in self.i['content-type'] or 'word' in self.i['content-type']:
                     self.i['body'] = self.parse_file_to_text(response)
                 else:
                     self.i['body'] = error

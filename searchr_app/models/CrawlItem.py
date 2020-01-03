@@ -23,6 +23,7 @@ class CrawlItem(models.Model):
         data = {
             'data': json.loads(self.data),
             'date': self.date,
+            'content-type': self.content_type,
         }
         return data
 

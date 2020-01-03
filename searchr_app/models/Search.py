@@ -51,7 +51,7 @@ class Search(models.Model):
         if not self.id:
             is_new_search = True
             self.date_created = timezone.now()
-        self.slug = slugify(self.title.strip())
+            self.slug = slugify(self.title.strip())
         if self.status == Search._RUNNING and self.running_results == 0:
             self.status = Search._SEARCHED
         super(Search, self).save(*args, **kwargs)
