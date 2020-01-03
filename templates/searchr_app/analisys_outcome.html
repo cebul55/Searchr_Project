@@ -1,0 +1,73 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if analisys_outcome and user.is_authenticated %}
+        Analisys Result
+    {% else %}
+        Unknown Analisys Result
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if not user.is_authenticated or not analisys_outcome %}
+        <div class="jumbotron p-4">
+            <div class="container">
+                <h1 class="jumbotron-heading text-center">Specified Analisys Result does not exist<br/> or you are not logged in.</h1>
+            </div>
+        </div>
+    {% elif is_private and user.username != username %}
+        <div class="jumbotron p-4">
+            <div class="container">
+                <h1 class="jumbotron-heading text-center">You don't have the rights to view specified analisys outcome.</h1>
+            </div>
+        </div>
+    {% else %}
+        <div class="jumbotron p-4">
+            <div class="container">
+                    <nav aria-label="breadcrumb p-1">
+                        <ol class="breadcrumb p-lg-0">
+                            <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
+                            <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a> </li>
+                            <li class="breadcrumb-item "><a href="#">{{ search_result|safe }}</a></li>
+                            <li class="breadcrumb-item active"><a href="#">{{ analisys_outcome.id }}</a></li>
+                        </ol>
+                    </nav>
+                    <h1 class="jumbotron-heading text-center">Analisys Outcome</h1>
+                    <h5 class="jumbotron-content text-left">
+                        Found Phrases: ....</a>
+                    </h5>
+                    <h5 class="jumbotron-content text-left">
+                        Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
+                    </h5>
+                    <h5 class="jumbotron-content text-left">
+                        Project: <a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
+                    </h5>
+            </div>
+        </div>
+        <div class="container">
+            <dl class="row p-0 card-text">
+                <dt class="col-sm-3 p-2">Analisys Outcome Id</dt>
+                <dd class="col-sm-9 p-2">{{ analisys_outcome.id }}</dd>
+
+                <dt class="col-sm-3 p-2">Website Part</dt>
+                <dd class="col-sm-9 p-2">
+                    {{ analisys_outcome.website_part }}
+                </dd>
+
+                <dt class="col-sm-3 p-2">Is exact match?</dt>
+                <dd class="col-sm-9 p-2">{{ analisys_outcome.exact_match }}</dd>
+            </dl>
+        </div>
+        <div class="container">
+            <p class="text-body">
+                <pre class="prettyprint linenums">
+                    <code >
+                        {{ analisys_outcome.text_fragment }}
+                    </code>
+                </pre>
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
