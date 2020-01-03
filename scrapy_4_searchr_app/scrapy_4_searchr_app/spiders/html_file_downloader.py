@@ -73,7 +73,12 @@ class HtmlFileDownloader(CrawlSpider):
 
     def tika_parser(self, file_path):
         # Extract text from document
-        content = parser.from_file(file_path)
+        try:
+            content = parser.from_file(file_path)
+        except:
+            import tika
+            tika.initVM()
+
         if 'content' in content:
             text = content['content']
         else:
