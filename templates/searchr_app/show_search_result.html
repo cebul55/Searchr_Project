@@ -1,5 +1,11 @@
 {% extends 'searchr_app/base.html' %}
 {% load staticfiles %}
+<style>
+    #collapse1{
+        overflow-y:scroll;
+        height:200px;
+    }
+</style>
 
 {% block title_block %}
     {% if search and user.is_authenticated %}
@@ -83,27 +89,59 @@
                                     </h6>
                                 </div>
                                 <div class="mh-20 card-body border border-dark p-2 overflow-auto">
-                                    <div class="list-group p-0 overflow-auto">
-                                        {% for a_res in analisys_results %}
-                                            <div class="list-group-item border border-dark ">
-                                            <dl class="row p-0 card-text">
-                                                <dt class="col-sm-3 p-1">Search Result Id:</dt>
-                                                <dd class="col-sm-9 p-0">
-                                                    <a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">{{ a_res.id }}</a>
-                                                </dd>
+                                    <div class="list-group p-0">
+                                    <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title text-center">
+                                                <a data-toggle="collapse" href="#collapse1">Table of Analisys Outcomes</a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapse1" class="panel-collapse collapse">
+                                            <table class="table table-sm table-hover">
+                                            <thead class="thead-dark">
+                                            <tr class="table-row">
+                                                <th class="table-cell p-1 border border-primary">Search Result Id</th>
+                                                <th class="table-cell p-1 border border-primary">Is exact match?</th>
+                                                <th class="table-cell p-1 border border-primary">Website part</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for a_res in analisys_results %}
+                                                    <tr class="table-row">
+                                                        <td class="table-cell p-1 border"><a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">{{ a_res.id }}</a></td>
+                                                        <td class="table-cell p-1 border">{{ a_res.exact_match }}</td>
+                                                        <td class="table-cell p-1 border">{{ a_res.website_part }}</td>
 
-                                                <dt class="col-sm-3 p-1">Is exact match?</dt>
-                                                <dd class="col-sm-9 p-0">
-                                                    {{ a_res.exact_match }}
-                                                </dd>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
 
-                                                <dt class="col-sm-3 p-1">Website part:</dt>
-                                                <dd class="col-sm-9 p-0">{{ a_res.website_part }}</dd>
-                                            </dl>
-                                            </div>
+                                    </div>
+
+{#                                        {% for a_res in analisys_results %}#}
+{#                                            <div class="list-group-item border border-dark ">#}
+{#                                            <dl class="row p-0 card-text">#}
+{#                                                <dt class="col-sm-3 p-1">Search Result Id:</dt>#}
+{#                                                <dd class="col-sm-9 p-0">#}
+{#                                                    <a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">{{ a_res.id }}</a>#}
+{#                                                </dd>#}
+{##}
+{#                                                <dt class="col-sm-3 p-1">Is exact match?</dt>#}
+{#                                                <dd class="col-sm-9 p-0">#}
+{#                                                    {{ a_res.exact_match }}#}
+{#                                                </dd>#}
+{##}
+{#                                                <dt class="col-sm-3 p-1">Website part:</dt>#}
+{#                                                <dd class="col-sm-9 p-0">{{ a_res.website_part }}</dd>#}
+{#                                            </dl>#}
+{#                                            </div>#}
 
 
-                                        {% endfor %}
+{#                                        {% endfor %}#}
                                     </div>
                                 </div>
                             {% else %}

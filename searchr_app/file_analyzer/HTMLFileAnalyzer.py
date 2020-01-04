@@ -10,6 +10,8 @@ class HTMLFileAnalyzer(object):
     search_phrases_combinations = None
     html_doc = None
     soup_obj = None
+    _SEARCH_TAG_LIST = ['q', 'code', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'dl', 'pre', 'span', 'table']
+    _META_TAG_LIST = ['base', 'link', 'meta', 'style']
 
     def __init__(self, search_result, search_phrases_combitations, html_doc):
         self.search_result = search_result
@@ -25,6 +27,11 @@ class HTMLFileAnalyzer(object):
         for combination in self.search_phrases_combinations:
             self.find_in_title(combination)
             self.find_in_header(combination)
+            self.find_in_main(combination)
+            self.find_in_footer(combination)
+            self.find_in_link(combination)
+            self.find_in_head(combination)
+            # todo find for occurences in other elements...
 
     def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part):
         outcome = AnalisysOutcome(text_fragment=text_fragment,
@@ -51,9 +58,75 @@ class HTMLFileAnalyzer(object):
         for header in header_list:
             soup_header = BeautifulSoup(str(header), 'html.parser')
             # search in visible elements placed in header:
-            # q, code, p, h1...h6, blockquote, dl, pre, span
-            tag_list = soup_header.find_all(['q', 'code', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'dl', 'pre', 'span'])
+            # q, code, p, h1...h6, blockquote, dl, pre, span, table
+            tag_list = soup_header.find_all(self._SEARCH_TAG_LIST)
             for tag in tag_list:
                 if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
-                    outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Header')
+                    if tag.parent.name.lower() != 'a':
+                        outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Header')
+                        self.list_of_outcomes.append(outcome)
+
+    def find_in_main(self, phrases_combination):
+        main_list = self.soup_obj.find_all('main')
+        # if main element does not exist try to find next element between </header>...<<footer> elements
+        if len(main_list) == 0:
+            body_tag = self.soup_obj.find('body')
+            for child in body_tag.children:
+                soup_child = BeautifulSoup(str(child), 'html.parser')
+                if child.name.lower != 'header' and child.name.lower != 'footer':
+                    tag_list = soup_child.find_all(self._SEARCH_TAG_LIST)
+                    for tag in tag_list:
+                        if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
+                            if tag.parent.name.lower() != 'a':
+                                outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Main')
+                                self.list_of_outcomes.append(outcome)
+        else:
+        # main element exist in html file
+            for main in main_list:
+                soup_main = BeautifulSoup(str(main), 'html.parser')
+                # search in visible elements placed in main:
+                # q, code, p, h1...h6, blockquote, dl, pre, span, table
+                tag_list = soup_main.find_all(self._SEARCH_TAG_LIST)
+                for tag in tag_list:
+                    if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
+                        if tag.parent.name.lower() != 'a':
+                            outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Main')
+                            self.list_of_outcomes.append(outcome)
+
+
+
+    def find_in_footer(self, phrases_combination):
+        footer_list = self.soup_obj.find_all('footer')
+        for footer in footer_list:
+            soup_footer = BeautifulSoup(str(footer), 'html.parser')
+            # search in visible elements placed in footer:
+            # q, code, p, h1...h6, blockquote, dl, pre, span, table
+            tag_list = soup_footer.find_all(self._SEARCH_TAG_LIST)
+            for tag in tag_list:
+                if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
+                    if tag.parent.name.lower() != 'a':
+                        outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Footer')
+                        self.list_of_outcomes.append(outcome)
+
+    def find_in_link(self, phrases_combination):
+        link_list = self.soup_obj.find_all('a')
+        for link in link_list:
+            if all(phrase.lower() in str(link).lower() for phrase in phrases_combination):
+                try:
+                    # try to find link's parent
+                    tag = link.parent
+                    outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Link')
+                    self.list_of_outcomes.append(outcome)
+                except TypeError:
+                    outcome = self.create_outcome(phrases_combination, link.prettify(), False, 'Link')
+                    self.list_of_outcomes.append(outcome)
+
+    def find_in_head(self, phrases_combination):
+        head_list = self.soup_obj.find_all('head')
+        for head in head_list:
+            soup_head = BeautifulSoup(str(head), 'html.parser')
+            tag_list = soup_head.find_all(self._META_TAG_LIST)
+            for tag in tag_list:
+                if all(phrase.lower() in str(tag) for phrase in phrases_combination):
+                    outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Meta')
                     self.list_of_outcomes.append(outcome)
