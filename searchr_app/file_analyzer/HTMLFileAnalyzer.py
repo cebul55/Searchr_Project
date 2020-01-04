@@ -24,24 +24,36 @@ class HTMLFileAnalyzer(object):
         # searching for occurance of phrase or combination of phrases
         for combination in self.search_phrases_combinations:
             self.find_in_title(combination)
+            self.find_in_header(combination)
+
+    def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part):
+        outcome = AnalisysOutcome(text_fragment=text_fragment,
+                                  exact_match=exact_match,
+                                  website_part=website_part,
+                                  search_result=self.search_result)
+        outcome.save()
+        # create phrase values
+        phrase_values = AnalisysOutcomePhraseValues(phrase_value=str(phrases_combination), analisys_outcome=outcome)
+        phrase_values.save()
+        return outcome
 
     def find_in_title(self, phrases_combination):
         title_list = self.soup_obj.find_all('title')
         for title in title_list:
-            try:
-                print(str(title) + '___' + str(phrases_combination))
-            except:
-                print('fail:' + str(title))
             if all(phrase.lower() in str(title).lower() for phrase in phrases_combination):
                 # element was successfully found
                 # based on that information analisys outcome is created
-                outcome = AnalisysOutcome(text_fragment=str(title),
-                                          exact_match=False,
-                                          website_part='Title',
-                                          search_result=self.search_result)
-                outcome.save()
-                # create phrase values
-                phrase_values = AnalisysOutcomePhraseValues(phrase_value=str(phrases_combination), analisys_outcome=outcome)
-                phrase_values.save()
+                outcome = self.create_outcome(phrases_combination, title.prettify(), False, 'Title')
                 self.list_of_outcomes.append(outcome)
 
+    def find_in_header(self, phrases_combination):
+        header_list = self.soup_obj.find_all('header')
+        for header in header_list:
+            soup_header = BeautifulSoup(str(header), 'html.parser')
+            # search in visible elements placed in header:
+            # q, code, p, h1...h6, blockquote, dl, pre, span
+            tag_list = soup_header.find_all(['q', 'code', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'dl', 'pre', 'span'])
+            for tag in tag_list:
+                if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
+                    outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Header')
+                    self.list_of_outcomes.append(outcome)

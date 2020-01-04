@@ -30,14 +30,11 @@
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a> </li>
-                            <li class="breadcrumb-item "><a href="#">{{ search_result|safe }}</a></li>
+                            <li class="breadcrumb-item "><a href="{% url 'searchr_app:search_result' search_result.id %}">{{ search_result|safe|escape }}</a></li>
                             <li class="breadcrumb-item active"><a href="#">{{ analisys_outcome.id }}</a></li>
                         </ol>
                     </nav>
                     <h1 class="jumbotron-heading text-center">Analisys Outcome</h1>
-                    <h5 class="jumbotron-content text-left">
-                        Found Phrases: ....</a>
-                    </h5>
                     <h5 class="jumbotron-content text-left">
                         Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
                     </h5>
@@ -50,6 +47,9 @@
             <dl class="row p-0 card-text">
                 <dt class="col-sm-3 p-2">Analisys Outcome Id</dt>
                 <dd class="col-sm-9 p-2">{{ analisys_outcome.id }}</dd>
+
+                <dt class="col-sm-3 p-2">Found Phrases</dt>
+                <dd class="col-sm-9 p-2">{{ phrase_values }}</dd>
 
                 <dt class="col-sm-3 p-2">Website Part</dt>
                 <dd class="col-sm-9 p-2">

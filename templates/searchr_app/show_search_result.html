@@ -27,7 +27,7 @@
                             <li class="breadcrumb-item active"><a href="#">{{ search_result|safe }}</a></li>
                         </ol>
                     </nav>
-                    <h1 class="jumbotron-heading text-center">Website title: {{ search_result.title|safe }}</h1>
+                    <h3 class="jumbotron-heading text-center">Website title: {{ search_result.title|safe }}</h3>
                     <h5 class="jumbotron-content text-left">
                         Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
                     </h5>
@@ -49,7 +49,7 @@
             </div>
         </div>{% endcomment %}
         <div class="container">
-            <div class=" row h-25 mh-25">
+            <div class=" row h-20 mh-25">
                 <div class="col-md-6 card border border-dark" style="background-color: lightsteelblue;">
                     <dl class="row p-0 card-text">
                         <dt class="col-sm-3 p-2">Search Result Title</dt>
@@ -121,15 +121,53 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+
+        <!-- Modal -->
+        <div class="modal fade" id="codeModalLong" tabindex="-1" role="dialog" aria-labelledby="codeModalLongTitle" aria-hidden="true" >
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Content of {{ search_result.title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <p class="text-body">
+                        <pre class="prettyprint linenums">
+                            <code >
+                                {{ search_result.html_file|escape }}
+
+                            </code>
+                        </pre>
+                  </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container p-2">
+            <h4 class="jumbotron-heading text-center">
+                <p class="text-body">
+                    Preview of downloaded content
+                </p>
+            </h4>
             <p class="text-body">
                 <pre class="prettyprint linenums">
                     <code >
-                        {{ search_result.html_file|escape }}
+                        {{ search_result.html_file|escape|truncatechars:1000 }}
 
                     </code>
                 </pre>
             </p>
+            <div class="container text-center">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#codeModalLong">
+                    Show content
+                </button>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
