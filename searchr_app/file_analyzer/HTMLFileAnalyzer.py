@@ -33,6 +33,11 @@ class HTMLFileAnalyzer(object):
             self.find_in_head(combination)
             # todo find for occurences in other elements...
 
+            accuracy = self.count_result_accuracy()
+            print(accuracy)
+            self.search_result.accuracy = accuracy
+            self.search_result.save()
+
     def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part):
         outcome = AnalisysOutcome(text_fragment=text_fragment,
                                   exact_match=exact_match,
@@ -65,7 +70,29 @@ class HTMLFileAnalyzer(object):
                     if tag.parent.name.lower() != 'a':
                         outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Header')
                         self.list_of_outcomes.append(outcome)
-
+"""
+Traceback (most recent call last):
+  File "/Users/bartoszcybulski/.virtualenvs/searchrENV/lib/python3.7/site-packages/twisted/internet/defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/scrapy_4_searchr_app/scrapy_4_searchr_app/pipelines.py", line 33, in close_spider
+    item.save()
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/models/CrawlItem.py", line 49, in save
+    search_result.save()
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/models/SearchResult.py", line 55, in save
+    analyze_search_result(self)
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/models/search_models_helper_functions.py", line 36, in analyze_search_result
+    file_analyzer = FileAnalyzer(search_result)
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/file_analyzer/FileAnalyzer.py", line 21, in __init__
+    self.start_analyzing()
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/file_analyzer/FileAnalyzer.py", line 43, in start_analyzing
+    self.analyze_html()
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/file_analyzer/FileAnalyzer.py", line 70, in analyze_html
+    html_analyzer.analyze_html_file()
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/file_analyzer/HTMLFileAnalyzer.py", line 30, in analyze_html_file
+    self.find_in_main(combination)
+  File "/Users/bartoszcybulski/Documents/python-workspace/searchr_project/searchr_app/file_analyzer/HTMLFileAnalyzer.py", line 79, in find_in_main
+    for child in body_tag.children:
+AttributeError: 'NoneType' object has no attribute 'children'"""
     def find_in_main(self, phrases_combination):
         main_list = self.soup_obj.find_all('main')
         # if main element does not exist try to find next element between </header>...<<footer> elements
@@ -73,7 +100,7 @@ class HTMLFileAnalyzer(object):
             body_tag = self.soup_obj.find('body')
             for child in body_tag.children:
                 soup_child = BeautifulSoup(str(child), 'html.parser')
-                if child.name.lower != 'header' and child.name.lower != 'footer':
+                if str(child.name).lower() != 'header' and str(child.name).lower() != 'footer':
                     tag_list = soup_child.find_all(self._SEARCH_TAG_LIST)
                     for tag in tag_list:
                         if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
@@ -130,3 +157,26 @@ class HTMLFileAnalyzer(object):
                 if all(phrase.lower() in str(tag) for phrase in phrases_combination):
                     outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Meta')
                     self.list_of_outcomes.append(outcome)
+
+    def count_result_accuracy(self):
+        title_weight = 3
+        header_weight = 4
+        footer_weight = 4
+        main_weight = 5
+        link_weight = 2
+        sum_of_weights = title_weight + header_weight + footer_weight + main_weight + link_weight
+        sum_of_occurences = 0
+        for outcome in self.list_of_outcomes:
+            if outcome.website_part == 'Title':
+                sum_of_occurences = sum_of_occurences + title_weight
+            elif outcome.website_part =='Header':
+                sum_of_occurences = sum_of_occurences + header_weight
+            elif outcome.website_part == 'Footer':
+                sum_of_occurences = sum_of_occurences + footer_weight
+            elif outcome.website_part == 'Main':
+                sum_of_occurences = sum_of_occurences + main_weight
+            elif outcome.website_part == 'Link':
+                sum_of_occurences = sum_of_occurences + link_weight
+
+        return sum_of_occurences / sum_of_weights
+
