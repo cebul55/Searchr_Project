@@ -51,12 +51,6 @@ class FileAnalyzer(object):
             for subset in itertools.combinations(phrases_list, L):
                 combinations.append(subset)
 
-        # for combination in combinations:
-        #     print(combination)
-        #     for i in combination:
-        #         print(i)
-        print(phrases_list)
-        print(combinations)
         return combinations
 
     @staticmethod

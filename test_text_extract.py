@@ -37,6 +37,13 @@ def try_combinations():
         for i in combination:
             print(i)
 
+def try_any():
+    titles = ['<title>dlugi tytul</title>', '<title>krotki tytul</title>']
+    title = 'krotki tytul'
+    phrases = ['tytul', 'krotki']
+    if all(phrase in title for phrase in phrases):
+        print(title)
+
 if __name__ == '__main__':
     # try_textract()
-    try_combinations()
+    try_any()

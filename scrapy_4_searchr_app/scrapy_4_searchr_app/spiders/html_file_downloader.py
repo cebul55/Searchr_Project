@@ -27,8 +27,13 @@ class HtmlFileDownloader(CrawlSpider):
 
     def parse_headers(self, response):
         if response.status == 200:
-            self.i['content-type'] = response.headers.get('Content-Type').decode('utf-8')
-            yield response.request.replace(callback=self.parse_item, method='GET')
+            try:
+                self.i['content-type'] = response.headers.get('Content-Type').decode('utf-8')
+                yield response.request.replace(callback=self.parse_item, method='GET')
+            except IOError:
+                self.i['content-type'] = ''
+                self.i['body'] = 'Status Code: ' + response.status + '\nPage wasn\'t downloaded.'
+                return self.i
         else:
             self.i['content-type'] = ''
             self.i['body'] = 'Status Code: ' + response.status + '\nPage wasn\'t downloaded.'
@@ -40,7 +45,6 @@ class HtmlFileDownloader(CrawlSpider):
             try:
                 self.i['body'] = response.text
             except AttributeError as error:
-                # todo sprawdzić czy pobiera word
                 if 'pdf' in self.i['content-type'] or 'word' in self.i['content-type']:
                     self.i['body'] = self.parse_file_to_text(response)
                 else:

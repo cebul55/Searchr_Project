@@ -40,7 +40,9 @@ class CrawlItem(models.Model):
                 if self.content_type is not None:
                     search_result.content_type = self.content_type
                 else:
-                    search_result.content_type = 'Unknown'
+                    search_result.content_type = 'SearchR-Unknown'
+                if self.data is None or self.data == '':
+                    self.data = 'Unable to find content.'
 
                 search_result.html_file = self.data
                 search_result.search_result_hash = search_result.sha256_html_content()

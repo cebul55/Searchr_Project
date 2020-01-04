@@ -54,7 +54,6 @@ class SearchResult(models.Model):
             from searchr_app.models.search_models_helper_functions import analyze_search_result
             analyze_search_result(self)
 
-
     def sha256_html_content(self):
         if self.html_file:
             hashed_html_content = sha256(str(self.html_file).encode('utf-8')).hexdigest()
