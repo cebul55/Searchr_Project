@@ -9,6 +9,7 @@ class FileAnalyzer(object):
     search_phrases_combination = None
     html_doc = None
     text_doc = None
+    accuracy = 0.0
 
     def __init__(self, search_result):
         self.search_result = search_result
@@ -42,7 +43,7 @@ class FileAnalyzer(object):
         elif self.html_doc is not None:
             self.analyze_html()
         # set status to 'analyzed' after end of analisys
-        self.search_result.set_status_to_analyzed()
+        # self.search_result.set_status_to_analyzed()
 
     def generate_phrase_combinations_as_text(self, phrases_list):
         phrases_list = self.convert_literal_list_to_list(phrases_list)
@@ -68,3 +69,7 @@ class FileAnalyzer(object):
     def analyze_html(self):
         html_analyzer = HTMLFileAnalyzer(self.search_result, self.search_phrases_combination, self.html_doc)
         html_analyzer.analyze_html_file()
+        self.accuracy = html_analyzer.count_result_accuracy()
+
+    def get_accuracy(self):
+        return self.accuracy

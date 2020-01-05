@@ -52,7 +52,9 @@ class SearchResult(models.Model):
         if self.status == self._FINISHED:
             # start analyzing result
             from searchr_app.models.search_models_helper_functions import analyze_search_result
-            analyze_search_result(self)
+            self.accuracy = analyze_search_result(self)
+            self.set_status_to_analyzed()
+            super(SearchResult, self).save(*args, **kwargs)
 
     def sha256_html_content(self):
         if self.html_file:
@@ -65,7 +67,6 @@ class SearchResult(models.Model):
         if not self.id:
             pass
         self.status = self._FINISHED_ANALYZED
-        self.save()
 
     def __str__(self):
         return self.title

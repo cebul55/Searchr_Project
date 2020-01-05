@@ -3,7 +3,7 @@ import json
 from django.db import models
 from django.utils import timezone
 
-from searchr_app.models import SearchResult
+from searchr_app.models import SearchResult, Search
 
 
 class CrawlItem(models.Model):
@@ -42,14 +42,16 @@ class CrawlItem(models.Model):
                 else:
                     search_result.content_type = 'SearchR-Unknown'
                 if self.data is None or self.data == '':
-                    self.data = 'Unable to find content.'
+                    self.data = 'Unable to find content for url: ' + search_result.url + '.'
 
                 search_result.html_file = self.data
                 search_result.search_result_hash = search_result.sha256_html_content()
                 search_result.save()
                 # update number of running searches in search
-                search = search_result.search
+                search = Search.objects.get(id=search_result.search.id)
+                print('First: ' + str(search.running_results))
                 search.running_results = search.running_results - 1
-                search.save()
+                print('Second: ' + str(search.running_results))
+                search.save(force_update=True)
 
         super(CrawlItem, self).save(*args, **kwargs)

@@ -34,3 +34,5 @@ def add_result_to_history(search, search_result):
 
 def analyze_search_result(search_result):
     file_analyzer = FileAnalyzer(search_result)
+    accuracy = file_analyzer.get_accuracy()
+    return accuracy
