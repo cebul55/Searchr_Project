@@ -7,12 +7,13 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from searchr_app.bing_search import create_bing_search_query
-from searchr_app.forms import SearchForm
+from searchr_app.forms import SearchForm, AdvancedSearchForm
 from searchr_app.models import Project
 
 
 class AddSearchView(View):
     form = SearchForm
+    form1 = AdvancedSearchForm
 
     @method_decorator(login_required)
     def get(self, request, project_id):
@@ -22,9 +23,13 @@ class AddSearchView(View):
                                initial={
                                    'project': project,
                                })
+        self.form1 = AdvancedSearchForm(userid=project.user.id, projectid=project_id, initial={
+                                   'project': project,
+                               })
 
         return render(request, 'searchr_app/new_search.html', {
             'form': self.form,
+            'form1': self.form1,
             'project_id': project_id,
         })
 
