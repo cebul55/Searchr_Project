@@ -11,16 +11,16 @@ class Search(models.Model):
     @:param str title: title of search. Has to be unique together in project
     """
     SEARCH_TITLE_LENGTH = 128
-    SEARCH_ATTRIBS_LENGTH = 256
+    SEARCH_ATTRIBS_LENGTH = 1024
     SEARCH_QUERY_LENGTH = 1024
 
-    _GOOGLE = 'go'
+    # _GOOGLE = 'go'
     _BING = 'bg'
-    _YAHOO = 'yh'
+    # _YAHOO = 'yh'
     SEARCH_ENGINE_CHOICES = [
-        (_GOOGLE, 'GOOGLE'),
+        # (_GOOGLE, 'GOOGLE'),
         (_BING, 'BING'),
-        (_YAHOO, 'YAHOO'),
+        # (_YAHOO, 'YAHOO'),
     ]
 
     _CREATED = 'created'
@@ -34,7 +34,7 @@ class Search(models.Model):
 
     title = models.CharField(max_length=SEARCH_TITLE_LENGTH, null=False, default=None)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False)
-    attributes = models.CharField(max_length=SEARCH_ATTRIBS_LENGTH, null=True)
+    attributes = models.TextField(null=True)
     query = models.CharField(max_length=SEARCH_QUERY_LENGTH, null=False, default=None)
     search_engine = models.CharField(max_length=64, choices=SEARCH_ENGINE_CHOICES, default=_BING)
     date_created = models.DateTimeField(editable=False)

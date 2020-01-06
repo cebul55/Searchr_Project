@@ -33,7 +33,7 @@
         Title: {{ search.title }}<br/>
         Project: {{ search.project }}<br/>
         SearchEngine: {{ search.search_engine }}<br/>
-        Exact Query: {{ search.query }}<br/>
+        Exact Query: {{ search.query|escape }}<br/>
         Date created: {{ search.date_created }}<br/>
 
         {% if phrases %}

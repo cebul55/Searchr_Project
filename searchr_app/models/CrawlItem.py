@@ -49,9 +49,7 @@ class CrawlItem(models.Model):
                 search_result.save()
                 # update number of running searches in search
                 search = Search.objects.get(id=search_result.search.id)
-                print('First: ' + str(search.running_results))
                 search.running_results = search.running_results - 1
-                print('Second: ' + str(search.running_results))
                 search.save(force_update=True)
 
         super(CrawlItem, self).save(*args, **kwargs)

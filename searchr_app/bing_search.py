@@ -8,16 +8,24 @@ from searchr_project.read_key import read_bing_key
 def create_search_terms(phrases):
     search_terms = ''
     for p in phrases:
-        search_terms = search_terms + '&& \"' + p.value + '\" '
+        if search_terms == '':
+            search_terms = search_terms + '\"' + p.value + '\" '
+        else:
+            search_terms = search_terms + '&& \"' + p.value + '\" '
 
     return search_terms
 
 
-def create_bing_search_query(search, phrases):
+def create_bing_search_query(search, phrases, number_of_results, offset, language):
     bing_key = read_bing_key()
     search_url = 'https://api.cognitive.microsoft.com/bing/v7.0/search'
     headers = {"Ocp-Apim-Subscription-Key": bing_key}
-    params = {"q": create_search_terms(phrases), "textDecorations": True, "textFormat": "HTML"}
+    params = {"q": create_search_terms(phrases),
+              "textDecorations": True,
+              "textFormat": "HTML",
+              "setLang": language,
+              "count": number_of_results,
+              "offset": offset}
     query = {
         'search_url': search_url,
         'headers': headers,

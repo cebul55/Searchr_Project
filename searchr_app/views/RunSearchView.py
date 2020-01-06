@@ -69,12 +69,20 @@ class RunSearchView(View):
                 search_results = response.json()
                 print(response.json())
                 results = []
-                for result in search_results["webPages"]["value"]:
-                    results.append({
-                        'title': result['name'],
-                        'link': result['url'],
-                        'summary': result['snippet'],
-                    })
+
+                if 'webPages' in search_results:
+                    for result in search_results["webPages"]["value"]:
+                        results.append({
+                            'title': result['name'],
+                            'link': result['url'],
+                            'summary': result['snippet'],
+                        })
+                if 'images' in search_results:
+                    for result in search_results["images"]["value"]:
+                        results.append({
+                            'title': result['name'],
+                            'link': result['hostPageUrl'],
+                        })
                 return results
 
         except IOError:

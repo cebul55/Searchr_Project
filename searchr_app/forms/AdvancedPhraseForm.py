@@ -4,9 +4,8 @@ from django.conf.global_settings import LANGUAGES
 from searchr_app.models import Phrase
 
 
-class PhraseForm(forms.ModelForm):
+class AdvancedPhraseForm(forms.ModelForm):
     value = forms.CharField(
-        label='Phrase value',
         max_length=Phrase._PHRASE_MAX_LENGTH,
         required=True,
         widget=forms.Textarea(),
@@ -28,7 +27,6 @@ class PhraseForm(forms.ModelForm):
     )
     language = forms.ChoiceField(
         choices=LANGUAGES,
-        initial='en',
     )
     projects = forms.MultipleChoiceField(
         widget=forms.HiddenInput(),
