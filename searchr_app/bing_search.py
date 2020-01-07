@@ -19,7 +19,8 @@ def create_search_terms(phrases):
 def create_bing_search_query(search, phrases, number_of_results, offset, language):
     bing_key = read_bing_key()
     search_url = 'https://api.cognitive.microsoft.com/bing/v7.0/search'
-    headers = {"Ocp-Apim-Subscription-Key": bing_key}
+    headers = {"Ocp-Apim-Subscription-Key": bing_key,
+               "Pragma": "no-cache"}
     params = {"q": create_search_terms(phrases),
               "textDecorations": True,
               "textFormat": "HTML",

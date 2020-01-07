@@ -9,7 +9,8 @@ class PhraseForm(forms.ModelForm):
         label='Phrase value',
         max_length=Phrase._PHRASE_MAX_LENGTH,
         required=True,
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'placeholder': 'Phrase value.'}),
+        help_text='Enter phrase value',
     )
     date_last_searched = forms.DateField(
         widget=forms.HiddenInput(),

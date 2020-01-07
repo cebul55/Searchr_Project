@@ -1,26 +1,27 @@
 {% extends 'searchr_app/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
     Register
 {% endblock %}
 
 {% block body_block %}
-        <div class="jumbotron p-4">
+    <div class="jumbotron p-4" xmlns="http://www.w3.org/1999/html">
             <div class="container">
-            <h1 class="jumbotron-heading">Register here</h1>
+            <h1 class="jumbotron-heading text-center">Register here</h1>
             </div>
         </div>
-    <div class="container">
+    <div class="container" style="background-color: #e4e7eb;">
         <div class="row">
-            <div class="form-group">
+            <div class="col-md-12 border border-dark rounded-top p-3">
             <form role="form" method="post" action=".">
                 {% csrf_token %}
-                <div class="form-group">
+                <div class="form-group col-md-6 align-center">
                     <p class="required"><label class="required" for="id_username">
                         Username:
                     </label>
                     <input class="form-control" id="id_username" maxlength="30" name="username" type="text"/>
-                    <span class="helptext">
+                    <span class="helptext" style="color: darkgreen;">
                         Required 30 characters or fewer.
                         Letters, digits and @/./+/-/_ only.
                     </span>
@@ -34,12 +35,12 @@
                         <input class="form-control" id="id_password1" name="password1" type="password"/>
                     </p>
                     <p class="required">
+
                         <label class="required" for="id_password2">Password confirmation:</label>
                         <input class="form-control" id="id_password2" name="password2" type="password"/>
-                        <span class="helptext">
-                            Enter the same password as before, for verification
-                        </span>
-                    </p>
+                        <span class="helptext" style="color: darkgreen;">
+                            Enter the same password as before, for verification.
+                        </span></br> </p>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

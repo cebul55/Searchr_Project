@@ -1,5 +1,6 @@
 {% extends 'searchr_app/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 
 
@@ -13,27 +14,25 @@
         <h1 class="jumbotron-heading text-center">Add a Phrase</h1>
         </div>
     </div>
-    <div class="container">
+
+    <div class="container" style="background-color: #e4e7eb;">
         <div class="row">
-            <form role="form" id="category_form" method="post" action="{% url 'searchr_app:add_phrase' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-{#                {% for hidden in form.hidden_fields %}#}
-{##}
-{#                    {{ hidden }}#}
-{#                {% endfor %}#}
-{#                {% for field in form.visible_fields %}#}
-{##}
-{#                    {% for error in field.errors %}#}
-{#                        <div class="alert alert-danger">{{ error|escape }}</div>#}
-{#                    {% endfor %}#}
-{#                    {{ field.help_text}}<br/>#}
-{#                    {{ field }}<br/>#}
-{#                {% endfor %}#}
-{#                <br/>#}
-                <button class="btn btn-primary" type="submit" name="submit">Add Phrase</button>
-                <div class="p-5"></div>
-            </form>
+            <div class="col-md-12 border border-dark rounded p-3">
+                <form role="form" id="category_form" method="post" action="{% url 'searchr_app:add_phrase' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-8 mb-0">
+                            {{ form.value|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8 mb-0">
+                            {{ form.language|as_crispy_field }}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" name="submit">Add Phrase</button>
+                 </form>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -41,7 +41,6 @@ class RunSearchView(View):
                     url=result['link'],
                     search=search,
                 )
-                # todo spider to download file and count hash value
                 search_result.save()
                 request.POST.url = search_result.url
                 response = self.start_spider(search_result.url)
