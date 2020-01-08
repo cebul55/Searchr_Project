@@ -18,7 +18,7 @@ urlpatterns = [
     path('run_query/<search_id>', views.RunSearchView.as_view(), name='run_query'),
     path('owner/<slug:username>/project/<slug:project_slug>/<slug:search_slug>/history', views.HistoryView.as_view(), name='history_view'),
     path('analisys_outcome/<analisys_outcome_id>', views.ShowAnalisysOutcomeView.as_view(), name='analisys_outcome'),
-
+    path('owner/<slug:username>/projects/', views.MyProjectsView.as_view(), name='my_projects'),
     path('search/', views.SearchView.as_view(), name='search'),
 
     path('add_keyword/', views.AddKeywordView.as_view(), name='add_keyword'),

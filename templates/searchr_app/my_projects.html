@@ -1,0 +1,86 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if user.is_authenticated %}
+
+        My Projects
+    {% else %}
+        Login reqiured!
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <div class="jumbotron p-4">
+            <div class="container">
+                <nav aria-label="breadcrumb p-1">
+                    <ol class="breadcrumb p-lg-0">
+                        <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
+                        <li class="breadcrumb-item active"><a href="#">My Projects</a></li>
+                    </ol>
+                </nav>
+            <h1 class="jumbotron-heading p-1 text-center">List of Projects</h1>
+            </div>
+        </div>
+        {% if projects %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            Projects:
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for project in projects %}
+                                    <li class="list-group-item">
+                                        <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title text-center">
+                                                    <a data-toggle="collapse" href="#collapse_project">{{ project.title }}</a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapse_project" class="panel-collapse collapse">
+                                                <dl class="row p-0 card-text">
+                                                    <dt class="col-sm-3 p-2">Project Title</dt>
+                                                    <dd class="col-sm-9 p-2">
+                                                        <a href="{% url 'searchr_app:show_project' user.username project.slug %}">{{ project.title|safe }}</a>
+                                                    </dd>
+
+{#                                                    <dt class="col-sm-3 p-2">URL Address</dt>#}
+{#                                                    <dd class="col-sm-9 p-2">#}
+{#                                                        <a href="{{ search_result.url }}">{{ search_result.url|safe }}</a>#}
+{#                                                    </dd>#}
+{#                            #}
+{#                                                    <dt class="col-sm-3 p-2">Content Type</dt>#}
+{#                                                    <dd class="col-sm-9 p-2">{{ search_result.content_type|safe }}</dd>#}
+{#                            #}
+{#                                                    <dt class="col-sm-3 p-2">Date found</dt>#}
+{#                                                    <dd class="col-sm-9 p-2">{{ search_result.date_found }}</dd>#}
+{#                            #}
+{#                                                    <dt class="col-sm-3 p-2">Status</dt>#}
+{#                                                    <dd class="col-sm-9 p-2">{{ search_result.status|capfirst }}</dd>#}
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="jumbotron p-4">
+            <div class="container">
+            <h1 class="jumbotron-heading p-1 text-center">Login is required to view projects.</h1>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

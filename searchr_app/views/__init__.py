@@ -14,6 +14,7 @@ from .CrawlerView import CrawlerView, crawl
 from .RunSearchView import RunSearchView
 from .HistoryView import HistoryView
 from .ShowAnalisysOutcomeView import ShowAnalisysOutcomeView
+from .MyProjectsView import MyProjectsView
 
 
 # Phrase view
