@@ -2,6 +2,7 @@ import itertools
 from bs4 import BeautifulSoup
 
 from searchr_app.file_analyzer.HTMLFileAnalyzer import HTMLFileAnalyzer
+from searchr_app.file_analyzer.TextFileAnalyzer import TextFileAnalyzer
 
 
 class FileAnalyzer(object):
@@ -39,6 +40,7 @@ class FileAnalyzer(object):
 
     def start_analyzing(self):
         if self.text_doc is not None:
+            print('startin doc analisys')
             self.analyze_text()
         elif self.html_doc is not None:
             self.analyze_html()
@@ -64,6 +66,10 @@ class FileAnalyzer(object):
         return return_list
 
     def analyze_text(self):
+        print('startin doc analisys')
+        text_analyzer = TextFileAnalyzer(self.search_result, self.search_phrases_combination, self.text_doc)
+        text_analyzer.analyze_text_file()
+        self.accuracy = text_analyzer.count_result_accuracy()
         pass
 
     def analyze_html(self):
