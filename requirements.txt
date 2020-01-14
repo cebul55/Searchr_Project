@@ -11,6 +11,7 @@ coverage==5.0.1
 cryptography==2.8
 cssselect==1.1.0
 Django==2.2.3
+django-crispy-forms==1.8.1
 django-registration-redux==2.2
 docx2txt==0.8
 EbookLib==0.17.1
