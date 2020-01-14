@@ -127,9 +127,14 @@ dmypy.json
 .key
 
 # Searchr App
-conf/
-searchr_app/migrations
+conf/bing.key
+conf/searchrDB.key
+conf/secret.key
+searchr_app/migrations/*
 .idea/
 .idea
 media/spider/
 media/spider
+
+# include files for migration
+!searchr_app/migrations/__init__.py
