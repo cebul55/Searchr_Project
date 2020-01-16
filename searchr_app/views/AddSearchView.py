@@ -41,7 +41,7 @@ class AddSearchView(View):
         if 'submit' in request.POST:
             project = Project.objects.get(id=project_id)
             self.advanced_search_form = AdvancedSearchForm(request.POST, userid=project.user.id, projectid=project_id, initial={'project': project,})
-            print(str(self.advanced_search_form))
+            # print(str(self.advanced_search_form))
 
             if self.advanced_search_form.is_valid():
 

@@ -1,5 +1,7 @@
+from crispy_forms.helper import FormHelper
 from django import forms
 from django.views import View
+from crispy_forms.layout import Submit
 
 
 class QueryBuilderForm(forms.Form):
@@ -23,3 +25,9 @@ class QueryBuilderForm(forms.Form):
                 self.fields[connective_name] = forms.ChoiceField(choices=self.LOGIC_CHOICES, required=True,)
                 field_name = 'phrase_%s' % (i,)
                 self.fields[field_name] = forms.CharField(disabled=True, initial=phrases_list[i])
+
+        self.helper = FormHelper()
+        self.helper.form_id = 'query_builder'
+        self.helper.form_class = 'form'
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Add Query'))

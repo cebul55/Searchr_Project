@@ -18,20 +18,25 @@ def create_search_terms(phrases):
 
 def create_bing_search_query(search, phrases, number_of_results, offset, language):
     bing_key = read_bing_key()
-    search_url = 'https://api.cognitive.microsoft.com/bing/v7.0/search'
+    search_url = "https://api.cognitive.microsoft.com/bing/v7.0/search"
     headers = {"Ocp-Apim-Subscription-Key": bing_key,
                "Pragma": "no-cache"}
     params = {"q": create_search_terms(phrases),
-              "textDecorations": True,
+              "textDecorations": "True",
               "textFormat": "HTML",
               "setLang": language,
               "count": number_of_results,
               "offset": offset}
     query = {
-        'search_url': search_url,
-        'headers': headers,
-        'params': params
+        "search_url": search_url,
+        "headers": headers,
+        "params": params
     }
+    return query
+
+def update_bing_search_query(query, phrases_query):
+    query['params']['q'] = phrases_query
+    print(query)
     return query
 
 
@@ -39,7 +44,7 @@ def run_query(search_terms):
     # Microsoft documentation: http://bit.ly/twd-bing-api
 
     bing_key = read_bing_key()
-    search_url = 'https://api.cognitive.microsoft.com/bing/v7.0/search'
+    search_url = "https://api.cognitive.microsoft.com/bing/v7.0/search"
     headers = {"Ocp-Apim-Subscription-Key": bing_key}
     params = {"q": search_terms, "textDecorations": True, "textFormat": "HTML"}
 

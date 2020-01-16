@@ -26,7 +26,8 @@
                     <form class="form"  role="form" id="query_builder" method="post" action="{% url 'searchr_app:query_builder' project_id search_id %}">
                         {% csrf_token %}
                         {% crispy query_form %}
-                        <button class="btn btn-primary" type="submit" name="submit">Create Query</button>
+
+{#                        <button class="submin submitButton btn btn-primary" type="submit" name="submit">Create Query</button>#}
                     </form>
                 </div>
             </div>
