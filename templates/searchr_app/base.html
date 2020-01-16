@@ -8,6 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="Bartosz Cybulski">
     <meta name="generator" content="Jekyll v3.8.5">
+    {% block meta_block %}
+    {% endblock %}
     <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
 
         <title>
@@ -96,6 +98,7 @@
         <script src="{% static 'js/dashboard.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/google-code-prettify/prettify.js' %}"></script>
         <script src="{% static 'js/custom/searchr_app-jquery.js' %}" crossorigin="anonymous"></script>
-
+        {% block script_block %}
+        {% endblock %}
     </body>
 </html>

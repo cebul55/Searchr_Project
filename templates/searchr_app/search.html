@@ -1,6 +1,8 @@
 {% extends 'searchr_app/base.html' %}
 {% load staticfiles %}
-
+{#{% block meta_block %}#}
+{#    <meta http-equiv="refresh" content="5">#}
+{#{% endblock %}#}
 {% block title_block %}
     Search
 {% endblock %}
@@ -50,4 +52,16 @@
             </div>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block script_block %}
+
+    <script type="text/javascript">
+        function autoRefreshPage()
+        {
+            window.location = window.location.href;
+                alert("hello world");
+        }
+        setInterval('autoRefreshPage()', 3000);
+    </script>
 {% endblock %}

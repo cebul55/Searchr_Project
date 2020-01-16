@@ -1,6 +1,10 @@
 {% extends 'searchr_app/base.html' %}
 {% load staticfiles %}
 
+{% block meta_block %}
+    <meta http-equiv="refresh" content="5">
+{% endblock %}
+
 {% block title_block %}
     {% if search and user.is_authenticated %}
         {{ search.title }}
