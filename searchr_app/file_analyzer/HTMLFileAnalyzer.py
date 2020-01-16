@@ -1,3 +1,5 @@
+import json
+
 from searchr_app.file_analyzer import FileAnalyzer
 from bs4 import BeautifulSoup
 
@@ -84,7 +86,7 @@ class HTMLFileAnalyzer(object):
                         tag_list = soup_child.find_all(self._SEARCH_TAG_LIST)
                         for tag in tag_list:
                             if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
-                                if tag.parent.name.lower() != 'a':
+                                if tag.parent.name.lower() != 'a' and tag.name.lower != 'a':
                                     outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Main')
                                     self.list_of_outcomes.append(outcome)
             except AttributeError:
@@ -100,7 +102,7 @@ class HTMLFileAnalyzer(object):
                 tag_list = soup_main.find_all(self._SEARCH_TAG_LIST)
                 for tag in tag_list:
                     if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
-                        if tag.parent.name.lower() != 'a':
+                        if tag.parent.name.lower() != 'a' and tag.name.lower != 'a':
                             outcome = self.create_outcome(phrases_combination, tag.prettify(), False, 'Main')
                             self.list_of_outcomes.append(outcome)
 
@@ -141,12 +143,25 @@ class HTMLFileAnalyzer(object):
                     self.list_of_outcomes.append(outcome)
 
     def count_result_accuracy(self):
-        title_weight = 3
-        header_weight = 4
-        footer_weight = 4
-        main_weight = 5
-        link_weight = 2
-        sum_of_weights = title_weight + header_weight + footer_weight + main_weight + link_weight
+        project = self.search_result.search.project
+        if project:
+            tags_weight = json.loads(project.tag_weights)
+            title_weight = tags_weight['Title']
+            header_weight = tags_weight['Header']
+            footer_weight = tags_weight['Footer']
+            main_weight = tags_weight['Main']
+            link_weight = tags_weight['Link']
+            meta_weight = tags_weight['Meta']
+            other_weight = tags_weight['Other']
+        else:
+            title_weight = 3
+            header_weight = 4
+            footer_weight = 4
+            main_weight = 5
+            link_weight = 2
+            meta_weight = 1
+            other_weight = 1
+        sum_of_weights = title_weight + header_weight + footer_weight + main_weight + link_weight + meta_weight + other_weight
         sum_of_occurences = 0
         for outcome in self.list_of_outcomes:
             if outcome.website_part == 'Title':
@@ -159,6 +174,10 @@ class HTMLFileAnalyzer(object):
                 sum_of_occurences = sum_of_occurences + main_weight
             elif outcome.website_part == 'Link':
                 sum_of_occurences = sum_of_occurences + link_weight
+            elif outcome.website_part == 'Meta':
+                sum_of_occurences = sum_of_occurences + meta_weight
+            elif outcome.website_part == 'Other':
+                sum_of_occurences = sum_of_occurences + other_weight
 
         return sum_of_occurences / sum_of_weights
 

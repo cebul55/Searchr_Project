@@ -21,6 +21,11 @@
                 <form role="form" id="category_form" method="post" action="{% url 'searchr_app:add_phrase' %}">
                     {% csrf_token %}
                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{ form|as_crispy_errors }}
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-8 mb-0">
                             {{ form.value|as_crispy_field }}
                         </div>

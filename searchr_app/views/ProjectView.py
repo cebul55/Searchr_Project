@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views import View
@@ -16,10 +18,12 @@ class ProjectView(View):
 
         context_dict['project'] = project
 
+        tags_weight = json.loads(project.tag_weights)
         searches = []
         if project:
             searches_query_set = Search.objects.filter(project=project)
             searches = searches_query_set.all()
 
         context_dict['searches'] = searches
+        context_dict['tags'] = tags_weight
         return render(request, 'searchr_app/project.html', context_dict)

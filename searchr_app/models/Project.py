@@ -21,6 +21,7 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     is_private = models.BooleanField(default=True, null=False)
     slug = models.SlugField(max_length=PROJECT_TITLE_LENGTH, null=False, unique=False)
+    tag_weights = models.TextField(blank=False)
 
     def __str__(self):
         return self.title

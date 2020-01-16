@@ -23,11 +23,14 @@ class SearchObjectView(View):
         context_dict['search'] = search
         context_dict['project'] = project
         phrases = []
-        print(search.phrases_list)
+        # print(search.phrases_list)
+        tags_weight = json.loads(project.tag_weights)
+
         if search:
             phrases = json.decoder.JSONDecoder().decode(search.phrases_list)
 
         context_dict['phrases'] = phrases
+        context_dict['tags'] = tags_weight
 
         try:
             search_results = SearchResult.objects.filter(search=search)

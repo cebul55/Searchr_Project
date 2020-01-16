@@ -32,6 +32,40 @@
         </div>
     </div>
 
+    <div class="jumbotron p-1" style="background-color: ghostwhite;">
+        <div class="container">
+            <div class="row">
+                <h3 class="jumbotron-heading p-1 text-center">
+                    Defined Weights:
+                </h3>
+                <table class="table table-info table-bordered">
+                    <thead >
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Header</th>
+                            <th scope="col">Main</th>
+                            <th scope="col">Footer</th>
+                            <th scope="col">Link</th>
+                            <th scope="col">Meta</th>
+                            <th scope="col">Other</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ tags.Title }}</td>
+                            <td>{{ tags.Header }}</td>
+                            <td>{{ tags.Main }}</td>
+                            <td>{{ tags.Footer }}</td>
+                            <td>{{ tags.Link }}</td>
+                            <td>{{ tags.Meta }}</td>
+                            <td>{{ tags.Other }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     {% if search %}
 
         Title: {{ search.title }}<br/>

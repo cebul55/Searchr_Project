@@ -33,6 +33,11 @@
                     <form class="form" role="form" id="new_advanced_search" method="post" action="{% url 'searchr_app:new_search' project_id %}"  >
                         {% csrf_token %}
                         <div class="form-row">
+                            <div class="form-group col-md-12">
+                                {{ advanced_search_form|as_crispy_errors }}
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-8 mb-0">
                                 {{ advanced_search_form.title|as_crispy_field }}
                             </div>
