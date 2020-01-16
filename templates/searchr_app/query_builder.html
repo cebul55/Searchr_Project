@@ -1,0 +1,35 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+    {% if user.is_authenticated %}
+
+        Query Builder
+    {% else %}
+        Login reqiured
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+
+        <div class="jumbotron p-4">
+            <div class="container">
+            <h1 class="jumbotron-heading p-1 text-center">Build Query !</h1>
+            </div>
+        </div>
+
+        <div class="container" style="background-color: #e4e7eb;">
+            <div class="row ">
+                <div class="col-md-12 border border-dark rounded-top p-3">
+                    <form class="form"  role="form" id="query_builder" method="post" action="{% url 'searchr_app:query_builder' project_id search_id %}">
+                        {% csrf_token %}
+                        {% crispy query_form %}
+                        <button class="btn btn-primary" type="submit" name="submit">Create Query</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

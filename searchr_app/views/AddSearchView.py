@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from searchr_app.bing_search import create_bing_search_query
-from searchr_app.forms import SearchForm, AdvancedSearchForm, PhraseForm
+from searchr_app.forms import SearchForm, AdvancedSearchForm, PhraseForm, QueryBuilderForm
 from searchr_app.models import Project, Search
 
 
@@ -27,6 +27,7 @@ class AddSearchView(View):
         self.advanced_search_form = AdvancedSearchForm(userid=project.user.id, projectid=project_id, initial={
                                    'project': project,
                                })
+
         return render(request, 'searchr_app/new_search.html', {
             'form': self.form,
             'advanced_search_form': self.advanced_search_form,
@@ -77,7 +78,8 @@ class AddSearchView(View):
                     search.save()
                     #
                     project = Project.objects.filter(id=project_id)[0]
-                    return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
+                    return redirect('searchr_app:query_builder', project_id = project_id, search_id = search.id )
+                    # return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
                 except IntegrityError:
                     self.advanced_search_form.add_error('title','Key (title, project_id)=('+ form_title +', '+ str(form_project.id) +') already exists in database.')
                     print(self.advanced_search_form.errors)

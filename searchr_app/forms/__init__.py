@@ -5,3 +5,4 @@ from .PhraseForm import PhraseForm
 from .SearchResultForm import SearchResultForm
 from .AdvancedSearchForm import AdvancedSearchForm
 from .AdvancedPhraseForm import AdvancedPhraseForm
+from .QueryBuilderForm import QueryBuilderForm

@@ -15,7 +15,7 @@ from .RunSearchView import RunSearchView
 from .HistoryView import HistoryView
 from .ShowAnalisysOutcomeView import ShowAnalisysOutcomeView
 from .MyProjectsView import MyProjectsView
-
+from .QueryBuilderView import QueryBuilderView
 
 # Phrase view
 # from .show_phrase import show_phrase
