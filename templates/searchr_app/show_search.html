@@ -24,7 +24,8 @@
                         <li class="breadcrumb-item active"><a href="#">{{ search.title }}</a> </li>
                     </ol>
                 </nav>
-                <h1 class="jumbotron-heading text-center">{{ search.title }}</h1>
+                <h1 class="jumbotron-heading text-center">Title: {{ search.title }}</h1>
+                <h5 class="jumbotron-content text-left">Created: {{ search.date_created}}</h5>
                 <h3 class="jumbotron-content text-left">Status: {{ search.status|capfirst}}</h3>
             {% else %}
                 <h1 class="jumbotron-heading">Specified Search does not exist or you are not logged in.</h1>
@@ -32,60 +33,79 @@
         </div>
     </div>
 
-    <div class="jumbotron p-1" style="background-color: ghostwhite;">
+    {% if search %}
+        <h3 class="jumbotron-heading text-center">Defined Search Parameters: </h3>
         <div class="container">
+            <div class=" row">
+                <div class=" col-md-6 card border border-info">
+                    <dl class="row p-0 card-text">
+                        <dt class="col-sm-4 p-1">Exact Query</dt>
+                        <dl class="col-sm-8 p-1">{{ attributes.query | safe}}</dl>
+
+                        <dt class="col-sm-4 p-1">Search Language Code</dt>
+                        <dl class="col-sm-8 p-1">{{ attributes.language }}</dl>
+
+                        <dt class="col-sm-4 p-1">Search Count</dt>
+                        <dl class="col-sm-8 p-1">{{ attributes.number_of_results }}</dl>
+
+                        <dt class="col-sm-4 p-1">Offset</dt>
+                        <dl class="col-sm-8 p-1">{{ attributes.offset }}</dl>
+                    </dl>
+                </div>
+                <div class="col-md-6 card-border border border-info">
+                    <h3 class="jumbotron-heading text-center">Defined Phrases: </h3>
+                    {% for phrase in phrases %}
+                        <li class="jumbotron-fluid text-center text-body">
+                            {{ phrase }}
+                        </li>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="row">
-                <h3 class="jumbotron-heading p-1 text-center">
-                    Defined Weights:
-                </h3>
-                <table class="table table-info table-bordered">
-                    <thead >
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Header</th>
-                            <th scope="col">Main</th>
-                            <th scope="col">Footer</th>
-                            <th scope="col">Link</th>
-                            <th scope="col">Meta</th>
-                            <th scope="col">Other</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ tags.Title }}</td>
-                            <td>{{ tags.Header }}</td>
-                            <td>{{ tags.Main }}</td>
-                            <td>{{ tags.Footer }}</td>
-                            <td>{{ tags.Link }}</td>
-                            <td>{{ tags.Meta }}</td>
-                            <td>{{ tags.Other }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-md-12 border border-info rounded" >
+                        <div class="row">
+                            <h3 class="jumbotron-heading p-1 text-center">
+                                Defined Tag Weights:
+                            </h3>
+                            <table class="table table-info table-bordered">
+                                <thead >
+                                    <tr>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Header</th>
+                                        <th scope="col">Main</th>
+                                        <th scope="col">Footer</th>
+                                        <th scope="col">Link</th>
+                                        <th scope="col">Meta</th>
+                                        <th scope="col">Other</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ tags.Title }}</td>
+                                        <td>{{ tags.Header }}</td>
+                                        <td>{{ tags.Main }}</td>
+                                        <td>{{ tags.Footer }}</td>
+                                        <td>{{ tags.Link }}</td>
+                                        <td>{{ tags.Meta }}</td>
+                                        <td>{{ tags.Other }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    {% if search %}
-
-        Title: {{ search.title }}<br/>
-        Project: {{ search.project }}<br/>
-        SearchEngine: {{ search.search_engine }}<br/>
-        Exact Query: {{ search.query|escape }}<br/>
-        Date created: {{ search.date_created }}<br/>
+        Exact Query (DEbUG PURPOSES ONLY, REMOVE LATER: <br/>{{ search.query|escape }}<br/>
 
         {% if phrases %}
-            <h3 class="jumbotron-heading text-center">Defined Phrases: </h3>
-            {% for phrase in phrases %}
-                <li class="jumbotron-fluid text-center text-body">
-                    {{ phrase }}
-                </li>
-            {% endfor %}
+
             {% if search.status != 'running' %}
                 <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
                     {% csrf_token %}
-                    <div class="btn-group">
+                    <div class="btn-group p-1">
                         <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
+                        <a class="btn btn-info" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
                     </div>
                 </form>
             {% else %}
@@ -96,13 +116,18 @@
 
                     <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
                         {% csrf_token %}
-                        <button class="btn-primary btn" type="submit" name="submit" disabled="disabled">Run Search</button>
+                        <div class="btn-group p-1">
+                            <button class="btn-primary btn" type="submit" name="submit" disabled="disabled">Run Search</button>
+                            <a class="btn btn-primary" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
+                        </div>
+
 
                     </form>
+
                 </div>
 
             {% endif %}
-            <a class="btn btn-primary" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
+
 {#            <a class="btn-primary btn" method="post" href="{% url 'searchr_app:run_query' search.id %}">Run Search</a>#}
         {% else %}
             <h3 class="jumbotron-heading text-center">No defined phrases add one to start searching</h3>
@@ -129,7 +154,7 @@
                                                 <p style="background-color: red">TODO URL GO TO</p>
                                                 URL: <a class="card-link" href="{{ search_result.url }}">{{ search_result.url }}</a><br/>
                                                 Date found: {{ search_result.date_found }}<br/>
-                                                Accuracy: {{ search_result.accuracy }}
+                                                Accuracy: {{ search_result.accuracy|floatformat:3 }}
                                             </div>
                                         </li>
                                         {% endif %}

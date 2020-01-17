@@ -66,6 +66,9 @@
                             <a href="{{ search_result.url }}">{{ search_result.url|safe }}</a>
                         </dd>
 
+                        <dt class="col-sm-3 p-2">Accuracy</dt>
+                        <dd class="col-sm-9 p-2">{{ search_result.accuracy|floatformat:3 }}</dd>
+
                         <dt class="col-sm-3 p-2">Content Type</dt>
                         <dd class="col-sm-9 p-2">{{ search_result.content_type|safe }}</dd>
 
@@ -101,7 +104,7 @@
                                             <table class="table table-sm table-hover">
                                             <thead class="thead-dark">
                                             <tr class="table-row">
-                                                <th class="table-cell p-1 border border-primary">Search Result Id</th>
+                                                <th class="table-cell p-1 border border-primary">Number of Phrases Found:</th>
                                                 <th class="table-cell p-1 border border-primary">Is exact match?</th>
                                                 <th class="table-cell p-1 border border-primary">Website part</th>
                                             </tr>
@@ -109,7 +112,7 @@
                                             <tbody>
                                                 {% for a_res in analisys_results %}
                                                     <tr class="table-row">
-                                                        <td class="table-cell p-1 border"><a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">{{ a_res.id }}</a></td>
+                                                        <td class="table-cell p-1 border"><a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">{{ a_res.analisysoutcomephrasevalues_set.values_list.count }}</a></td>
                                                         <td class="table-cell p-1 border">{{ a_res.exact_match }}</td>
                                                         <td class="table-cell p-1 border">{{ a_res.website_part }}</td>
 

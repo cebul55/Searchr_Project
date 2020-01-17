@@ -64,9 +64,16 @@ class QueryBuilderView(View):
                     saved_query = saved_query.replace('\'', '\"')
                     saved_query = json.loads(saved_query)
 
+                    # update attribures
+                    attributes = json.loads(search.attributes)
+                    attributes['query'] = form_query
+
+                    # print(attributes)
                     updated_query = update_bing_search_query(saved_query, form_query)
                     search.query = updated_query
+                    search.attributes = attributes
                     search.save()
+                    #
                     return redirect('searchr_app:show_search', username=project.user.username, slug=project.slug, search_slug=search.slug)
 
         except Search.DoesNotExist:

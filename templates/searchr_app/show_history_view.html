@@ -50,7 +50,7 @@
                                 <a href="{% url 'searchr_app:search_result' result.id %}">{{ result.title|escape }}</a>
                             </th>
                             <th class="table-cell p-3 border">{{ result.date_found }}</th>
-                            <th class="table-cell p-3 border">{{ result.accuracy|escape }} %</th>
+                            <th class="table-cell p-3 border">{{ result.accuracy|floatformat:3 }}</th>
                             <th class="table-cell p-3 border">{{ result.status|capfirst }}</th>
                         </tr>
                         {% endfor %}

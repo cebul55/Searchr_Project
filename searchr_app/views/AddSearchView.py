@@ -68,7 +68,7 @@ class AddSearchView(View):
                                     project=form_project,
                                     search_engine=form_search_engine,
                                     phrases_list=json.dumps(phrases_val),
-                                    attributes=attribs)
+                                    attributes=json.dumps(attribs))
                     if form_search_engine == Search._BING:
                         search.query = create_bing_search_query(search=search,
                                                                 phrases=form_phrases,
