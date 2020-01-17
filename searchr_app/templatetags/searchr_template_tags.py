@@ -26,4 +26,5 @@ def get_projects_list(current_project=None, username=None):
         'public_projects': Project.objects.all().filter(is_private=False),
         'private_projects': Project.objects.all().filter(user=user),
         'current_project': current_project,
+        'user': user,
     }

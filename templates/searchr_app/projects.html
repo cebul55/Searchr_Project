@@ -1,6 +1,6 @@
 <ul class="nav flex-column">
     <h2 class="sidebar-heading">My Projects:</h2>
-    {% if private_projects %}
+    {% if private_projects and user.is_authenticated %}
 
         {% for project in private_projects %}
 
@@ -15,17 +15,19 @@
                 </li>
             {% endif %}
         {% endfor %}
-    {% elif  user.is_authenticated  %}
-        <p class="nav-fill">No projects.</p>
+    {% elif user.is_authenticated  %}
+        <p class="nav-fill navbar-text text-center">No projects.</p>
     {% else %}
-        <p class="nav-fill">
-            <a class="card-link" href="{% url 'auth_login' %}">Login</a>
-            or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+        <p class="nav-fill navbar-text text-center">
+            To use application:<br />
+            <a class="btn btn-primary" href="{% url 'auth_login' %}">Login</a><br />
+            or<br />
+            <a class="btn btn-primary" href="{% url 'registration_register' %}">Register</a><br />
         </p>
     {% endif %}
     <br/>
     <h2 class="sidebar-heading">Public Projects:</h2>
-    {% if public_projects %}
+    {% if public_projects and user.is_authenticated %}
 
         {% for project in public_projects %}
 
@@ -41,6 +43,6 @@
             {% endif %}
         {% endfor %}
     {% else %}
-        <p class="nav-fill">No projects.</p>
+        <p class="nav-fill navbar-text text-center">No projects.</p>
     {% endif %}
 </ul>

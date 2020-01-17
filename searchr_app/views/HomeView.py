@@ -28,5 +28,6 @@ class HomeView(View):
         context_dict['private_project_list'] = private_project_list
         context_dict['search_results'] = search_results_list
         context_dict['username'] = username
+        context_dict['user'] = user
 
         return render(request, 'searchr_app/home.html', context_dict)
