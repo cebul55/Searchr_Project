@@ -35,7 +35,7 @@
 
     {% if search %}
         <h3 class="jumbotron-heading text-center">Defined Search Parameters: </h3>
-        <div class="container">
+        <div class="container p-4" style="max-width: 100%">
             <div class=" row">
                 <div class=" col-md-6 card border border-info">
                     <dl class="row p-0 card-text">
@@ -56,18 +56,18 @@
                     <h3 class="jumbotron-heading text-center">Defined Phrases: </h3>
                     {% for phrase in phrases %}
                         <li class="jumbotron-fluid text-center text-body">
-                            {{ phrase }}
+                            <a class="text-info" href="{% url 'searchr_app:show_phrase' phrase.language phrase.slug %}">{{ phrase }}</a>
                         </li>
                     {% endfor %}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 border border-info rounded" >
-                        <div class="row">
-                            <h3 class="jumbotron-heading p-1 text-center">
+                        <div class="row p-3">
+                            <h3 class="jumbotron-heading text-center p-1">
                                 Defined Tag Weights:
                             </h3>
-                            <table class="table table-info table-bordered">
+                            <table class="table table-info table-bordered p-3">
                                 <thead >
                                     <tr>
                                         <th scope="col">Title</th>
@@ -134,7 +134,7 @@
         {% endif %}
 
         {% if search_results %}
-            <div class="container">
+            <div class="container p-4" style="max-width: 100%;">
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="card mb-4">

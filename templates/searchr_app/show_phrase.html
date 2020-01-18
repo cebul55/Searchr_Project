@@ -14,7 +14,7 @@
     <div class="jumbotron p-4">
         <div class="container">
             {% if phrase %}
-            <h1 class="jumbotron-heading text-center">{{ phrase.value }}</h1>
+            <h1 class="jumbotron-heading text-center">Phrase Value: <strong class="text-info">{{ phrase.value }}</strong></h1>
             {% else %}
 
                 <h1 class="jumbotron-heading">The specified Phrase does not exist!</h1>
@@ -23,31 +23,48 @@
     </div>
 
     {% if phrase %}
-        <p class="page-item">
-            Date created: {{ phrase.date_created }}
-        </p>
-        <p class="page-item">
-            Date last searched: {{ phrase.date_last_searched }}
-        </p>
-        <p class="page-item">
-            Language: {{ phrase.get_language_display|capfirst|escape }}
-        </p>
-        {% if keywords %}
-            <ul>
-                {% for kword in keywords %}
-                    <li>{{ kword.keyword }}
-                        <a class="page-link" href="{% url 'searchr_app:show_keyword' kword.language kword.slug %}">{{ kword.keyword }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>No Keywords found in phrase.</strong>
+        <div class="container p-4">
+            <div class="row">
+                <div class=" col-md-12 card border border-info p-2">
+                    <dl class="row p-0 card-text text-center">
+                        <dt class="col-sm-6 p-1">Date Created</dt>
+                        <dl class="col-sm-6 p-1">{{ phrase.date_created }}</dl>
 
-        {% endif %}
+                        <dt class="col-sm-6 p-1">Date Last Searched</dt>
+                        <dl class="col-sm-6 p-1">{{ phrase.date_last_searched }}</dl>
 
-        {% if user.is_authenticated %}
-        Użytkownik jest zalogowany!
-{#            <a href="{% url 'searchr_app:add_keyword' phrase.slug %}">Add Keyword</a>#}
-        {% endif %}
+                        <dt class="col-sm-6 p-1">Language of phrase</dt>
+                        <dl class="col-sm-6 p-1">{{ phrase.get_language_display|capfirst|escape }}</dl>
+
+{#                        <dt class="col-sm-4 p-1">Offset</dt>#}
+{#                        <dl class="col-sm-8 p-1">{{ attributes.offset }}</dl>#}
+                    </dl>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class=" col-md-12 card border border-info">
+                    <div class="card-header "><h3 class="jumbotron-heading text-center">Keywords</h3></div>
+                        {% if keywords %}
+                            <ul class="list-group">
+                                {% for kword in keywords %}
+                                <li class="list-group-item">
+                                    <div class="card-body">
+                                        <p class="text-info">
+                                            <h5 class="text-info text-center">
+                                                {{ kword.keyword |capfirst }}
+                                            </h5>
+                                        </p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <strong>No Keywords found in phrase.</strong>
+
+                        {% endif %}
+
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

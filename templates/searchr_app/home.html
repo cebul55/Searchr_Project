@@ -6,9 +6,18 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="jumbotron p-4">
+    <div class="jumbotron p-3">
         <div class="container">
-            <h1 class="jumbotron-heading p-1 text-center">HOME PAGE</h1>
+            <h1 class="jumbotron-heading p-1 text-primary text-left">Welcome to SearchR Application!</h1>
+            <p class="lead">This application helps to monitor and control web searches!</p>
+            <hr class="my-4">
+            {% if user.is_authenticated %}
+                <p>Create your next project.</p>
+                <a class="btn btn-primary btn-lg" href="{% url 'searchr_app:add_project' %}" role="button">Create Project</a>
+            {% else %}
+                <p>Don't wait and create your first project.</p>
+                <a class="btn btn-primary btn-lg" href="{% url 'searchr_app:add_project' %}" role="button">Create Project</a>
+            {% endif %}
         </div>
     </div>
 {% comment %}    <div>
@@ -19,67 +28,130 @@
                 <button type="submit" name='mybtn2' >run crawler</button>
             </form>
     </div>{% endcomment %}
-        <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-6">
-                    <div class="card-body">
-                        <h2>Public projects</h2>
-                        <p class="card-text">
-                        {% if public_project_list %}
-                            <ul class="list-group">
-                                {% for project in public_project_list %}
-                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <strong>There are no public projects available.</strong>
-                        {% endif %}
-
-                        </p>
-                        <h2>My projects</h2>
-                        <p class="card-text">
-                        {% if private_project_list %}
-                            <ul class="list-group">
-                                {% for project in private_project_list %}
-                                    <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        {% elif user.is_authenticated %}
-                            <strong>You have no projects.</strong>
-                        {% else %}
+    <div class="container p-2" style="max-width: 100%; max-height: 100%">
+        <div class="row " style="max-height: 40%">
+            <div class="col-md-4" style="">
+                <div class="overflow-auto" style="max-height: 50%">
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h2>Public projects</h2>
+                        </div>
+                        <div class="card-body">
                             <p class="card-text">
-                                To see projects, <a class="card-link" href="{% url 'auth_login' %}">login</a> or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+                            {% if public_project_list %}
+                                <ul class="list-group">
+                                    {% for project in public_project_list %}
+                                        <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <strong>There are no public projects available.</strong>
+                            {% endif %}
+
                             </p>
+                        </div>
+                        <div class="card-header">
+                             <h2>My projects</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                            {% if private_project_list %}
+                                <ul class="list-group">
+                                    {% for project in private_project_list %}
+                                        <li class="list-group-item" ><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% elif user.is_authenticated %}
+                                <strong>You have no projects.</strong>
+                            {% else %}
+                                <p class="card-text">
+                                    To see projects, <a class="card-link" href="{% url 'auth_login' %}">login</a> or<a class="card-link" href="{% url 'registration_register' %}">register</a>.
+                                </p>
 
-                        {% endif %}
+                            {% endif %}
 
-                        </p>
+                            </p>
+                        </div>
                     </div>
                 </div>
+
             </div>
-        <div class="col-md-6">
-                <div class="card mb-6">
-                    <div class="card-body">
-                        <h2>Most Viewed Search Results </h2>
-                        <p class="card-text">
-{#                        {% if search_results %}#}
-{#                            <ul class="list-group">#}
-{#                                {% for result in search_results %}#}
-{#                                    <li class="list-group-item" >#}
-{#                                        <a href="{% url 'searchr_app:goto_url' %}?search_result_id={{ result.id }}">{{ result.search_result_title }}</a>#}
-{#                                        {% if result.views > 1 or result.views == 0 %}#}
-{#                                            ({{ result.views }} views.)#}
-{#                                        {% else %}#}
-{#                                            ({{ result.views }} view.)#}
-{#                                        {% endif %}#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-{#                            </ul>#}
-{#                        {% else %}#}
-{#                            <strong>There are no searched results present yet.</strong>#}
-{#                        {% endif %}#}
-                        </p>
+            <div class="col-md-4" >
+                <div class="overflow-auto" style="max-height: 50%">
+                    <div class="card mb-6">
+                        <div class="card" >
+
+                            <div class="card-header">
+                                <h2 >Recently created searches </h2>
+                            </div>
+                            {% if searches %}
+                                <ul class="list-group">
+                                    {% for search in searches %}
+                                        <li class="list-group-item" >
+                                            <div class="card-header">
+                                                <a href="{% url 'searchr_app:show_search' username search.project.slug search.slug %}">{{ search.title }}</a>
+                                            </div>
+                                            <dl class="row pl-4 card-text text-left">
+                                                <dt class="col-sm-6 p-1">Date Created</dt>
+                                                <dl class="col-sm-6 p-1">{{ search.date_created }}</dl>
+
+                                                <dt class="col-sm-6 p-1">Number of Results</dt>
+                                                <dl class="col-sm-6 p-1">{{ search.searchresult_set.count }}</dl>
+
+                                                <dt class="col-sm-6 p-1">Status</dt>
+                                                <dl class="col-sm-6 p-1">{{ search.status|capfirst }}</dl>
+
+                                                <dt class="col-sm-4 p-1">Phrase List</dt>
+                                                <dl class="col-sm-8 p-1">{{ search.phrases_list|safe}}</dl>
+                                            </dl>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <strong>There are no searches created yet.</strong>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4" >
+                <div class="overflow-auto" style="max-height: 50%">
+                    <div class="card mb-6">
+                        <div class="card" >
+
+                            <div class="card-header">
+                                <h2 >Recently analyzed results </h2>
+                            </div>
+                            {% if searches %}
+                                <ul class="list-group">
+                                    {% for result in results %}
+                                        <li class="list-group-item" >
+                                            <div class="card-header">
+                                                <a href="{% url 'searchr_app:search_result' result.id %}">{{ result.title|safe|escape }}</a>
+                                            </div>
+                                            <dl class="row pl-4 card-text text-left">
+                                                <dt class="col-sm-6 p-1">Date Found</dt>
+                                                <dl class="col-sm-6 p-1">{{ result.date_found }}</dl>
+
+                                                <dt class="col-sm-6 p-1">Accuracy</dt>
+                                                <dl class="col-sm-6 p-1">{{ result.accuracy | floatformat:3}}</dl>
+
+                                                <dt class="col-sm-6 p-1">Search</dt>
+                                                <dl class="col-sm-6 p-1">
+                                                    <a href="{% url 'searchr_app:show_search' username result.search.project.slug result.search.slug %}">{{ result.search.title }}</a>
+                                                </dl>
+{##}
+{#                                                <dt class="col-sm-4 p-1">Phrase List</dt>#}
+{#                                                <dl class="col-sm-8 p-1">{{ search.phrases_list|safe}}</dl>#}
+                                            </dl>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <strong>There are no search results, that has been analyzed yet.</strong>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
 

@@ -29,7 +29,17 @@ class SearchObjectView(View):
         if search:
             phrases = json.decoder.JSONDecoder().decode(search.phrases_list)
 
-        context_dict['phrases'] = phrases
+        # get phrases objects defined in project/search
+        phrases_list = []
+        phrases_list_project = project.phrase_set.all()
+        for phrase_str in phrases:
+            phrase = phrases_list_project.filter(value=phrase_str)[0]
+            if phrase:
+                phrases_list.append(phrase)
+
+        # print(phrases_list)
+
+        context_dict['phrases'] = phrases_list
         context_dict['tags'] = tags_weight
         context_dict['attributes'] = json.loads(search.attributes.replace('\"', ' ').replace('\'', '\"'))
 
