@@ -112,7 +112,14 @@
                                             <tbody>
                                                 {% for a_res in analisys_results %}
                                                     <tr class="table-row">
-                                                        <td class="table-cell p-1 border"><a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">{{ a_res.analisysoutcomephrasevalues_set.values_list.count }}</a></td>
+                                                        <td class="table-cell p-1 border">
+                                                            <a href="{% url 'searchr_app:analisys_outcome' a_res.id %}">
+                                                                {% with a_res.analisysoutcomephrasevalues_set.all|first as item %}
+                                                                    {{ item.number_of_phrases }}
+                                                                {% endwith %}
+{#                                                                ///{{ a_res.analisysoutcomephrasevalues_set.count }}#}
+                                                            </a>
+                                                        </td>
                                                         <td class="table-cell p-1 border">{{ a_res.exact_match }}</td>
                                                         <td class="table-cell p-1 border">{{ a_res.website_part }}</td>
 

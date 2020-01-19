@@ -1,6 +1,5 @@
 import json
 
-from searchr_app.file_analyzer import FileAnalyzer
 from bs4 import BeautifulSoup
 
 from searchr_app.models import AnalisysOutcome, AnalisysOutcomePhraseValues
@@ -46,14 +45,14 @@ class HTMLFileAnalyzer(object):
             # self.search_result.accuracy = accuracy
             # self.search_result.save()
 
-    def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part):
+    def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part, number_of_phrases):
         outcome = AnalisysOutcome(text_fragment=text_fragment,
                                   exact_match=exact_match,
                                   website_part=website_part,
                                   search_result=self.search_result)
         outcome.save()
         # create phrase values
-        phrase_values = AnalisysOutcomePhraseValues(phrase_value=str(phrases_combination), analisys_outcome=outcome)
+        phrase_values = AnalisysOutcomePhraseValues(phrase_value=str(phrases_combination), analisys_outcome=outcome, number_of_phrases=number_of_phrases)
         phrase_values.save()
         return outcome
 
@@ -63,7 +62,7 @@ class HTMLFileAnalyzer(object):
             if all(phrase.lower() in str(title).lower() for phrase in phrases_combination):
                 # element was successfully found
                 # based on that information analisys outcome is created
-                outcome = self.create_outcome(phrases_combination, title.prettify(), exact_match, 'Title')
+                outcome = self.create_outcome(phrases_combination, title.prettify(), exact_match, 'Title', len(phrases_combination))
                 self.list_of_outcomes.append(outcome)
 
     def find_in_header(self, phrases_combination, exact_match):
@@ -76,7 +75,7 @@ class HTMLFileAnalyzer(object):
             for tag in tag_list:
                 if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
                     if tag.parent.name.lower() != 'a':
-                        outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Header')
+                        outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Header', len(phrases_combination))
                         self.list_of_outcomes.append(outcome)
 
     def find_in_main(self, phrases_combination, exact_match):
@@ -93,14 +92,14 @@ class HTMLFileAnalyzer(object):
                         for tag in tag_list:
                             if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
                                 if tag.parent.name.lower() != 'a' and tag.name.lower != 'a':
-                                    outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Main')
+                                    outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Main', len(phrases_combination))
                                     self.list_of_outcomes.append(outcome)
             except AttributeError:
                 if all(phrase.lower() in str(body_tag).lower() for phrase in phrases_combination):
-                    outcome = self.create_outcome(phrases_combination, body_tag.prettify(), exact_match, 'Main')
+                    outcome = self.create_outcome(phrases_combination, body_tag.prettify(), exact_match, 'Main', len(phrases_combination))
                     self.list_of_outcomes.append(outcome)
         else:
-        # main element exist in html file
+            # main element exist in html file
             for main in main_list:
                 soup_main = BeautifulSoup(str(main), 'html.parser')
                 # search in visible elements placed in main:
@@ -109,7 +108,7 @@ class HTMLFileAnalyzer(object):
                 for tag in tag_list:
                     if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
                         if tag.parent.name.lower() != 'a' and tag.name.lower != 'a':
-                            outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Main')
+                            outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Main', len(phrases_combination))
                             self.list_of_outcomes.append(outcome)
 
     def find_in_footer(self, phrases_combination, exact_match):
@@ -122,7 +121,7 @@ class HTMLFileAnalyzer(object):
             for tag in tag_list:
                 if all(phrase.lower() in str(tag).lower() for phrase in phrases_combination):
                     if tag.parent.name.lower() != 'a':
-                        outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Footer')
+                        outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Footer', len(phrases_combination))
                         self.list_of_outcomes.append(outcome)
 
     def find_in_link(self, phrases_combination, exact_match):
@@ -132,10 +131,10 @@ class HTMLFileAnalyzer(object):
                 try:
                     # try to find link's parent
                     tag = link.parent
-                    outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Link')
+                    outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Link', len(phrases_combination))
                     self.list_of_outcomes.append(outcome)
                 except TypeError:
-                    outcome = self.create_outcome(phrases_combination, link.prettify(), exact_match, 'Link')
+                    outcome = self.create_outcome(phrases_combination, link.prettify(), exact_match, 'Link', len(phrases_combination))
                     self.list_of_outcomes.append(outcome)
 
     def find_in_head(self, phrases_combination, exact_match):
@@ -145,7 +144,7 @@ class HTMLFileAnalyzer(object):
             tag_list = soup_head.find_all(self._META_TAG_LIST)
             for tag in tag_list:
                 if all(phrase.lower() in str(tag) for phrase in phrases_combination):
-                    outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Meta')
+                    outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Meta', len(phrases_combination))
                     self.list_of_outcomes.append(outcome)
 
     def count_result_accuracy(self):
@@ -172,7 +171,7 @@ class HTMLFileAnalyzer(object):
         for outcome in self.list_of_outcomes:
             if outcome.website_part == 'Title':
                 sum_of_occurences = sum_of_occurences + title_weight
-            elif outcome.website_part =='Header':
+            elif outcome.website_part == 'Header':
                 sum_of_occurences = sum_of_occurences + header_weight
             elif outcome.website_part == 'Footer':
                 sum_of_occurences = sum_of_occurences + footer_weight
@@ -196,7 +195,7 @@ class HTMLFileAnalyzer(object):
         reversed_combination = reversed(sorted(combination, key=len))
         # find phrases from combination and change to True
         for c_phrase in reversed_combination:
-            mid_phrase = '\"' + c_phrase + '\"'
+            mid_phrase = '\"' + str(c_phrase) + '\"'
             if mid_phrase in tmp_search_query:
                 tmp_search_query = tmp_search_query.replace(mid_phrase, 'True')
 
@@ -205,7 +204,7 @@ class HTMLFileAnalyzer(object):
         # sorting and reversing list to replace items correctly
         reversed_missing = reversed(sorted(missing_phrases, key=len))
         for m_phrase in reversed_missing:
-            mid_phrase = '\"' + m_phrase + '\"'
+            mid_phrase = '\"' + str(m_phrase) + '\"'
             if mid_phrase in tmp_search_query:
                 tmp_search_query = tmp_search_query.replace(mid_phrase, 'False')
 
@@ -213,4 +212,3 @@ class HTMLFileAnalyzer(object):
         # print(tmp_search_query)
         # returns boolean evaluation of searching combination
         return eval(tmp_search_query)
-

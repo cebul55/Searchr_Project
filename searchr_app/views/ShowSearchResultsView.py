@@ -22,6 +22,7 @@ class ShowSearchResultsView(View):
             context_dict['project'] = search_result.search.project
             context_dict['form'] = self.form
             context_dict['analisys_results'] = search_result.analisysoutcome_set.get_queryset()
+            # context_dict['outcome_phrases'] = search_result.analisysoutcome_set
 
         except SearchResult.DoesNotExist:
             context_dict['search_result'] = None

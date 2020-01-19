@@ -25,6 +25,8 @@ class TextFileAnalyzer(object):
             exact_match = self.evaluate_exact_match(combination)
             self.find_in_text(combination, exact_match)
 
+        # if all found phrases are not exact_matches, delete all found phrases
+
     def find_in_text(self, combination, exact_match):
         if len(combination) == 1:
             # count how many times single phrase occurs in text
@@ -38,7 +40,7 @@ class TextFileAnalyzer(object):
                         flag = False
                     else:
                         outcome_text = string_text[index-100:(index+len(phrase)+100)]
-                        outcome = self.create_outcome(combination, outcome_text, exact_match, '(1)Index: ' + str(index))
+                        outcome = self.create_outcome(combination, outcome_text, exact_match, '(1)Index: ' + str(index), len(combination))
                         self.list_of_outcomes.append(outcome)
                         string_text = string_text[index+1:]
 
@@ -58,17 +60,17 @@ class TextFileAnalyzer(object):
                         if max_pos_index < index:
                             max_pos_index = index + len(phrase)
                 outcome_text = str(self.text_doc)[min_pos_index:max_pos_index]
-                outcome = self.create_outcome(combination, outcome_text, exact_match, '(' + str(len(combination)) + ')Index:' + str(min_pos_index))
+                outcome = self.create_outcome(combination, outcome_text, exact_match, '(' + str(len(combination)) + ')Index:' + str(min_pos_index), len(combination))
                 self.list_of_outcomes.append(outcome)
 
-    def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part):
+    def create_outcome(self, phrases_combination, text_fragment, exact_match, website_part, number_of_phrases):
         outcome = AnalisysOutcome(text_fragment=text_fragment,
                                   exact_match=exact_match,
                                   website_part=website_part,
                                   search_result=self.search_result)
         outcome.save()
         # create phrase values
-        phrase_values = AnalisysOutcomePhraseValues(phrase_value=str(phrases_combination), analisys_outcome=outcome)
+        phrase_values = AnalisysOutcomePhraseValues(phrase_value=str(phrases_combination), analisys_outcome=outcome, number_of_phrases=number_of_phrases)
         phrase_values.save()
         return outcome
 
