@@ -1,7 +1,9 @@
 import json
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from searchr_app.models import Project, Search, Phrase, SearchResult
@@ -9,6 +11,7 @@ from searchr_app.models import Project, Search, Phrase, SearchResult
 
 class SearchObjectView(View):
 
+    @method_decorator(login_required)
     def get(self, request, username, slug, search_slug):
         context_dict = {}
         # get user by username
@@ -53,3 +56,25 @@ class SearchObjectView(View):
             context_dict['search_results'] = None
 
         return render(request, 'searchr_app/show_search.html', context_dict)
+
+    @method_decorator(login_required)
+    def post(self, request, username, slug, search_slug):
+        if 'delete' in request.POST:
+            try:
+                # get user by username
+                user = User.objects.filter(username=username)[0]
+
+                # get project by slug and username
+                project = Project.objects.filter(user=user, slug=slug)[0]
+
+                # get search object by project and slug
+                search = Search.objects.filter(project=project, slug=search_slug)[0]
+                search.delete()
+                return redirect('searchr_app:show_project', username=project.user.username, slug=project.slug)
+
+            except User.DoesNotExist or Project.DoesNotExist or Search.DoesNotExist:
+                print('Error while deleting Search: ' + username + ' ' + slug + ' ' + search_slug)
+                return redirect('searchr_app:home')
+
+        else:
+            self.get(request, username, slug, search_slug)
