@@ -26,6 +26,17 @@ class TextFileAnalyzer(object):
             self.find_in_text(combination, exact_match)
 
         # if all found phrases are not exact_matches, delete all found phrases
+        if_any_is_exact = False
+        for outcome in self.list_of_outcomes:
+            if outcome.exact_match:
+                if_any_is_exact = True
+                break
+        # delete all outcomes
+        if not if_any_is_exact:
+            for outcome in self.list_of_outcomes:
+                outcome.delete()
+            self.list_of_outcomes = []
+
 
     def find_in_text(self, combination, exact_match):
         if len(combination) == 1:
