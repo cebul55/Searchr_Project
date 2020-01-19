@@ -1,0 +1,99 @@
+{% extends 'searchr_app/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block title_block %}
+    Update Project
+{% endblock %}
+
+{% block body_block %}
+
+    <div class="jumbotron p-4">
+        <div class="container">
+            <h1 class="jumbotron-heading text-center">Update Project: "{{ project.title }}"</h1>
+        </div>
+    </div>
+
+    <div class="container" style="background-color: #e4e7eb;">
+        <div class="row">
+            <div class="col-md-12 border border-dark rounded p-3">
+                <form role="form" id="add_project_form" method="post" action="{% url 'searchr_app:update_project' project.user.username project.slug %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{ form|as_crispy_errors }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-7 mb-0">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-5 mb-0">
+                            {{ form.is_private|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            {{ form.description|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="overflow-auto p-2" style="max-height: 70%; background-color: white;">
+                                <div class="form-row">
+                                    <div class="form-group col-md-8 mb-0">
+                                        {{ form.phrases|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group col-md-8 mb-0">
+                                        {{ form.user|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-row">
+                                <div class="form-group col-md-12 mb-0">
+                                    {{ form.title_weight|as_crispy_field }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12 mb-0">
+                                    {{ form.header_weight|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class=" form-group col-md-12 mb-0">
+                                    {{ form.main_weight|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class=" form-group col-md-12 mb-0">
+                                    {{ form.footer_weight|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class=" form-group col-md-12 mb-0">
+                                    {{ form.link_weight|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12 mb-0">
+                                    {{ form.meta_weight|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                 <div class=" form-group col-md-12 mb-0">
+                                     {{ form.other_weight|as_crispy_field }}
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" name="submit">Update Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

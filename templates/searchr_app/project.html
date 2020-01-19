@@ -19,8 +19,10 @@
                         <li class="breadcrumb-item active"><a href="#">{{ project.title }}</a></li>
                     </ol>
                 </nav>
-            <h1 class="jumbotron-heading p-1 text-center">Title: {{ project.title }}</h1>
-            <h4 class="jumbotron-heading p-1 text-right">Author: {{ project.user.first_name }} {{ project.user.last_name }}</h4>
+                <h1 class="jumbotron-heading p-1 text-center">Title: {{ project.title }}</h1>
+                <hr class="my-4">
+                <p><strong>Description: </strong>{{ project.description }}</p>
+{#                <h4 class="jumbotron-heading p-1 text-right">Author: {{ project.user.first_name }} {{ project.user.last_name }}</h4>#}
             {% else%}
                 <h1 class="jumbotron-heading p-1 text-center">Unknown project</h1>
             {% endif %}
@@ -64,6 +66,7 @@
         {% if user.is_authenticated and user == project.user %}
             <div class="btn-group">
                 <a class="btn btn-primary" href="{% url 'searchr_app:new_search' project.id %}">Create new Search</a>
+                <a class="btn btn-info" href="{% url 'searchr_app:update_project' project.user.username project.slug %}">Update Project</a>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
                     Delete Project
