@@ -1,4 +1,6 @@
 import itertools
+import json
+
 from bs4 import BeautifulSoup
 
 from searchr_app.file_analyzer.HTMLFileAnalyzer import HTMLFileAnalyzer
@@ -8,6 +10,10 @@ from searchr_app.file_analyzer.TextFileAnalyzer import TextFileAnalyzer
 class FileAnalyzer(object):
     search_result = None
     search_phrases_combination = None
+    # phrases defined by user
+    search_phrases = None
+    # query defined by user
+    search_query = None
     html_doc = None
     text_doc = None
     accuracy = 0.0
@@ -16,6 +22,7 @@ class FileAnalyzer(object):
         self.search_result = search_result
         phrases_list = str(search_result.search.phrases_list)
         self.search_phrases_combination = self.generate_phrase_combinations_as_text(phrases_list)
+        self.search_query = self.get_search_query(search_result.search)
         if 'pdf' in search_result.content_type or 'word' in search_result.content_type:
             self.text_doc = search_result.html_file
         elif search_result.html_file is not None:
@@ -49,6 +56,7 @@ class FileAnalyzer(object):
 
     def generate_phrase_combinations_as_text(self, phrases_list):
         phrases_list = self.convert_literal_list_to_list(phrases_list)
+        self.search_phrases = phrases_list
         combinations = []
         for L in range(1, len(phrases_list) + 1):
             for subset in itertools.combinations(phrases_list, L):
@@ -67,15 +75,24 @@ class FileAnalyzer(object):
 
     def analyze_text(self):
         print('startin doc analisys')
-        text_analyzer = TextFileAnalyzer(self.search_result, self.search_phrases_combination, self.text_doc)
+        text_analyzer = TextFileAnalyzer(self.search_result, self.search_phrases_combination, self.search_phrases, self.search_query, self.text_doc)
         text_analyzer.analyze_text_file()
         self.accuracy = text_analyzer.count_result_accuracy()
         pass
 
     def analyze_html(self):
-        html_analyzer = HTMLFileAnalyzer(self.search_result, self.search_phrases_combination, self.html_doc)
+        html_analyzer = HTMLFileAnalyzer(self.search_result, self.search_phrases_combination, self.search_phrases, self.search_query, self.html_doc)
         html_analyzer.analyze_html_file()
         self.accuracy = html_analyzer.count_result_accuracy()
 
     def get_accuracy(self):
         return self.accuracy
+
+    def get_search_query(self, search):
+        saved_attribs = search.attributes.replace('\"', '#DOUBLEQUOTE#')
+        saved_attribs = saved_attribs.replace('\'', '\"')
+        attr_dict = json.loads(saved_attribs)
+
+        search_query = attr_dict['query']
+        search_query = search_query.replace('#DOUBLEQUOTE#', '\"')
+        return search_query
