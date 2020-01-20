@@ -17,6 +17,7 @@ urlpatterns = [
     path('add_phrase/', views.AddPhraseView.as_view(), name='add_phrase'),
     # path('keyword/<keyword_language>/<slug:keyword_slug>/', views.ShowKeywordView.as_view(), name='show_keyword'),
     path('search_result/<search_res_id>', views.ShowSearchResultsView.as_view(), name='search_result'),
+    path('search_result/<search_res_id_1>/compare/<search_res_id_2>/', views.CompareSearchResultsView.as_view(), name='compare_results'),
     path('run_query/<search_id>', views.RunSearchView.as_view(), name='run_query'),
     path('owner/<slug:username>/project/<slug:project_slug>/<slug:search_slug>/history', views.HistoryView.as_view(), name='history_view'),
     path('analisys_outcome/<analisys_outcome_id>', views.ShowAnalisysOutcomeView.as_view(), name='analisys_outcome'),

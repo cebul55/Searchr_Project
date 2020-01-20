@@ -7,3 +7,4 @@ from .AdvancedSearchForm import AdvancedSearchForm
 from .AdvancedPhraseForm import AdvancedPhraseForm
 from .QueryBuilderForm import QueryBuilderForm
 from .ProjectForm import UpdateProjectForm
+from .ChooseResultForm import ChooseResultForm
