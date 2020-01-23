@@ -18,6 +18,8 @@ class HtmlFileDownloader(CrawlSpider):
         self.domain = kwargs.get('domain')
         self.start_urls = [self.url]
         self.allowed_domains = [self.domain]
+        self.user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"
+
 
         super(HtmlFileDownloader, self).__init__(*args, **kwargs)
 

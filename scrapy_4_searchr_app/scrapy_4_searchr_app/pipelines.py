@@ -28,6 +28,9 @@ class Scrapy4SearchrAppPipeline(object):
         item.unique_id = self.unique_id
         # save html file
         item.content_type = self.content_type
+        if self.html_content:
+            self.html_content = self.html_content.replace('\x00', '')
+
         item.data = self.html_content
         item.status = 'finished'
         item.save()
