@@ -31,6 +31,7 @@ class CrawlItem(models.Model):
         return self.unique_id
 
     def save(self, *args, **kwargs):
+
         if self.status == 'finished':
             scrapy_id = self.unique_id
             search_result = SearchResult.objects.get(scrapy_unique_task_id=scrapy_id)

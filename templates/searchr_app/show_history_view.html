@@ -47,7 +47,11 @@
                         <tbody>
                         {% for result in search_history.search_results.get_queryset %}<tr class="table-row">
                             <th class="table-cell text-body p-3 border">
-                                <a href="{% url 'searchr_app:search_result' result.id %}">{{ result.title|escape }}</a>
+                                {% if result.status == 'Finished_analyzed' %}
+                                <a class="active" href="{% url 'searchr_app:search_result' result.id %}">{{ result.title|escape }}</a>
+                                {% else %}
+                                    <a class="disabled" href="{% url 'searchr_app:search_result' result.id %}">{{ result.title|escape }}</a>
+                                {% endif %}
                             </th>
                             <th class="table-cell p-3 border">{{ result.date_found }}</th>
                             <th class="table-cell p-3 border">{{ result.accuracy|floatformat:3 }}</th>
