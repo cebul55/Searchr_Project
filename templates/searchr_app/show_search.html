@@ -29,8 +29,10 @@
                     </ol>
                 </nav>
                 <h1 class="jumbotron-heading text-center">Title: {{ search.title }}</h1>
+                <h5 class="jumbotron-content text-left float-right">Status: {{ search.status|capfirst}}</h5>
                 <h5 class="jumbotron-content text-left">Created: {{ search.date_created}}</h5>
-                <h3 class="jumbotron-content text-left">Status: {{ search.status|capfirst}}</h3>
+                <hr class="my-4">
+                <p>That page presents created <strong>Search</strong> object with listed search results object found.</p>
             {% else %}
                 <h1 class="jumbotron-heading">Specified Search does not exist or you are not logged in.</h1>
             {% endif %}

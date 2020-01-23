@@ -40,12 +40,14 @@
                             <li class="list-group-item-secondary rounded p-2">"{{ search_result_2.title|safe }}"</li>
                         </ul>
                     </h3>
-                    <h5 class="jumbotron-content text-left">
-                        Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
-                    </h5>
-                    <h5 class="jumbotron-content text-left">
-                        Project: <a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
-                    </h5>
+                <h5 class="jumbotron-content float-right text-left">
+                    Project: <a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
+                </h5>
+                <h5 class="jumbotron-content text-left">
+                    Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
+                </h5>
+                <hr class="my-3">
+                <p>That page presents view to compare two <strong>Search Results</strong> objects. Found in the same Search object. <br/>You can choose another Search Result object to compare with content of: <strong class="text-primary">{{ search_result_1.title }}</strong>.</p>
             </div>
         </div>
         <div class="container">
@@ -316,11 +318,11 @@
 {#            </p>#}
             <div class="container text-center">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#codeModalLong">
-                    Show content of left result
-                </button>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#codeModalLong2">
+                <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#codeModalLong2">
                     Show content of right result
+                </button>
+                <button type="button" class="btn btn-info align-left" data-toggle="modal" data-target="#codeModalLong">
+                    Show content of left result
                 </button>
             </div>
         </div>
