@@ -61,11 +61,11 @@ class TextFileAnalyzer(object):
             max_pos_index = None
             if all(phrase.lower() in str(self.text_doc).lower() for phrase in combination):
                 for phrase in combination:
-                    index = str(self.text_doc).lower().find(phrase)
-                    if min_pos_index is None or max_pos_index is None:
+                    index = str(self.text_doc).lower().find(phrase.lower())
+                    if (min_pos_index is None or max_pos_index is None) and index >= 0:
                         min_pos_index = index
                         max_pos_index = index + len(phrase)
-                    else:
+                    elif index >= 0:
                         if min_pos_index > index:
                             min_pos_index = index
                         if max_pos_index < index:
@@ -86,7 +86,30 @@ class TextFileAnalyzer(object):
         return outcome
 
     def count_result_accuracy(self):
-        return len(self.list_of_outcomes)
+        single_occurances = {}
+        for outcome in self.list_of_outcomes:
+            try:
+                phrase_vals = AnalisysOutcomePhraseValues.objects.get(analisys_outcome=outcome)
+                if phrase_vals.number_of_phrases == 1:
+                    key_val = str(phrase_vals.phrase_value).replace('\'', '')
+                    key_val = key_val.replace(',', '')
+                    key_val = key_val.replace('(', '')
+                    key_val = key_val.replace(')', '')
+                    if key_val in single_occurances:
+                        single_occurances[key_val] = single_occurances[key_val] + 1
+                    else:
+                        single_occurances[key_val] = 1
+
+            except AnalisysOutcomePhraseValues.DoesNotExist:
+                print('Error while counting accuracy of %s', str(self.search_result))
+
+        min_value = -1
+        print(str(single_occurances))
+        for key in single_occurances.keys():
+            if single_occurances[key] < min_value or min_value < 0:
+                min_value = single_occurances[key]
+
+        return min_value
 
     def evaluate_exact_match(self, combination):
         # search_phrases = None
