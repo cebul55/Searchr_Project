@@ -16,7 +16,6 @@ class Keyword(models.Model):
 
     keyword = models.CharField(max_length=KEYWORD_MAX_LENGTH, unique=False, null=False)
     language = models.CharField(max_length=LANGUAGE_MAX_LENGTH, choices=LANGUAGES)
-    # todo get root form basing on language and keyword
     primary_form = models.CharField(max_length=KEYWORD_MAX_LENGTH)
     slug = models.SlugField(unique=False)
     phrases = models.ManyToManyField(
@@ -28,7 +27,6 @@ class Keyword(models.Model):
         if self.keyword == '':
             raise ValidationError('Keyword value can not be empty.')
         self.slug = slugify(self.keyword + ' ' + self.language)
-        # todo perform lematization of keyword and save it to primary_form
 
         super(Keyword, self).save(*args, **kwargs)
 

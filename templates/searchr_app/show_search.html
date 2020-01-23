@@ -1,8 +1,12 @@
 {% extends 'searchr_app/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block meta_block %}
-    <meta http-equiv="refresh" content="10">
+    {% if search.status == 'running' %}
+
+        <meta http-equiv="refresh" content="10">
+    {% endif %}
 {% endblock %}
 
 {% block title_block %}
@@ -114,7 +118,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <form class="form" role="form" id="delete_project" method="post" action="#">
+                        <form class="form" role="form" id="delete" method="post" action="#">
                             {% csrf_token %}
                             <button class="btn btn-danger" type="submit" name="delete">Delete Search</button>
                         </form>
@@ -128,18 +132,22 @@
         {% if phrases %}
 
             {% if search.status != 'running' %}
-                <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
-                    {% csrf_token %}
-                    <div class="btn-group p-1">
-                        <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
-                        <a class="btn btn-info" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Search</button>
-                    </div>
-                </form>
+
+                <div class="container float-left p-2">
+                    <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="btn-group p-1">
+                            <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
+                            <a class="btn btn-info" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Search</button>
+                        </div>
+                    </form>
+                </div>
+
             {% else %}
                 <div class="container">
                     <h3 class="jumbotron-heading text-body">
-                        Search is running. {{ search.running_results }} search results are still processed.
+                        Search is running. <br/>{{ search.running_results }} search results are still processed.
                     </h3>
 
                     <form action="{% url 'searchr_app:run_query' search.id %}" method="post">

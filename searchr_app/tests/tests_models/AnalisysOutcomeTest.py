@@ -23,5 +23,3 @@ class AnalisysOutcomeTest(TestCase):
     def test_verbose_name_plural(self):
         self.assertEqual(str(AnalisysOutcome._meta.verbose_name_plural), 'analisys outcomes')
 
-
-# todo more models tests !

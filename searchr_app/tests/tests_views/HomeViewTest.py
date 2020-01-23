@@ -16,6 +16,3 @@ class HomeViewTest(TestCase):
     def test_selenium_runs(self):
         self.resolved = resolve('/')
         self.assertEqual(self.resolved.func, HomeView.as_view.func)
-
-
-# todo repair class test

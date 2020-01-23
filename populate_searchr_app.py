@@ -7,8 +7,6 @@ django.setup()
 
 from searchr_app.models import Keyword, SearchResult
 
-# todo update populate script !!!
-
 def populate():
 
     allegro_results = [

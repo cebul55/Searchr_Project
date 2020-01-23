@@ -21,7 +21,6 @@ class ShowKeywordView(View):
             keyword = Keyword.objects.get(slug=keyword_slug, language=keyword_language)
 
             # search_res = SearchResult.objects.filter(keyword=keyword).order_by('-views')
-            # todo change search results ...
             search_res = SearchResult.objects.all()
 
             context_dict['keyword'] = keyword
@@ -47,7 +46,6 @@ class ShowKeywordView(View):
             self.add_or_update_search_results(query_result_list, keyword)
 
             # search_res = SearchResult.objects.filter(keyword=keyword).order_by('-views')
-            # todo change search results ...
             search_res = SearchResult.objects.all()
 
             context_dict['keyword'] = keyword
@@ -58,6 +56,3 @@ class ShowKeywordView(View):
             context_dict['search_res'] = None
 
         return render(request, 'searchr_app/keyword.html', context_dict)
-
-# todo change displaying searh results to phrasees.
-# todo remove saerch button ..., keyword view should be read-only

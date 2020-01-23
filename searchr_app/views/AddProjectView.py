@@ -70,7 +70,3 @@ class AddProjectView(View):
                       {
                           'form': self.form,
                       })
-
-# todo delete project
-# todo edit project
-# todo choosing user disabled, user should be assigned automatically

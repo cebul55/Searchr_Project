@@ -74,5 +74,3 @@ class SearchResult(models.Model):
     class Meta:
         verbose_name_plural = 'Search Results'
         verbose_name = 'Search Result'
-
-# todo calculate accuracy

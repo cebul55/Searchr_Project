@@ -1,5 +1,6 @@
 {% extends 'searchr_app/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 <style>
     #collapse1{
         overflow-y:scroll;
@@ -46,6 +47,15 @@
                         Project: <a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
                     </h5>
             </div>
+        </div>
+        <div class="container">
+            <form class="form" role="form" method="post" action="{% url 'searchr_app:search_result' search_result_1.id %}">
+                {% csrf_token %}
+{#                   {{ form.as_p }}#}
+                {{ form|as_crispy_errors }}
+                {{ form.search_results|as_crispy_field }}
+                <button class="btn btn-primary" type="submit" name="compare">Compare</button>
+            </form>
         </div>
         <div class="container">
             <div class=" row h-20 mh-25">

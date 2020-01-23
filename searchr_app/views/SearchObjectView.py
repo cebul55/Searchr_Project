@@ -6,10 +6,13 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from searchr_app.forms import ChooseResultForm
 from searchr_app.models import Project, Search, Phrase, SearchResult
 
 
 class SearchObjectView(View):
+
+    form = ChooseResultForm
 
     @method_decorator(login_required)
     def get(self, request, username, slug, search_slug):
@@ -45,6 +48,7 @@ class SearchObjectView(View):
         context_dict['phrases'] = phrases_list
         context_dict['tags'] = tags_weight
         context_dict['attributes'] = json.loads(search.attributes.replace('\"', ' ').replace('\'', '\"'))
+
 
         try:
             search_results = SearchResult.objects.filter(search=search)
