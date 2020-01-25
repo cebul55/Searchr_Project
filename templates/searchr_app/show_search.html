@@ -149,19 +149,22 @@
                 </div>
 
             {% else %}
-                <div class="container">
-                    <div class="alert alert-warning" role="alert">
-                        Search is running. <br/>{{ search.running_results }} search results are still processed.
-                    </div>
-                    <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
-                        {% csrf_token %}
-                        <div class="btn-group p-1">
-                            <button class="btn-primary btn" type="submit" name="submit" disabled="disabled">Run Search</button>
-                            <a class="btn btn-primary" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
+                <div class="container ">
+                    <div class="row">
+                        <div class="alert alert-warning" role="alert">
+                            Search is running. <br/>{{ search.running_results }} search results are still processed.
                         </div>
+                        <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="btn-group p-1">
+                                <button class="btn-primary btn" type="submit" name="submit" disabled="disabled">Run Search</button>
+                                <a class="btn btn-primary" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
+                            </div>
 
 
-                    </form>
+                        </form>
+                    </div>
+
 
                 </div>
 
