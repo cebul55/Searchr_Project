@@ -16,6 +16,7 @@ class HTMLFileAnalyzer(object):
     soup_obj = None
     _SEARCH_TAG_LIST = ['q', 'code', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'dl', 'pre', 'span', 'table']
     _META_TAG_LIST = ['base', 'link', 'meta', 'style']
+    _OTHER_TAG_LIST = ['video', 'style', 'source', 'img', 'dialog']
 
     def __init__(self, search_result, search_phrases_combitations, search_phrases, search_query, html_doc):
         self.search_result = search_result
@@ -38,6 +39,7 @@ class HTMLFileAnalyzer(object):
             self.find_in_footer(combination, exact_match)
             self.find_in_link(combination, exact_match)
             self.find_in_head(combination, exact_match)
+            self.find_in_other(combination, exact_match)
             # todo find for occurences in other elements...
 
             # accuracy = self.count_result_accuracy()
@@ -147,6 +149,15 @@ class HTMLFileAnalyzer(object):
                     outcome = self.create_outcome(phrases_combination, tag.prettify(), exact_match, 'Meta', len(phrases_combination))
                     self.list_of_outcomes.append(outcome)
 
+    def find_in_other(self, phrases_combination, exact_match):
+        soup_obj = self.soup_obj
+        for tag in self._OTHER_TAG_LIST:
+            list_vals = soup_obj.find_all(tag)
+            for val in list_vals:
+                if all(phrase.lower() in str(val) for phrase in phrases_combination):
+                    outcome = self.create_outcome(phrases_combination, val.prettify(), exact_match, 'Other', len(phrases_combination))
+                    self.list_of_outcomes.append(outcome)
+
     def count_result_accuracy(self):
         project = self.search_result.search.project
         if project:
@@ -212,3 +223,4 @@ class HTMLFileAnalyzer(object):
         # print(tmp_search_query)
         # returns boolean evaluation of searching combination
         return eval(tmp_search_query)
+

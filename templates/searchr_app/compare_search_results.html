@@ -83,7 +83,7 @@
                         <dd class="col-sm-9 p-2">{{ search_result_1.date_found }}</dd>
 
                         <dt class="col-sm-3 p-2">Status</dt>
-                        <dd class="col-sm-9 p-2">{{ search_result_1.status|capfirst }}</dd>
+                        <dd class="col-sm-9 p-2">{{ search_result_1.get_status_display|capfirst }}</dd>
                     </dl>
                 </div>
                 <div class="col-md-6 card border border-dark" style="background-color: lightsteelblue;">
@@ -108,7 +108,7 @@
                         <dd class="col-sm-9 p-2">{{ search_result_2.date_found }}</dd>
 
                         <dt class="col-sm-3 p-2">Status</dt>
-                        <dd class="col-sm-9 p-2">{{ search_result_2.status|capfirst }}</dd>
+                        <dd class="col-sm-9 p-2">{{ search_result_2.get_status_display|capfirst }}</dd>
                     </dl>
                 </div>
             </div>
@@ -303,27 +303,27 @@
           </div>
         </div>
         <div class="container p-2">
-            <h4 class="jumbotron-heading text-center">
-                <p class="text-body">
-                    Preview of downloaded content
-                </p>
-            </h4>
-{#            <p class="text-body">#}
-{#                <pre class="prettyprint linenums">#}
-{#                    <code >#}
-{#                        {{ search_result_1.html_file|escape|truncatechars:1000 }}#}
-{##}
-{#                    </code>#}
-{#                </pre>#}
-{#            </p>#}
+            <div class="alert alert-info" role="alert">
+                <h4 class="jumbotron-heading text-center">
+                    <p class="text-body text-center ">
+                        To preview the downloaded content press the button:
+                    </p>
+                </h4>
+            </div>
             <div class="container text-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#codeModalLong2">
-                    Show content of right result
-                </button>
-                <button type="button" class="btn btn-info align-left" data-toggle="modal" data-target="#codeModalLong">
-                    Show content of left result
-                </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-info align-left" data-toggle="modal" data-target="#codeModalLong">
+                            Show content of <strong>{{ search_result_1.title|safe|truncatechars:35  }}</strong>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#codeModalLong2">
+                            Show content of <strong>{{ search_result_2.title|safe|truncatechars:35  }}</strong>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     {% endif %}

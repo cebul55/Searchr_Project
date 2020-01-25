@@ -69,7 +69,7 @@ class SearchResult(models.Model):
         self.status = self._FINISHED_ANALYZED
 
     def __str__(self):
-        return self.title
+        return '[' + self.date_found.strftime("%d/%m/%Y, %H:%M:%S") + '] ' + self.title
 
     class Meta:
         verbose_name_plural = 'Search Results'
