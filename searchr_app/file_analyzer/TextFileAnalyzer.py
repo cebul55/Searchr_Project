@@ -109,7 +109,10 @@ class TextFileAnalyzer(object):
             if single_occurances[key] < min_value or min_value < 0:
                 min_value = single_occurances[key]
 
-        return min_value
+        if min_value < 0:
+            return 0
+        else:
+            return min_value
 
     def evaluate_exact_match(self, combination):
         # search_phrases = None
