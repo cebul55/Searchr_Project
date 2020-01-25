@@ -67,7 +67,7 @@
                         <dd class="col-sm-9 p-2">{{ search_result.date_found }}</dd>
 
                         <dt class="col-sm-3 p-2">Status</dt>
-                        <dd class="col-sm-9 p-2">{{ search_result.status|capfirst }}</dd>
+                        <dd class="col-sm-9 p-2">{{ search_result.get_status_display|capfirst }}</dd>
                     </dl>
                 </div>
                 <div class="col-md-6 card border border-dark" style="background-color: lightsteelblue;">

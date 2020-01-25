@@ -19,7 +19,7 @@ class SearchResult(models.Model):
         (_STARTED, 'STARTED'),
         (_FINISHED, 'FINISHED'),
         (_FINISHED_SAVED, 'FINISHED_SAVED'),
-        (_FINISHED_ANALYZED, 'FINISHED_ANALYZED')
+        (_FINISHED_ANALYZED, 'ANALYZED')
     ]
 
     title = models.CharField(max_length=SEARCH_RESULT_NAME_MAX_LEN)

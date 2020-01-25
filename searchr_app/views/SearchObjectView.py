@@ -52,7 +52,7 @@ class SearchObjectView(View):
 
         try:
             search_results = SearchResult.objects.filter(search=search)
-            search_results = search_results.order_by('-date_found')
+            search_results = search_results.order_by('-date_found__date', '-date_found__hour', '-date_found__minute', '-accuracy')
 
             context_dict['search_results'] = search_results
 
