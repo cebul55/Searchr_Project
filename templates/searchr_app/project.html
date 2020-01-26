@@ -114,7 +114,7 @@
                                                 <div class="list-group-item card p-0" style="background-color: aliceblue">
 
                                                     <p class="card-header p-1 pl-4">
-                                                        <a class="card-link active" href="{% url 'searchr_app:show_search' user.username project.slug search.slug %}">{{ search.title }}</a>
+                                                        <a class="card-link active" href="{% url 'searchr_app:show_search' project.user.username project.slug search.slug %}">{{ search.title }}</a>
                                                     </p>
                                                     <p class="card-body p-0 pl-4">
                                                         Date created: {{ search.date_created }}

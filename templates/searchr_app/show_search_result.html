@@ -30,7 +30,7 @@
                         <ol class="breadcrumb p-lg-0">
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:home' %}">Home</a> </li>
                             <li class="breadcrumb-item"><a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a></li>
-                            <li class="breadcrumb-item active"><a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a> </li>
+                            <li class="breadcrumb-item active"><a href="{% url 'searchr_app:show_search' project.user.username search.project.slug search.slug %}">{{ search.title }}</a> </li>
                             <li class="breadcrumb-item active"><a href="#">{{ search_result|safe }}</a></li>
                         </ol>
                     </nav>
@@ -39,7 +39,7 @@
                         Project: <a href="{% url 'searchr_app:show_project' project.user.username project.slug %}">{{ project.title }}</a>
                     </h5>
                     <h5 class="jumbotron-content text-left">
-                        Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
+                        Found in Search: <a href="{% url 'searchr_app:show_search' project.user.username search.project.slug search.slug %}">{{ search.title }}</a>
                     </h5>
                     <hr class="my-3">
                     <p>That page presents created <strong>Search Result</strong> object. You can find here parameters describing object, content of downloaded website.<br/> <strong>Table of Analysis outcome</strong> stores analysis results for specified Search Result.</p>

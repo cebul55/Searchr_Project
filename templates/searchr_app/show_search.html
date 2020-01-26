@@ -149,9 +149,15 @@
                     <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
                         {% csrf_token %}
                         <div class="btn-group p-1">
+                            {% if user == project.user %}
                             <button class="btn-primary btn" type="submit" name="submit" >Run Search</button>
+                            {% endif %}
                             <a class="btn btn-info" href="{% url 'searchr_app:history_view' project.user.username project.slug search.slug %}">History</a>
+                            {% if user == project.user %}
+
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Search</button>
+                            {% endif %}
+
                         </div>
                     </form>
                 </div>
