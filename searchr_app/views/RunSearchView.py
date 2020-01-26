@@ -24,7 +24,7 @@ class RunSearchView(View):
     def post(self, request, search_id):
         try:
             search = Search.objects.get(id=search_id)
-            if search.attributes.find('\'query\':'):
+            if search.attributes.find('\'query\':') == -1:
                 return redirect('searchr_app:show_search', username=request.user.username, slug=search.project.slug,
                                 search_slug=search.slug,
                                 message='Couldn\'t execute search query. Search query is incorrect, please delete search object and create new one.')
