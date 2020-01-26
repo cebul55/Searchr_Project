@@ -15,7 +15,7 @@ class SearchObjectView(View):
     form = ChooseResultForm
 
     @method_decorator(login_required)
-    def get(self, request, username, slug, search_slug):
+    def get(self, request, username, slug, search_slug, message=None):
         context_dict = {}
         # get user by username
         user = User.objects.filter(username=username)[0]
@@ -48,7 +48,8 @@ class SearchObjectView(View):
         context_dict['phrases'] = phrases_list
         context_dict['tags'] = tags_weight
         context_dict['attributes'] = json.loads(search.attributes.replace('\"', ' ').replace('\'', '\"'))
-
+        context_dict['message'] = message
+        print(message)
 
         try:
             search_results = SearchResult.objects.filter(search=search)

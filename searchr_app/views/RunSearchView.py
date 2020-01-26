@@ -26,7 +26,7 @@ class RunSearchView(View):
 
             results = self.run_search_query(search.query)
             if results is None:
-                return redirect('searchr_app:home')
+                return redirect('searchr_app:show_search', username=request.user.username, slug=search.project.slug, search_slug=search.slug, message='Couldn\'t execute search query. Please try again in a while')
 
             # set status running
             search.status = Search._RUNNING
@@ -84,7 +84,7 @@ class RunSearchView(View):
                         })
                 return results
 
-        except IOError:
+        except IOError or OSError:
             print(IOError)
             print('Query failed')
             return None
@@ -102,7 +102,6 @@ class RunSearchView(View):
 
         # url = request.POST.get('url', None)
         if not url:
-            print('dupa')
             return JsonResponse({'error': 'Missing arguments: URL'})
 
         if not self.is_url_valid(url):
@@ -117,10 +116,11 @@ class RunSearchView(View):
             'unique_id': unique_id,  # unique ID for each record for DB
             'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
         }
-        print(settings)
+        # print(settings)
 
         # Schedule new crawling task by scrapyd
         # schedule() returns task_id
+
         task_id = scrapyd.schedule('default',
                                    'html_file_downloader',
                                    settings=settings,

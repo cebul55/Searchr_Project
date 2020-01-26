@@ -11,6 +11,8 @@ urlpatterns = [
     path('owner/<slug:username>/project/<slug:slug>/', views.ProjectView.as_view(), name='show_project'),
     path('owner/<slug:username>/project/<slug:slug>/update/', views.UpdateProjectView.as_view(), name='update_project'),
     path('owner/<slug:username>/project/<slug:slug>/<slug:search_slug>/', views.SearchObjectView.as_view(), name='show_search'),
+    path('owner/<slug:username>/project/<slug:slug>/<slug:search_slug>/<message>/', views.SearchObjectView.as_view(),
+         name='show_search'),
     path('<project_id>/new_search/', views.AddSearchView.as_view(), name='new_search'),
     path('<project_id>/<search_id>/build_query/', views.QueryBuilderView.as_view(), name='query_builder'),
     path('phrase/<phrase_language>/<slug:phrase_slug>/', views.ShowPhraseView.as_view(), name='show_phrase'),
