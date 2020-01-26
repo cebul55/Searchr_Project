@@ -63,7 +63,7 @@ class SearchObjectView(View):
         return render(request, 'searchr_app/show_search.html', context_dict)
 
     @method_decorator(login_required)
-    def post(self, request, username, slug, search_slug):
+    def post(self, request, username, slug, search_slug, message=None):
         if 'delete' in request.POST:
             try:
                 # get user by username

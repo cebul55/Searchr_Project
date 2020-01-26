@@ -1,7 +1,8 @@
 from django import forms
 from django.conf.global_settings import LANGUAGES
+from django.core.exceptions import ValidationError
 
-from searchr_app.models import Phrase
+from searchr_app.models import Phrase, Keyword
 
 
 class PhraseForm(forms.ModelForm):
@@ -43,3 +44,12 @@ class PhraseForm(forms.ModelForm):
     class Meta:
         model = Phrase
         exclude = ['slug']
+
+    def clean_value(self):
+        # custom clean of value field to validate if words are not longer than 512 characters
+        phrase_value = self.cleaned_data['value']
+        words = phrase_value.split()
+        for word in words:
+            if len(word) > Keyword.KEYWORD_MAX_LENGTH:
+                raise ValidationError("Phrase must contain from keywords shorter than " + str(Keyword.KEYWORD_MAX_LENGTH) + ' characters.')
+        return phrase_value

@@ -44,6 +44,10 @@ class RunSearchView(View):
                 search_result.save()
                 request.POST.url = search_result.url
                 response = self.start_spider(search_result.url)
+                # try:
+                #     response = self.start_spider(search_result.url)
+                # except Exception:
+                #     print(Exception)
                 # get unique_id from new spider
                 response_dict = json.loads(response.content)
                 search_result.scrapy_unique_task_id = response_dict['unique_id']

@@ -30,7 +30,6 @@ class AddPhraseView(View):
 
             except IntegrityError:
                 self.form.add_error('value', 'Phrase with selected language ('+ self.form.cleaned_data['value'] + ',' + self.form.cleaned_data['language'] + ') already exists in database.')
-                print('dupa')
                 print(self.form.errors)
                 return render(request, 'searchr_app/add_phrase.html', {
                     'form': self.form,
