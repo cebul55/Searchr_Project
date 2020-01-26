@@ -47,6 +47,10 @@
                     Found in Search: <a href="{% url 'searchr_app:show_search' user.username search.project.slug search.slug %}">{{ search.title }}</a>
                 </h5>
                 <hr class="my-3">
+                    <h6 class="jumbotron-text text-center">
+                        Searched Query: {{ attributes.query | safe}}
+                    </h6>
+                <hr class="my-3">
                 <p>That page presents view to compare two <strong>Search Results</strong> objects. Found in the same Search object. <br/>You can choose another Search Result object to compare with content of: <strong class="text-primary">{{ search_result_1.title }}</strong>.</p>
             </div>
         </div>

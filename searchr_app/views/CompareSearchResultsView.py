@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
@@ -29,6 +31,7 @@ class CompareSearchResultsView(View):
             context_dict['project'] = search_res_1.search.project
             context_dict['analysis_1'] = search_res_1.analisysoutcome_set.get_queryset()
             context_dict['analysis_2'] = search_res_2.analisysoutcome_set.get_queryset()
+            context_dict['attributes'] = json.loads(search_res_1.search.attributes.replace('\"', ' ').replace('\'', '\"'))
             context_dict['form'] = self.form
 
         except SearchResult.DoesNotExist:
@@ -39,6 +42,7 @@ class CompareSearchResultsView(View):
             context_dict['project'] = None
             context_dict['analysis_1'] = None
             context_dict['analysis_2'] = None
+            context_dict['attributes'] = None
             context_dict['form'] = self.form
 
         return render(request, 'searchr_app/compare_search_results.html', context_dict)
