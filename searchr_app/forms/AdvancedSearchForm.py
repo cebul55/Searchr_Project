@@ -1,3 +1,5 @@
+import json
+
 from django import forms
 from django.conf.global_settings import LANGUAGES
 from django.core.exceptions import ValidationError
@@ -180,3 +182,13 @@ class AdvancedSearchForm(forms.Form):
             raise ValidationError('Title can not be longer than ' + str(Search.SEARCH_TITLE_LENGTH) + ' characters.')
         return title
 
+    def clean_choose_phrases(self):
+        list_phrases = self.cleaned_data['choose_phrases']
+        phrases_val = []
+        for p in list_phrases:
+            phrases_val.append(p.value)
+
+        json_phrases_list = json.dumps(phrases_val)
+        if len(json_phrases_list) > Search.SEARCH_QUERY_LENGTH:
+            raise ValidationError('Final search query must be shorter than %s characters. Please choose different phrases.' %str(Search.SEARCH_QUERY_LENGTH))
+        return list_phrases

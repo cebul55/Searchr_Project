@@ -47,9 +47,11 @@ class SearchObjectView(View):
 
         context_dict['phrases'] = phrases_list
         context_dict['tags'] = tags_weight
-        context_dict['attributes'] = json.loads(search.attributes.replace('\"', ' ').replace('\'', '\"'))
+        try:
+            context_dict['attributes'] = json.loads(search.attributes.replace('\"', ' ').replace('\'', '\"'))
+        except:
+            context_dict['attributes'] = search.attributes
         context_dict['message'] = message
-        print(message)
 
         try:
             search_results = SearchResult.objects.filter(search=search)
