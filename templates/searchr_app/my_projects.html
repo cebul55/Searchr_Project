@@ -83,6 +83,15 @@
                 </div>
             </div>
         </div>
+        {% else %}
+            <div class="container" style="width: 100%">
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Empty Project List</h4>
+                    <p>You don't have any added projects!.</p>
+                    <hr class="my-3">
+                    <p class="mb-0">Add your first project <a class="btn btn-primary" href="{% url 'searchr_app:add_project' %}">HERE</a>. </p>
+                </div>
+            </div>
         {% endif %}
     {% else %}
         <div class="jumbotron p-4">

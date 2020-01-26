@@ -1,5 +1,6 @@
 from django import forms
 from django.conf.global_settings import LANGUAGES
+from django.core.exceptions import ValidationError
 
 from searchr_app.models import Search, Project, Phrase
 
@@ -114,6 +115,7 @@ BING_LANGUAGE_CHOICES = [
 class AdvancedSearchForm(forms.Form):
     title = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Title'}),
+        max_length=Search.SEARCH_TITLE_LENGTH,
         required=True,
     )
 
@@ -171,3 +173,10 @@ class AdvancedSearchForm(forms.Form):
         if projectid:
             project = Project.objects.get(id=projectid)
             self.fields['choose_phrases'].queryset = Phrase.objects.filter(projects=project)
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if len(title) > Search.SEARCH_TITLE_LENGTH:
+            raise ValidationError('Title can not be longer than ' + str(Search.SEARCH_TITLE_LENGTH) + ' characters.')
+        return title
+

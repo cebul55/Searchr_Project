@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from searchr_app.models import Search, Project, Phrase
 
@@ -47,3 +48,9 @@ class SearchForm(forms.ModelForm):
     class Meta:
         model = Search
         exclude = ['slug', 'phrases_list', 'running_results']
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if len(title) > Search.SEARCH_TITLE_LENGTH:
+            raise ValidationError('Title can not be longer than ' + str(Search.SEARCH_TITLE_LENGTH) + ' characters.')
+        return title
