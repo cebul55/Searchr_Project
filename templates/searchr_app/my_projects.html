@@ -21,15 +21,17 @@
                     </ol>
                 </nav>
             <h1 class="jumbotron-heading p-1 text-center">List of Projects</h1>
+            <hr class="my-4">
+                <p>That page presents projects owned by logged user.</p>
             </div>
         </div>
         {% if projects %}
-        <div class="container">
+        <div class="container" style="max-width: 100%">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-2">
-                        <div class="card-header">
-                            Projects:
+                        <div class="card-header " style="background-color: #80bdff;">
+                            <h3 class="jumbotron-heading text-center">My Projects:</h3>
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
@@ -39,29 +41,35 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h5 class="panel-title text-center">
-                                                    <a data-toggle="collapse" href="#collapse_project">{{ project.title }}</a>
+                                                    <a data-toggle="collapse" href="#collapse_project_{{ project.id }}">{{ project.title }}</a>
                                                 </h5>
                                             </div>
-                                            <div id="collapse_project" class="panel-collapse collapse">
+                                            <div id="collapse_project_{{ project.id }}" class="panel-collapse collapse">
                                                 <dl class="row p-0 card-text">
                                                     <dt class="col-sm-3 p-2">Project Title</dt>
                                                     <dd class="col-sm-9 p-2">
                                                         <a href="{% url 'searchr_app:show_project' user.username project.slug %}">{{ project.title|safe }}</a>
                                                     </dd>
 
-{#                                                    <dt class="col-sm-3 p-2">URL Address</dt>#}
-{#                                                    <dd class="col-sm-9 p-2">#}
-{#                                                        <a href="{{ search_result.url }}">{{ search_result.url|safe }}</a>#}
-{#                                                    </dd>#}
-{#                            #}
-{#                                                    <dt class="col-sm-3 p-2">Content Type</dt>#}
-{#                                                    <dd class="col-sm-9 p-2">{{ search_result.content_type|safe }}</dd>#}
-{#                            #}
-{#                                                    <dt class="col-sm-3 p-2">Date found</dt>#}
-{#                                                    <dd class="col-sm-9 p-2">{{ search_result.date_found }}</dd>#}
-{#                            #}
-{#                                                    <dt class="col-sm-3 p-2">Status</dt>#}
-{#                                                    <dd class="col-sm-9 p-2">{{ search_result.status|capfirst }}</dd>#}
+                                                    <dt class="col-sm-3 p-2">Description</dt>
+                                                    <dd class="col-sm-9 p-2">
+                                                        {{ project.description|safe|truncatechars:100|capfirst }}
+                                                    </dd>
+
+                                                    <dt class="col-sm-3 p-2">Defined phrase set</dt>
+                                                    <dd class="col-sm-9 p-2">
+                                                        {% if project.phrase_set.count > 0 %}
+                                                            {% for phrase in project.phrase_set.get_queryset %}
+                                                                {{ phrase.value|safe|capfirst }},
+                                                            {% endfor %}
+                                                        {%  else %}
+                                                            No defined phrases!
+                                                        {% endif %}
+                                                    </dd>
+
+                                                    <dt class="col-sm-3 p-2">Number of search objects</dt>
+                                                    <dd class="col-sm-9 p-2">{{ project.search_set.count }}</dd>
+
                                                 </dl>
                                             </div>
                                         </div>

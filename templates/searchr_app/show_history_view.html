@@ -25,7 +25,9 @@
                 <h1 class="jumbotron-heading text-center">Search History of {{ search.title }}</h1>
                 <h3 class="jumbotron-content text-left">Number of results: {{ search_history.number_of_results }}</h3>
             {% else %}
-                <h1 class="jumbotron-heading">Specified Search History does not exist or you are not logged in.</h1>
+                <div class="alert-danger">
+                    <h1 class="jumbotron-heading">Specified Search History does not exist or you are not logged in.</h1>
+                </div>
             {% endif %}
         </div>
     </div>
@@ -65,7 +67,9 @@
                 </div>
             </div>
         {% else %}
-            <h1 class="jumbotron-heading text-center text-danger">No Search Result History</h1>
+            <div class="alert alert-danger" role="alert">
+                <h1 class="jumbotron-heading text-center">No Search Result History</h1>
+            </div>
         {% endif %}
     {% else %}
 

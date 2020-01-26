@@ -137,7 +137,7 @@
 
             {% if search.status != 'running' %}
 
-                <div class="container float-left p-2">
+                <div class="container align-left p-2">
                     <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
                         {% csrf_token %}
                         <div class="btn-group p-1">
@@ -149,11 +149,17 @@
                 </div>
 
             {% else %}
-                <div class="container ">
+                <div class="container " style="max-width: 100%">
                     <div class="row">
-                        <div class="alert alert-warning" role="alert">
-                            Search is running. <br/>{{ search.running_results }} search results are still processed.
+                        <div class="col-md-12">
+                            <div class="alert alert-warning" role="alert">
+                                <h4 class="jumbotron-heading text-center">
+                                    Search is running. <br/>{{ search.running_results }} search results are still processed.
+                                </h4>
+                            </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <form action="{% url 'searchr_app:run_query' search.id %}" method="post">
                             {% csrf_token %}
                             <div class="btn-group p-1">
@@ -178,14 +184,14 @@
         {% if search_results %}
             <div class="container p-4" style="max-width: 100%;">
                 <div class="row align-items-center">
-                    <div class="col-md-12">
-                        <div class="card mb-4">
+                    <div class="col-md-12" style="max-width: 100%;">
+                        <div class="card">
                             <div class="card-header" style="background-color: #80bdff;">
                                 <h3 class="jumbotron-heading text-center" >Search Results:</h3>
                             </div>
-                            <div class="card-body p-2">
-                                <div class="container p-0">
-                                    <table class="table-light table-bordered table-hover table-responsive">
+                            <div class="card-body p-2" style="max-width: 100%;">
+                                <div class="w-100" style="width: 100%;">
+                                    <table class="table table-light table-bordered table-hover" style="width: 100%; max-width: 100%;">
                                         <thead class="table-primary">
                                             <th scope="col">Page Title</th>
                                             <th scope="col">URL</th>
@@ -234,10 +240,10 @@
             </div>
 
         {% else %}
-            <div class="container">
+            <div class="container" style="max-width: 100%">
                 <div class="row align-items-center">
                     <div class="col-md-12">
-                        <div class="card mb-4  alert alert-primary">
+                        <div class="card alert alert-primary">
                             <h3 class="jumbotron-heading text-center">No Search Results<br/>Try searching again or execute your first Search.</h3>
                         </div>
                     </div>
