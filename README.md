@@ -1,34 +1,55 @@
 # SEARCH PROJECT
 
+## Project implemented for purposes of writing Engineer's Thesis on Warsaw University of Technology
+
+author: B.Cybulski 
+
 ## 1. Basic environment configuration:
-| **Package**               | **Version**
-|-------------------------  |-------
-| bcrypt                    | 3.1.7  
-| cffi                      | 1.12.3 
-| Django                    | 2.2.3  
-| django-registration-redux | 2.2    
-| Pillow                    | 6.1.0  
-| pip                       | 19.2.3 
-| pycparser                 | 2.19   
-| pytz                      | 2019.2 
-| setuptools                | 41.2.0 
-| six                       | 1.12.0 
-| sqlparse                  | 0.3.0  
-| wheel                     | 0.33.6 
+Can be found in file requirements.txt(or requirements_windows.txt for Windows users). It is recommended to work on virtualenvironment.
 
 ## 2. Technology Stack
-### 2.1 Aktualnie wykorzystywane
-- Język: Python
-- Framework: Django
+- Programming language: Python
+- Framework: Django and Scrapy
 - IDE: PyCharm
-- Baza Danych: PostgreSQL
-- Wyszukiwarka: Bing Search
-- Repozytorium: GitHub
+- Database: PostgreSQL
+- Search engine: Bing Search
+- Online code repository: GitHub
 - Framework CSS: Bootstrap
-- Wyświetlanie kodu za pomocą [Google prettyprint](https://github.com/google/code-prettify)
-- (W przygotowaniu) Narzędzia do parsowania i pobierania stron WWW: Scrapy, BeautifulSoup (integracja Django i Scrapy: https://blog.theodo.com/2019/01/data-scraping-scrapy-django-integration/ )
-- (W przygotowaniu) Biblioteki NLP: Spacy: Industrial Standard, TextBlob, Polylot
-### 2.2 Plany / pomysły do wykorzystania
-- Serwer: Serwer na platformie Azure for Students
-- Wirtualizacja: Docker
-- CI: Jenkins
+- For displaying HTML code: [Google prettyprint](https://github.com/google/code-prettify)
+- Apache-Tika
+- BeautifulSoup library
+
+## 3. Set up project on local machine
+- Install all necessary libraries
+- Configure virtual environment
+- set up postgreSQL database using script in file **create_database.sql**
+- generate secret_key for Django by running:
+```python
+from django,core.management.utils import get_random_secret_key
+get_random_secret_key()
+```
+and save it in file **/searchr_project/conf/secret.key**
+- set up Bing Search API on [Azure](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-web-search/web-sdk-python-quickstart) and save secret key in file **/searchr_project/conf/bing.key**
+- save password for admin psql user in file **/searchr_project/conf/searchrDB.key**
+- next step is to migrate database structure. Run following commands in project root folder (where *manage.py* file is stored):
+```python
+python manage.py migrate
+python manage.py makiemigraitons
+```
+- Create super user
+```python
+python manage.py createsuperuser
+```
+## 4. Run project
+In order to run project on localhost, you have to start django server as well as scrapy server. Run following command to start django server:
+```
+python manage.py runserver
+```
+To start scrapy server go to *scrapy_4_searchr_app* folder and execute command:
+```
+scrapyd
+```
+That will start django server on localhost:8000 and scrapy server on localhost:6800
+
+## 4.1 Enter application
+Go to url: [http://localhost:8000/](http://localhost:8000/)

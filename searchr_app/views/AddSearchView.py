@@ -111,7 +111,6 @@ class AddSearchView(View):
                                 search_slug=search.slug)
 
             else:
-                print('???')
                 print(self.form.errors)
 
             return render(request, 'searchr_app/new_search.html', {
