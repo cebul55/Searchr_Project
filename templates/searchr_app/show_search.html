@@ -28,7 +28,7 @@
                         <li class="breadcrumb-item active"><a href="#">{{ search.title }}</a> </li>
                     </ol>
                 </nav>
-                <h1 class="jumbotron-heading text-center">Title: {{ search.title }}</h1>
+                <h1 class="jumbotron-heading text-center">Title: {{ search.title|safe }}</h1>
                 <h5 class="jumbotron-content text-left float-right">Status: {{ search.status|capfirst}}</h5>
                 <h5 class="jumbotron-content text-left">Created: {{ search.date_created}}</h5>
                 <hr class="my-4">

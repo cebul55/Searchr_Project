@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views import View
+from urllib3.exceptions import MaxRetryError, NewConnectionError
 
 from searchr_app.models import Search, SearchResult
 from searchr_app.views import CrawlerView, crawl
@@ -41,13 +42,15 @@ class RunSearchView(View):
                     url=result['link'],
                     search=search,
                 )
-                search_result.save()
                 request.POST.url = search_result.url
                 response = self.start_spider(search_result.url)
-                # try:
-                #     response = self.start_spider(search_result.url)
-                # except Exception:
-                #     print(Exception)
+                if response is None:
+                    search.running_results = 0
+                    search.save()
+                    message = 'Unable to communicate with Scrapyd server. Please contact system administrator.'
+                    return redirect('searchr_app:show_search', request.user.username, search.project.slug, search.slug, message)
+                else:
+                    search_result.save()
                 # get unique_id from new spider
                 response_dict = json.loads(response.content)
                 search_result.scrapy_unique_task_id = response_dict['unique_id']
@@ -111,28 +114,31 @@ class RunSearchView(View):
         if not self.is_url_valid(url):
             return JsonResponse({'error': 'URL is not valid'})
 
-        # extract domain from url
-        domain = urlparse(url).netloc
-        # create unique id to store in helper table in database,
-        unique_id = str(uuid4())
-        # configuration of settings for scrapy spider
-        settings = {
-            'unique_id': unique_id,  # unique ID for each record for DB
-            'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-        }
-        # print(settings)
+        try:
+            # extract domain from url
+            domain = urlparse(url).netloc
+            # create unique id to store in helper table in database,
+            unique_id = str(uuid4())
+            # configuration of settings for scrapy spider
+            settings = {
+                'unique_id': unique_id,  # unique ID for each record for DB
+                'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+            }
+            # print(settings)
 
-        # Schedule new crawling task by scrapyd
-        # schedule() returns task_id
+            # Schedule new crawling task by scrapyd
+            # schedule() returns task_id
 
-        task_id = scrapyd.schedule('default',
-                                   'html_file_downloader',
-                                   settings=settings,
-                                   url=url,
-                                   domain=domain)
+            task_id = scrapyd.schedule('default',
+                                       'html_file_downloader',
+                                       settings=settings,
+                                       url=url,
+                                       domain=domain)
 
-        return JsonResponse({
-            'task_id': task_id,
-            'unique_id': unique_id,
-            'status': 'started',
-        })
+            return JsonResponse({
+                'task_id': task_id,
+                'unique_id': unique_id,
+                'status': 'started',
+            })
+        except IOError or ConnectionRefusedError or NewConnectionError or requests.exceptions.ConnectionError or MaxRetryError:
+            return None

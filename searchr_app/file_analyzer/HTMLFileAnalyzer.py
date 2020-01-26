@@ -40,7 +40,6 @@ class HTMLFileAnalyzer(object):
             self.find_in_link(combination, exact_match)
             self.find_in_head(combination, exact_match)
             self.find_in_other(combination, exact_match)
-            # todo find for occurences in other elements...
 
             # accuracy = self.count_result_accuracy()
             # print(accuracy)

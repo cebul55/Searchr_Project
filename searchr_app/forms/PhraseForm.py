@@ -51,5 +51,5 @@ class PhraseForm(forms.ModelForm):
         words = phrase_value.split()
         for word in words:
             if len(word) > Keyword.KEYWORD_MAX_LENGTH:
-                raise ValidationError("Phrase must contain from keywords shorter than " + str(Keyword.KEYWORD_MAX_LENGTH) + ' characters.')
+                raise ValidationError("Phrase must contain keywords shorter than " + str(Keyword.KEYWORD_MAX_LENGTH) + ' characters.')
         return phrase_value
